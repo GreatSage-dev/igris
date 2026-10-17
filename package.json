@@ -1,0 +1,37 @@
+{
+  "name": "igris",
+  "version": "1.0.0",
+  "description": "The Silent Gatekeeper: Autonomous Vulnerability Verification & Bisection Engine for GitLab",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "igris": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/**/*.test.js",
+    "test:src": "node --import tsx --test src/**/*.test.ts",
+    "serve": "node dist/server.js",
+    "start": "node dist/server.js"
+  },
+  "keywords": [
+    "gitlab",
+    "mcp",
+    "security",
+    "vulnerability",
+    "triage",
+    "bisection",
+    "sandbox",
+    "devsecops"
+  ],
+  "author": "King's Court",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "igris-launch-video",
+  "version": "1.0.0",
+  "description": "High-Calibre 60s Launch Promo for Igris (Built with Remotion & ElevenLabs)",
+  "scripts": {
+    "start": "remotion preview",
+    "render": "remotion render IgrisPromo out/igris_launch.mp4 --concurrency=4 --gl=angle",
+    "render:fast": "remotion render IgrisPromo out/igris_launch.mp4 --concurrency=8 --gl=angle --jpeg-quality=85"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.240",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.240"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.8.2"
+  }
+}
