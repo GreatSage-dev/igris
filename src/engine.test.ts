@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { IgrisEngine } from './engine.js';
 import { VulnerabilityReport } from './types.js';
 import { createIgrisMcpServer } from './mcp_server.js';
+import { verifyReceiptSignature } from './receipt.js';
 import { CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -179,5 +180,34 @@ describe('Igris Defense Cascade Tests', () => {
     assert.ok(receipt.tamperProofHash);
     assert.strictEqual(receipt.tamperProofHash.length, 64); // SHA-256 is 64 hex chars
     assert.ok(receipt.receiptId.startsWith('IGRIS-'));
+
+    // Check signature verification
+    assert.strictEqual(verifyReceiptSignature(receipt), true);
+
+    // Check tampered receipt fails signature verification
+    const tamperedReceipt = { ...receipt, exitCode: 99 };
+    assert.strictEqual(verifyReceiptSignature(tamperedReceipt), false);
+  });
+
+  it('MCP: igris_bisect_history should be callable via MCP tool interface', async () => {
+    const server = createIgrisMcpServer();
+    const handler = (server as any)._requestHandlers.get(CallToolRequestSchema.shape.method.value);
+
+    const result = await handler({
+      method: 'tools/call',
+      params: {
+        name: 'igris_bisect_history',
+        arguments: {
+          repoRoot: REPO_ROOT,
+          goodCommitSha: 'HEAD~1',
+          reproCommand: 'node -e "process.exit(0)"'
+        }
+      }
+    });
+
+    assert.ok(result);
+    assert.ok(result.content[0].text);
+    const parsed = JSON.parse(result.content[0].text);
+    assert.ok('summary' in parsed);
   });
 });

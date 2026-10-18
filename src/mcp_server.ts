@@ -7,6 +7,7 @@ import {
 import { IgrisEngine } from './engine.js';
 import { VulnerabilityReport } from './types.js';
 import { formatReceiptMarkdown } from './receipt.js';
+import { runAutomatedBisection } from './gates/g3_bisect.js';
 
 const engine = new IgrisEngine();
 
@@ -60,6 +61,20 @@ export function createIgrisMcpServer() {
               }
             },
             required: ['diffText']
+          }
+        },
+        {
+          name: 'igris_bisect_history',
+          description:
+            'Solves GitLab Issue #989: Automatically executes binary search across git commits to pinpoint the exact commit that introduced a test failure or regression.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              repoRoot: { type: 'string', description: 'Absolute path to repository root' },
+              goodCommitSha: { type: 'string', description: 'Known passing commit SHA or tag' },
+              reproCommand: { type: 'string', description: 'Command to run at each commit (e.g. npm test)' }
+            },
+            required: ['repoRoot', 'goodCommitSha', 'reproCommand']
           }
         }
       ]
@@ -129,6 +144,35 @@ export function createIgrisMcpServer() {
                 deletedTests,
                 addedDependencies: addedDeps,
                 weakenedAssertions
+              },
+              null,
+              2
+            )
+          }
+        ]
+      };
+    }
+
+    if (name === 'igris_bisect_history') {
+      const { repoRoot, goodCommitSha, reproCommand } = args as {
+        repoRoot: string;
+        goodCommitSha: string;
+        reproCommand: string;
+      };
+
+      const result = runAutomatedBisection(repoRoot, goodCommitSha, reproCommand);
+
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(
+              {
+                success: result !== null,
+                bisection: result,
+                summary: result
+                  ? `Automated Git Bisection successfully isolated culprit commit ${result.culpritCommitSha} by ${result.commitAuthor} in ${result.stepsCount} steps.`
+                  : 'Bisection completed without isolating an unambiguous culprit commit.'
               },
               null,
               2

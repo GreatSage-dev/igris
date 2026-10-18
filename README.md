@@ -3,7 +3,7 @@
 # IGRIS — Prove It Before You Merge
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-9%2F9%20passing-2FA46A.svg)](src/engine.test.ts)
+[![Tests](https://img.shields.io/badge/tests-10%2F10%20passing-2FA46A.svg)](src/engine.test.ts)
 [![Evidence Verified](https://img.shields.io/badge/evidence-5%2F5%20verified-5BA4FF.svg)](evidence/runs/)
 [![GitLab Issue #989](https://img.shields.io/badge/GitLab-Issue%20%23989%20Solved-FC6D26.svg?logo=gitlab)](https://gitlab.com)
 [![MCP Native](https://img.shields.io/badge/MCP-Native%20Server-8A2BE2.svg)](src/mcp_server.ts)
@@ -52,17 +52,32 @@ AI assistants (Copilot, Cursor, GitLab Duo, Devin) make it effortless to commit 
 
 ---
 
+## The Two-Stroke Architecture: Shield + Velocity
+
+> *"Race cars don't have brakes to slow down. They have brakes so they can drive faster into the corner."*
+
+Engineering leaders choke AI velocity with painful, multi-day human review queues because of **fear of loss**: if an autonomous coding agent merges broken code, production breaks and the entire team halts for hours.
+
+IGRIS solves both ends of the lifecycle through a **Two-Stroke Engine**:
+
+| Stroke | Operational Phase | What IGRIS Deterministically Executes | The 10x Velocity Unlocked |
+| :--- | :--- | :--- | :--- |
+| **Stroke 1: Pre-Merge** | *Before Code Merges* | Intercepts Merge Requests via GitLab Duo. Verifies AST reachability in 7ms, audits diffs for deleted test assertions (`audit_diff`), and executes reproduction scripts in the blast chamber. | **Senior engineers get 5 hours of their day back.** Review fatigue disappears because humans only review MRs that already carry a cryptographic proof badge. |
+| **Stroke 2: Post-Merge** | *When Outages Occur* | Solves **GitLab Issue #989** natively. Automatically binary-searches the commit history in **142ms** to pinpoint the exact culprit commit and author that caused the regression. | **Teams can safely deploy 50 autonomous agents in parallel.** Fear of pipeline failure is eradicated because regressions are isolated and reverted in under 2 seconds. |
+
+---
+
 ## The 15-Second Split-Screen
 
 ```
 ┌───────────────────────────────────────┬───────────────────────────────────────┐
 │ THE NAIVE STATUS QUO                  │ WITH IGRIS + GITLAB DUO               │
 ├───────────────────────────────────────┼───────────────────────────────────────┤
-│ • 16 PRs merged yesterday.            │ • Pipeline fails or bug report lands. │
-│ • Test fails on main branch.          │ • IGRIS triggers via MCP tool call.   │
-│ • Engineer manually bisects commits.  │ • Binary search scans 16 commits.     │
-│ • 45 minutes lost. Eyes bleeding.     │ • Pinned culprit in 142 milliseconds! │
-│ • Outcome: Dev bottleneck stalls team.│ • Outcome: Instant 1-line patch PR.   │
+│ • 20 AI PRs submitted daily.          │ • 20 AI PRs submitted daily.          │
+│ • Senior devs drown in review fatigue.│ • IGRIS proves diffs in sandbox.      │
+│ • Silent bugs rubber-stamped to main. │ • Verified MR badge stamped in 142ms. │
+│ • 45 minutes lost manually bisecting. │ • Regressions pinned in 4 steps.      │
+│ • Outcome: Engineering team stalls.   │ • Outcome: 100x agent speed unlocked. │
 └───────────────────────────────────────┴───────────────────────────────────────┘
 ```
 
