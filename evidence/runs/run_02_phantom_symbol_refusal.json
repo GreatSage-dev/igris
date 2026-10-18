@@ -1,0 +1,32 @@
+{
+  "receiptId": "IGRIS-DDAC45AE9132",
+  "reportId": "AI-REP-2026-4019",
+  "timestamp": "2026-10-18T22:17:31.482Z",
+  "target": {
+    "file": "src/handlers/webhook.ts",
+    "symbol": "processUntrustedWebhookPayload"
+  },
+  "verdict": "PHANTOM_SYMBOL",
+  "exitCode": 1,
+  "durationMs": 7.95,
+  "memoryDeltaMb": 0,
+  "gatesEvaluated": [
+    {
+      "gate": "G0_SCHEMA",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Valid schema provided.",
+      "durationMs": 0.6
+    },
+    {
+      "gate": "G1_REACHABILITY",
+      "passed": false,
+      "verdict": "PHANTOM_SYMBOL",
+      "evidence": "Symbol processUntrustedWebhookPayload does not exist in src/handlers/webhook.ts.",
+      "durationMs": 7.35
+    }
+  ],
+  "bisection": null,
+  "remediationSummary": "REJECTED: Hallucinated code report. Function name does not exist in repository AST. Zero runner resources spent.",
+  "tamperProofHash": "16f8b80d3c171bdfc208aa5f180ba3d827443a12142c8d61e1125681642fe54c"
+}

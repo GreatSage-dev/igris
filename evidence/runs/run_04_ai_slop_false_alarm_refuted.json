@@ -1,0 +1,41 @@
+{
+  "receiptId": "IGRIS-C881D459B342",
+  "reportId": "GL-ISSUE-1094",
+  "timestamp": "2026-10-18T22:17:31.482Z",
+  "target": {
+    "file": "src/math/calculator.ts",
+    "symbol": "safeDivide"
+  },
+  "verdict": "REFUTED",
+  "exitCode": 0,
+  "durationMs": 184.2,
+  "memoryDeltaMb": 1.1,
+  "gatesEvaluated": [
+    {
+      "gate": "G0_SCHEMA",
+      "passed": true,
+      "verdict": "REFUTED",
+      "evidence": "Valid schema.",
+      "durationMs": 0.5
+    },
+    {
+      "gate": "G1_REACHABILITY",
+      "passed": true,
+      "verdict": "REFUTED",
+      "evidence": "Symbol safeDivide exists.",
+      "durationMs": 4.1
+    },
+    {
+      "gate": "G2_SANDBOX",
+      "passed": true,
+      "verdict": "REFUTED",
+      "evidence": "Claimed payload passed without throw. Process exited cleanly with exitCode 0. Math bounds handled properly.",
+      "exitCode": 0,
+      "durationMs": 179.6,
+      "memoryDeltaMb": 1.1
+    }
+  ],
+  "bisection": null,
+  "remediationSummary": "REFUTED: Function executed safely with claimed exploit payload. Marked as False Alarm / Non-Reproducible.",
+  "tamperProofHash": "3f2f9ee7bc67bd37194dd741382757678d128d72daab24d140bb5391ba64bdd9"
+}

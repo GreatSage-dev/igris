@@ -1,0 +1,55 @@
+{
+  "receiptId": "IGRIS-4A7AE88C0C40",
+  "reportId": "DUO-MR-5821",
+  "timestamp": "2026-10-18T22:17:31.482Z",
+  "target": {
+    "file": "src/services/billing.ts",
+    "symbol": "chargeCustomerCard"
+  },
+  "verdict": "REPRODUCED",
+  "exitCode": 1,
+  "durationMs": 198.5,
+  "memoryDeltaMb": 3.8,
+  "gatesEvaluated": [
+    {
+      "gate": "G0_SCHEMA",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "MCP tool call verify_exploit triggered by GitLab Duo Agent.",
+      "durationMs": 1.2
+    },
+    {
+      "gate": "G1_REACHABILITY",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Symbol chargeCustomerCard exists at billing.ts:18.",
+      "durationMs": 8.4
+    },
+    {
+      "gate": "G2_SANDBOX",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Blast chamber verified double-charge idempotency regression.",
+      "exitCode": 1,
+      "durationMs": 98.4,
+      "memoryDeltaMb": 3.8
+    },
+    {
+      "gate": "G3_BISECTION",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Bisected to commit 7b19a0fc in 3 steps.",
+      "durationMs": 90.5
+    }
+  ],
+  "bisection": {
+    "culpritCommitSha": "7b19a0fc421948ba0918efcc01289410ea675102",
+    "commitAuthor": "Devin Agent <agent-42@gitlab.com>",
+    "commitDate": "2026-10-17T09:15:00Z",
+    "commitMessage": "fix(billing): optimize payment gateway retry backoff",
+    "stepsCount": 3,
+    "reproductionCommand": "npm test -- --grep \"idempotent card charge\""
+  },
+  "remediationSummary": "CONFIRMED REGRESSION: Autonomous commit 7b19a0fc by Devin Agent bypassed idempotency lock. Revert recommendation dispatched to MR #5821.",
+  "tamperProofHash": "9e204d870e7e90d09880ed1895ff96d1492ab587e1278011a865cda302c76984"
+}

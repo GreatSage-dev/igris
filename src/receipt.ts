@@ -51,6 +51,23 @@ export function buildReceipt(params: {
 }
 
 /**
+ * Deterministically checks whether a receipt's SHA-256 seal matches its payload.
+ */
+export function verifyReceiptSignature(receipt: IgrisReceipt): boolean {
+  const payloadToSign = JSON.stringify({
+    receiptId: receipt.receiptId,
+    reportId: receipt.reportId,
+    timestamp: receipt.timestamp,
+    target: `${receipt.target.file}#${receipt.target.symbol}`,
+    verdict: receipt.verdict,
+    exitCode: receipt.exitCode,
+    durationMs: receipt.durationMs
+  });
+  const computedHash = crypto.createHash('sha256').update(payloadToSign).digest('hex');
+  return computedHash === receipt.tamperProofHash;
+}
+
+/**
  * Formats the receipt as a clean, high-contrast GitLab discussion comment.
  */
 export function formatReceiptMarkdown(receipt: IgrisReceipt): string {

@@ -1,7 +1,7 @@
 {
   "name": "igris",
   "version": "1.0.0",
-  "description": "The Silent Gatekeeper: Autonomous Vulnerability Verification & Bisection Engine for GitLab",
+  "description": "The Sub-Second Git Bisection & Cryptographic Proof Engine for GitLab Duo",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -11,6 +11,7 @@
     "build": "tsc",
     "test": "node --test dist/**/*.test.js",
     "test:src": "node --import tsx --test src/**/*.test.ts",
+    "reverify": "node --import tsx scripts/reverify.ts",
     "serve": "node dist/server.js",
     "start": "node dist/server.js"
   },

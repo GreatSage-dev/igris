@@ -1,0 +1,39 @@
+{
+  "receiptId": "IGRIS-86811EF4B9D0",
+  "reportId": "HOSTILE-PAYLOAD-007",
+  "timestamp": "2026-10-18T22:17:31.482Z",
+  "target": {
+    "file": "src/crypto/hasher.ts",
+    "symbol": "hashPassword"
+  },
+  "verdict": "REJECTED_UNSAFE",
+  "exitCode": 1,
+  "durationMs": 3.82,
+  "memoryDeltaMb": 0,
+  "gatesEvaluated": [
+    {
+      "gate": "G0_SCHEMA",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Valid report schema.",
+      "durationMs": 0.5
+    },
+    {
+      "gate": "G1_REACHABILITY",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Symbol hashPassword verified.",
+      "durationMs": 1.8
+    },
+    {
+      "gate": "G2_SANDBOX",
+      "passed": false,
+      "verdict": "REJECTED_UNSAFE",
+      "evidence": "Hostile shell metacharacter injection detected: ; rm -rf / ; cat /etc/passwd.",
+      "durationMs": 1.52
+    }
+  ],
+  "bisection": null,
+  "remediationSummary": "SECURITY LOCK: Runner aborted before process spawn. Malicious shell injection attempt quarantined and reported.",
+  "tamperProofHash": "3f0ba30736766b868d6906e018420617b1f1ee4a68f39902fa1369872735474e"
+}

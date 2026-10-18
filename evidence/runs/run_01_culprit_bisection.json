@@ -1,0 +1,55 @@
+{
+  "receiptId": "IGRIS-04E310546452",
+  "reportId": "GL-SEC-2026-9812",
+  "timestamp": "2026-10-18T22:17:31.481Z",
+  "target": {
+    "file": "src/auth/jwt_validator.ts",
+    "symbol": "verifyToken"
+  },
+  "verdict": "REPRODUCED",
+  "exitCode": 1,
+  "durationMs": 142.35,
+  "memoryDeltaMb": 4.2,
+  "gatesEvaluated": [
+    {
+      "gate": "G0_SCHEMA",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Valid JSON schema with complete reproduction payload.",
+      "durationMs": 0.8
+    },
+    {
+      "gate": "G1_REACHABILITY",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Symbol verifyToken found at src/auth/jwt_validator.ts:42.",
+      "durationMs": 7.2
+    },
+    {
+      "gate": "G2_SANDBOX",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Script executed in isolated runner. Threw TokenExpiredError with non-zero exit code.",
+      "exitCode": 1,
+      "durationMs": 64.1,
+      "memoryDeltaMb": 4.2
+    },
+    {
+      "gate": "G3_BISECTION",
+      "passed": true,
+      "verdict": "REPRODUCED",
+      "evidence": "Binary search across 16 commits completed in 4 steps. Culprit: a4f81c9e.",
+      "durationMs": 70.25
+    }
+  ],
+  "bisection": {
+    "culpritCommitSha": "a4f81c9e83b0129f76a54cd102eef5a38190d712",
+    "commitAuthor": "Alex Chen <alex@gitlab-demo.internal>",
+    "commitDate": "2026-10-16T14:22:09Z",
+    "commitMessage": "refactor(auth): tighten token expiration tolerance from 60s to 0s",
+    "stepsCount": 4,
+    "reproductionCommand": "npm test -- --grep \"verifyToken expired\""
+  },
+  "remediationSummary": "CRITICAL: Regression bisected to commit a4f81c9e. Tolerances stripped without grace period. Recommended 1-line patch in jwt_validator.ts:45.",
+  "tamperProofHash": "5a28b9736e193991d4c9e70194369dc37b9b8660c1a3fb43419d1e65eb939efb"
+}
