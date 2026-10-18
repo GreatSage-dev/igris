@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const evidenceDir = path.resolve(__dirname, '../evidence/runs');
 
 console.log('========================================================================');
-console.log('  IGRIS CRYPTOGRAPHIC RE-VERIFICATION SUITE (Drey Invariant Standard)  ');
+console.log('  IGRIS CRYPTOGRAPHIC RE-VERIFICATION SUITE (Zero-Trust Standard)      ');
 console.log('========================================================================\n');
 
 const targetArg = process.argv[2];

@@ -148,7 +148,7 @@ cd igris
 # 2. Run the 9/9 deterministic unit & integration tests (Exit Code 0)
 npm run test:src
 
-# 3. Cryptographically re-verify all 5 evidence runs (Drey standard)
+# 3. Cryptographically re-verify all 5 evidence runs (Zero-Trust Invariant standard)
 npm run reverify
 
 # 4. Launch the Interactive Cyber Cockpit
