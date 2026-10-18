@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/triage",
+      "destination": "/api/triage"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ]
+}
