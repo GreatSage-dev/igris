@@ -46,9 +46,9 @@ AI assistants (Copilot, Cursor, GitLab Duo, Devin) make it effortless to commit 
 2. **Untrusted Bug Reports:** 65% of automated vulnerability tickets report hallucinated functions (`verifyToken_v2()`) that don't exist in the codebase.
 3. **The Regression Nightmare (GitLab Issue #989):** When a bug slips onto `main`, nobody knows which of yesterday's 20 merged PRs caused it. Since 2017, developers have requested automated bisection natively in GitLab.
 
-**The Anti-Clone Rule:** 200 lazy hackathon teams will build another AI bot that writes summaries or leaves generic review comments (adding *more* text to read). 
+**Beyond Text-Based Code Review:** Most AI review tools focus on text generation and markdown commentary—which often adds more reading and cognitive load to an already overwhelmed human reviewer.
 
-**IGRIS does the opposite.** It doesn't write essays. It runs the code in an isolated runner, bisects the git tree in 142ms, and stamps an immutable cryptographic receipt.
+**IGRIS takes an execution-first approach.** Rather than adding conversational comments, it executes the code in an isolated runner, mathematically bisects the git tree in 142ms if tests break, and stamps an immutable cryptographic receipt.
 
 ---
 
@@ -138,7 +138,7 @@ Every row below is a real, recorded inspection from [`evidence/runs/`](evidence/
 
 ## Why the Judge Can't Be Fooled
 
-Most hackathon agent demos let an LLM decide if its own fix worked ("self-grading"). In IGRIS, **the model never grades itself**:
+Many automated coding workflows let an LLM evaluate its own output ("self-grading"). In IGRIS, **the model never grades itself**:
 
 | Potential Cheat / Attack | What Stops It in IGRIS | Verified in Code |
 | :--- | :--- | :--- |
@@ -160,7 +160,7 @@ Zero setup hurdles. Run the entire deterministic verification suite from your co
 git clone https://github.com/GreatSage-dev/igris.git
 cd igris
 
-# 2. Run the 9/9 deterministic unit & integration tests (Exit Code 0)
+# 2. Run the 10/10 deterministic unit & integration tests (Exit Code 0)
 npm run test:src
 
 # 3. Cryptographically re-verify all 5 evidence runs (Zero-Trust Invariant standard)
