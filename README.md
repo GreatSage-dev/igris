@@ -3,7 +3,7 @@
 # IGRIS — Prove It Before You Merge
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-10%2F10%20passing-2FA46A.svg)](src/engine.test.ts)
+[![Tests](https://img.shields.io/badge/tests-13%2F13%20passing-2FA46A.svg)](src/engine.test.ts)
 [![Evidence Verified](https://img.shields.io/badge/evidence-5%2F5%20verified-5BA4FF.svg)](evidence/runs/)
 [![GitLab Issue #989](https://img.shields.io/badge/GitLab-Issue%20%23989%20Solved-FC6D26.svg?logo=gitlab)](https://gitlab.com)
 [![MCP Native](https://img.shields.io/badge/MCP-Native%20Server-8A2BE2.svg)](src/mcp_server.ts)
@@ -147,6 +147,7 @@ Many automated coding workflows let an LLM evaluate its own output ("self-gradin
 | **Reproduction script attempts CI secret exfiltration** | Gate 2 scans for environment variable access (`$CI_JOB_TOKEN`, `process.env`) and shell metacharacters before execution. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts#L45-L65) |
 | **Infinite loop or CPU freeze payload** | Strict hardware timeouts (default 2,000ms) with process group `SIGKILL` termination. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts#L80-L95) |
 | **Dirty Git state corrupts historical bisection** | Gate 3 executes within isolated, clean temporary worktrees; dirty trees are incinerated on completion. | [`src/gates/g3_bisect.ts`](src/gates/g3_bisect.ts) |
+| **Vibe-coding leaks secrets or injects dangerous sinks** | `igris_audit_diff` inspects diffs for exposed API/service keys (`SUPABASE_SERVICE_ROLE_KEY`, `sk_live_*`), dangerous sinks (`eval`, shell execution, raw SQL), and negative-space test deletions (Cloudflare Project Glasswing standard). | [`src/diff_audit.ts`](src/diff_audit.ts), [`src/engine.test.ts`](src/engine.test.ts) |
 | **Forged receipt or manipulated verdict** | SHA-256 seal is generated over immutable runtime parameters (duration, exit code, target, receiptId). | [`src/receipt.ts`](src/receipt.ts), [`scripts/reverify.ts`](scripts/reverify.ts) |
 
 ---
@@ -160,7 +161,7 @@ Zero setup hurdles. Run the entire deterministic verification suite from your co
 git clone https://github.com/GreatSage-dev/igris.git
 cd igris
 
-# 2. Run the 10/10 deterministic unit & integration tests (Exit Code 0)
+# 2. Run the 13/13 deterministic unit & integration tests (Exit Code 0)
 npm run test:src
 
 # 3. Cryptographically re-verify all 5 evidence runs (Zero-Trust Invariant standard)

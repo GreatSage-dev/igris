@@ -67,3 +67,25 @@ export interface SandboxExecutionOptions {
   maxMemoryMb?: number;
   allowNetwork?: boolean;
 }
+
+export interface DiffAuditFinding {
+  type: 'LEAKED_SECRET' | 'DANGEROUS_SINK' | 'DELETED_TEST' | 'WEAKENED_ASSERTION' | 'SUSPICIOUS_DEPENDENCY';
+  severity: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  detail: string;
+  line: string;
+  lineNumber?: number;
+}
+
+export interface DiffAuditResult {
+  verdict: 'CLEAN_DIFF' | 'SUSPICIOUS_MUTATION' | 'ADVISORY_NOTICE';
+  passed: boolean;
+  deletedTestCount: number;
+  deletedTests: string[];
+  addedDependencies: string[];
+  weakenedAssertions: number;
+  leakedSecrets: Array<{ line: string; type: string }>;
+  dangerousSinks: Array<{ line: string; type: string }>;
+  findings: DiffAuditFinding[];
+  summary: string;
+}
+

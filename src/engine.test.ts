@@ -6,6 +6,7 @@ import { IgrisEngine } from './engine.js';
 import { VulnerabilityReport } from './types.js';
 import { createIgrisMcpServer } from './mcp_server.js';
 import { verifyReceiptSignature } from './receipt.js';
+import { auditDiff } from './diff_audit.js';
 import { CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -165,7 +166,81 @@ describe('Igris Defense Cascade Tests', () => {
     assert.strictEqual(parsed.deletedTestCount, 2);
   });
 
+  it('MCP: audit_diff should catch leaked credentials in PR diffs (Cloudflare pattern)', async () => {
+    const server = createIgrisMcpServer();
+    const handler = (server as any)._requestHandlers.get(CallToolRequestSchema.shape.method.value);
+
+    const fakeStripeLiveKey = ['sk', 'live', '0000000000abcdef12345678'].join('_');
+    const fakeSupabaseToken = ['eyJhYmNkZWZnaGlqa2xt', 'bm9wcXJzdHV2d3h5eiI'].join('');
+    const diffWithSecret = `
+--- a/src/services/billing.ts
++++ b/src/services/billing.ts
+@@ -5,2 +5,4 @@
++ const stripeKey = "${fakeStripeLiveKey}";
++ const supabaseKey = "SUPABASE_SERVICE_ROLE_KEY=${fakeSupabaseToken}";
+    `;
+
+
+    const result = await handler({
+      method: 'tools/call',
+      params: {
+        name: 'igris_audit_diff',
+        arguments: { diffText: diffWithSecret }
+      }
+    });
+
+    const parsed = JSON.parse(result.content[0].text);
+    assert.strictEqual(parsed.passed, false);
+    assert.strictEqual(parsed.verdict, 'SUSPICIOUS_MUTATION');
+    assert.strictEqual(parsed.leakedSecrets.length, 2);
+    assert.ok(parsed.summary.includes('hardcoded secret'));
+  });
+
+  it('MCP: audit_diff should catch dangerous execution sinks (eval, child_process shell)', async () => {
+    const server = createIgrisMcpServer();
+    const handler = (server as any)._requestHandlers.get(CallToolRequestSchema.shape.method.value);
+
+    const diffWithSink = `
+--- a/src/routes/execute.ts
++++ b/src/routes/execute.ts
+@@ -12,2 +12,4 @@
++ const result = eval(req.body.userCode);
++ child_process.execSync(\`rm -rf \${req.body.tempDir}\`);
+    `;
+
+    const result = await handler({
+      method: 'tools/call',
+      params: {
+        name: 'igris_audit_diff',
+        arguments: { diffText: diffWithSink }
+      }
+    });
+
+    const parsed = JSON.parse(result.content[0].text);
+    assert.strictEqual(parsed.passed, false);
+    assert.strictEqual(parsed.verdict, 'SUSPICIOUS_MUTATION');
+    assert.strictEqual(parsed.dangerousSinks.length, 2);
+    assert.ok(parsed.summary.includes('dangerous execution sink'));
+  });
+
+  it('MCP: audit_diff should pass clean safe diffs with CLEAN_DIFF', async () => {
+    const cleanDiff = `
+--- a/src/math.ts
++++ b/src/math.ts
+@@ -1,3 +1,4 @@
++ export function multiply(a: number, b: number): number {
++   return a * b;
++ }
+    `;
+
+    const audit = auditDiff(cleanDiff);
+    assert.strictEqual(audit.passed, true);
+    assert.strictEqual(audit.verdict, 'CLEAN_DIFF');
+    assert.strictEqual(audit.findings.length, 0);
+  });
+
   it('Receipt: should produce valid tamper-proof SHA-256 hash', async () => {
+
     const report: VulnerabilityReport = {
       id: 'RECEIPT-01',
       title: 'Receipt verification test',

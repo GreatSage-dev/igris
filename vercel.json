@@ -6,6 +6,10 @@
       "destination": "/api/triage"
     },
     {
+      "source": "/api/audit_diff",
+      "destination": "/api/audit_diff"
+    },
+    {
       "source": "/",
       "destination": "/index.html"
     }

@@ -8,6 +8,7 @@ import { IgrisEngine } from './engine.js';
 import { VulnerabilityReport } from './types.js';
 import { formatReceiptMarkdown } from './receipt.js';
 import { runAutomatedBisection } from './gates/g3_bisect.js';
+import { auditDiff } from './diff_audit.js';
 
 const engine = new IgrisEngine();
 
@@ -51,7 +52,7 @@ export function createIgrisMcpServer() {
         {
           name: 'igris_audit_diff',
           description:
-            'Audits a Merge Request diff for negative-space safety: flags deleted test assertions, weakened invariants, or suspicious new package dependencies.',
+            'Audits a Merge Request diff for negative-space safety & vibe-coding vulnerabilities (Cloudflare Project Glasswing standard): flags deleted test assertions, leaked service secrets, dangerous execution sinks (eval, child_process), or suspicious new dependencies.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -105,53 +106,18 @@ export function createIgrisMcpServer() {
 
     if (name === 'igris_audit_diff') {
       const { diffText } = args as { diffText: string };
-      const lines = diffText.split('\n');
-
-      const deletedTests: string[] = [];
-      const addedDeps: string[] = [];
-      let weakenedAssertions = 0;
-
-      for (const line of lines) {
-        // Detect deleted test lines
-        if (line.startsWith('-') && !line.startsWith('---')) {
-          if (line.includes('expect(') || line.includes('assert.') || line.includes('test(') || line.includes('it(')) {
-            deletedTests.push(line.trim());
-          }
-          if (line.includes('toBe(true)') || line.includes('toBeDefined()')) {
-            weakenedAssertions++;
-          }
-        }
-        // Detect newly added dependencies in package.json
-        if (line.startsWith('+') && !line.startsWith('+++')) {
-          if (line.includes('"dependencies"') || line.includes('"devDependencies"') || /"\s*:\s*"\^?[0-9]/.test(line)) {
-            addedDeps.push(line.trim());
-          }
-        }
-      }
-
-      const passed = deletedTests.length === 0;
-      const verdict = passed ? 'CLEAN_DIFF' : 'SUSPICIOUS_MUTATION';
+      const auditResult = auditDiff(diffText);
 
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(
-              {
-                verdict,
-                passed,
-                deletedTestCount: deletedTests.length,
-                deletedTests,
-                addedDependencies: addedDeps,
-                weakenedAssertions
-              },
-              null,
-              2
-            )
+            text: JSON.stringify(auditResult, null, 2)
           }
         ]
       };
     }
+
 
     if (name === 'igris_bisect_history') {
       const { repoRoot, goodCommitSha, reproCommand } = args as {
