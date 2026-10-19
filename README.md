@@ -147,7 +147,7 @@ Many automated coding workflows let an LLM evaluate its own output ("self-gradin
 | **Reproduction script attempts CI secret exfiltration** | Gate 2 scans for environment variable access (`$CI_JOB_TOKEN`, `process.env`) and shell metacharacters before execution. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts#L45-L65) |
 | **Infinite loop or CPU freeze payload** | Strict hardware timeouts (default 2,000ms) with process group `SIGKILL` termination. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts#L80-L95) |
 | **Dirty Git state corrupts historical bisection** | Gate 3 executes within isolated, clean temporary worktrees; dirty trees are incinerated on completion. | [`src/gates/g3_bisect.ts`](src/gates/g3_bisect.ts) |
-| **Vibe-coding leaks secrets or injects dangerous sinks** | `igris_audit_diff` inspects diffs for exposed API/service keys (`SUPABASE_SERVICE_ROLE_KEY`, `sk_live_*`), dangerous sinks (`eval`, shell execution, raw SQL), and negative-space test deletions (Cloudflare Project Glasswing standard). | [`src/diff_audit.ts`](src/diff_audit.ts), [`src/engine.test.ts`](src/engine.test.ts) |
+| **Vibe-coding leaks secrets or injects dangerous sinks** | `igris_audit_diff` inspects diffs for exposed API/service keys (`SUPABASE_SERVICE_ROLE_KEY`, `sk_live_*`), dangerous sinks (`eval`, shell execution, raw SQL), and negative-space test deletions (Zero-Trust Invariant standard). | [`src/diff_audit.ts`](src/diff_audit.ts), [`src/engine.test.ts`](src/engine.test.ts) |
 | **Forged receipt or manipulated verdict** | SHA-256 seal is generated over immutable runtime parameters (duration, exit code, target, receiptId). | [`src/receipt.ts`](src/receipt.ts), [`scripts/reverify.ts`](scripts/reverify.ts) |
 
 ---

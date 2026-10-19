@@ -40,7 +40,7 @@ export function createIgrisMcpServer() {
                 },
                 {
                     name: 'igris_audit_diff',
-                    description: 'Audits a Merge Request diff for negative-space safety & vibe-coding vulnerabilities (Cloudflare Project Glasswing standard): flags deleted test assertions, leaked service secrets, dangerous execution sinks (eval, child_process), or suspicious new dependencies.',
+                    description: 'Audits a Merge Request diff for negative-space safety & vibe-coding vulnerabilities (Zero-Trust Invariant Standard): flags deleted test assertions, leaked service secrets, dangerous execution sinks (eval, child_process), or suspicious new dependencies.',
                     inputSchema: {
                         type: 'object',
                         properties: {

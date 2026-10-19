@@ -143,7 +143,7 @@ describe('Igris Defense Cascade Tests', () => {
         assert.strictEqual(parsed.verdict, 'SUSPICIOUS_MUTATION');
         assert.strictEqual(parsed.deletedTestCount, 2);
     });
-    it('MCP: audit_diff should catch leaked credentials in PR diffs (Cloudflare pattern)', async () => {
+    it('MCP: audit_diff should catch leaked credentials in PR diffs (Zero-Trust pattern)', async () => {
         const server = createIgrisMcpServer();
         const handler = server._requestHandlers.get(CallToolRequestSchema.shape.method.value);
         const fakeStripeLiveKey = ['sk', 'live', '0000000000abcdef12345678'].join('_');

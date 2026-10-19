@@ -166,7 +166,7 @@ describe('Igris Defense Cascade Tests', () => {
     assert.strictEqual(parsed.deletedTestCount, 2);
   });
 
-  it('MCP: audit_diff should catch leaked credentials in PR diffs (Cloudflare pattern)', async () => {
+  it('MCP: audit_diff should catch leaked credentials in PR diffs (Zero-Trust pattern)', async () => {
     const server = createIgrisMcpServer();
     const handler = (server as any)._requestHandlers.get(CallToolRequestSchema.shape.method.value);
 
