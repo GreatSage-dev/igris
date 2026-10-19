@@ -14,8 +14,7 @@
     "test": "node --test dist/**/*.test.js",
     "test:src": "node --import tsx --test src/**/*.test.ts",
     "reverify": "node --import tsx scripts/reverify.ts",
-    "serve": "node dist/server.js",
-    "start": "node dist/server.js"
+    "serve": "node dist/server.js"
   },
   "keywords": [
     "gitlab",
