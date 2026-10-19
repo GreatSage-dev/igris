@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "The Sub-Second Git Bisection & Cryptographic Proof Engine for GitLab Duo",
   "type": "module",
-  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "bin": {
     "igris": "dist/cli.js"
   },
