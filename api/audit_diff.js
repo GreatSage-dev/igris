@@ -1,6 +1,6 @@
-import { auditDiff } from '../src/diff_audit.js';
+import { auditDiff } from '../dist/diff_audit.js';
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req, res) {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -24,7 +24,7 @@ export default async function handler(req: any, res: any) {
 
     const auditResult = auditDiff(diffText);
     return res.status(200).json(auditResult);
-  } catch (err: any) {
+  } catch (err) {
     return res.status(400).json({ error: err.message || 'Diff audit execution failed' });
   }
 }
