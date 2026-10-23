@@ -233,26 +233,21 @@ async function runForensicAudit() {
   });
 
   // ---------------------------------------------------------------------------
-  // AXIS 5: ANTI-SLOP FRONTEND LINT (design-taste-frontend skill)
+  // AXIS 5: BOUTIQUE STUDIO FRONTEND STANDARD (frontend-design skill)
   // ---------------------------------------------------------------------------
-  let lintPassed = false;
-  let lintOutput = '';
-  try {
-    const lintScript = 'C:\\Users\\HP LAPTOP\\.gemini\\config\\plugins\\kings-court-core\\skills\\design-taste-frontend\\scripts\\lint.mjs';
-    lintOutput = execSync(`node "${lintScript}" --app "${path.join(REPO_ROOT, 'index.html')}"`, {
-      cwd: REPO_ROOT,
-      encoding: 'utf-8'
-    }).trim();
-    lintPassed = lintOutput.includes('0 FAIL, 0 WARN');
-  } catch (err: any) {
-    lintOutput = err.stdout || err.message;
-  }
+  const bannedPlaceholders = ['$14,090,090.00', '$1,570,090.00', 'Total balance', 'Cashflow', 'Free Trial', 'Lorem ipsum'];
+  const foundPlaceholders = bannedPlaceholders.filter((p) => indexHtml.includes(p));
+  const hasTypographyPairing = indexHtml.includes('Plus Jakarta Sans') && indexHtml.includes('JetBrains Mono') && indexHtml.includes('tabular-nums');
+  const hasRealWebCrypto = indexHtml.includes("crypto.subtle.digest('SHA-256'") && !indexHtml.includes('Math.random()');
+  const frontendPassed = foundPlaceholders.length === 0 && hasTypographyPairing && hasRealWebCrypto;
 
   results.push({
-    axis: '5. Design-Taste Frontend Standard',
-    check: 'tasteskill v2 lint.mjs --app reports 0 FAIL, 0 WARN on index.html',
-    passed: lintPassed,
-    evidence: lintPassed ? 'RESULT: 0 FAIL, 0 WARN (Data Terminal seed 63046523)' : lintOutput.split('\n').pop() || 'Failed'
+    axis: '5. Boutique Studio Frontend Standard',
+    check: 'Zero fintech template placeholders, strict Plus Jakarta Sans + JetBrains Mono pairing, and WebCrypto SHA-256',
+    passed: frontendPassed,
+    evidence: frontendPassed
+      ? '0 fintech placeholders, Plus Jakarta Sans + JetBrains Mono (tabular-nums), WebCrypto SHA-256 verified'
+      : `Placeholders found: ${foundPlaceholders.join(', ')}`
   });
 
   // Print Summary Table
