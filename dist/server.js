@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { IgrisEngine } from './engine.js';
+import { auditDiff } from './diff_audit.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -39,6 +40,32 @@ const server = http.createServer(async (req, res) => {
                 const receipt = await engine.triageReport(report, { repoRoot: REPO_ROOT });
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(receipt));
+            }
+            catch (err) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+        return;
+    }
+    // API Endpoint: /api/audit_diff
+    if (req.method === 'POST' && req.url === '/api/audit_diff') {
+        let body = '';
+        req.on('data', (chunk) => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            try {
+                const parsed = JSON.parse(body);
+                const diffText = parsed?.diffText || '';
+                if (!diffText || typeof diffText !== 'string') {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Missing required string parameter: diffText' }));
+                    return;
+                }
+                const auditResult = auditDiff(diffText);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(auditResult));
             }
             catch (err) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });

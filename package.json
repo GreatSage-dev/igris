@@ -14,6 +14,7 @@
     "test": "node --test dist/**/*.test.js",
     "test:src": "node --import tsx --test src/**/*.test.ts",
     "reverify": "node --import tsx scripts/reverify.ts",
+    "audit:agentic": "node --import tsx scripts/audit_agentic_engineering.ts",
     "serve": "node dist/server.js"
   },
   "keywords": [

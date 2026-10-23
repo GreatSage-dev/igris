@@ -22,3 +22,6 @@ yarn-error.log*
 # OS metadata
 .DS_Store
 Thumbs.db
+.taste-skill/before/
+.taste-skill/before-app/
+.taste-skill/after/
