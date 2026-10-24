@@ -1,0 +1,30 @@
+{
+  "$schema": "https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/user/gitlab_duo/mcp_schema.json",
+  "name": "igris-gatekeeper-mcp",
+  "version": "1.0.0",
+  "description": "Sub-Second Git Bisection and AST Quarantine Engine for GitLab Duo",
+  "mcpServers": {
+    "igris": {
+      "command": "node",
+      "args": ["dist/mcp_server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "8080"
+      },
+      "tools": [
+        {
+          "name": "igris_triage_report",
+          "description": "Evaluates untrusted vulnerability reports through a 4-gate deterministic cascade (G0 Schema, G1 AST Reachability, G2 Isolated Sandbox, G3 Git Bisect) and produces a SHA-256 sealed receipt."
+        },
+        {
+          "name": "igris_bisect_history",
+          "description": "Performs sub-second automated git bisection (resolving GitLab Issue #989) across commit history to isolate the exact commit hash and author that introduced a regression."
+        },
+        {
+          "name": "igris_audit_diff",
+          "description": "Pre-merge zero-trust diff auditor that checks merge request diffs for negative-space deleted test assertions, hardcoded secrets, and dangerous execution sinks."
+        }
+      ]
+    }
+  }
+}
