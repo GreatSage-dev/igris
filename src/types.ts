@@ -59,7 +59,47 @@ export interface IgrisReceipt {
   gatesEvaluated: GateResult[];
   bisection: BisectionResult | null;
   remediationSummary?: string;
+  previousHash?: string;
+  autonomyLevel?: AutonomyLevel;
+  probationState?: {
+    level: AutonomyLevel;
+    consecutiveCleanPasses: number;
+    demoted: boolean;
+  };
   tamperProofHash: string;
+}
+
+export type AutonomyLevel =
+  | 'LEVEL_1_SUGGEST'   // Assisted: comments suggestions on issue discussions; cannot open MR
+  | 'LEVEL_2_PROPOSE'   // Supervised: opens MR; requires named human maintainer approval
+  | 'LEVEL_3_ACT';      // Hands-off: auto-merges & deploys with daily rate limits
+
+export type AgentAction =
+  | 'SUGGEST_FIX'
+  | 'OPEN_MERGE_REQUEST'
+  | 'AUTO_MERGE'
+  | 'DEPLOY';
+
+export interface GitLabPolicyState {
+  approvalsRequired: number;
+  allowMerge: boolean;
+  targetBranchProtected: boolean;
+  dailyMergeLimit: number;
+  mergesToday: number;
+}
+
+export interface ProbationEvaluation {
+  allowed: boolean;
+  agentId: string;
+  currentLevel: AutonomyLevel;
+  consecutiveCleanPasses: number;
+  actionRequested: AgentAction;
+  reason: string;
+  demoted: boolean;
+  demotedFrom?: AutonomyLevel;
+  demotedTo?: AutonomyLevel;
+  gitLabPolicy: GitLabPolicyState;
+  auditEvidence?: string;
 }
 
 export interface SandboxExecutionOptions {

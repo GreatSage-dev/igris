@@ -51,5 +51,6 @@
     "reproductionCommand": "npm test -- --grep \"idempotent card charge\""
   },
   "remediationSummary": "CONFIRMED REGRESSION: Autonomous commit 7b19a0fc by Devin Agent bypassed idempotency lock. Revert recommendation dispatched to MR #5821.",
-  "tamperProofHash": "9e204d870e7e90d09880ed1895ff96d1492ab587e1278011a865cda302c76984"
+  "tamperProofHash": "90a1c0fbf416b47d6007225da144fd9ab6fdd4ddd9d7180acdeb4c90808b3bfe",
+  "previousHash": "93ad166813f92fc9c427d485bd5bb6d28b27b341a8441b6af88a5f22941860e2"
 }

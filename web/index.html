@@ -1190,6 +1190,170 @@
 
       </div>
 
+      <!-- ======================================================== -->
+      <!-- THIRD ROW IN CONSOLE: PROBATION & EARNED AUTONOMY        -->
+      <!-- Implementing The GitLab Security Standard v1.0 (Oct 6)   -->
+      <!-- ======================================================== -->
+      <div id="probation-section" class="rounded-3xl bg-[#0c0a12]/95 backdrop-blur-2xl border border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl relative glow-card ring-1 ring-white/10 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent">
+        
+        <!-- Header -->
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-white/[0.06]">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#f093bf]/10 border border-[#f093bf]/30 text-[#f093bf] text-[10px] font-mono tracking-wider uppercase font-semibold">
+                The GitLab Security Standard v1.0 (Oct 6, 2026)
+              </span>
+              <span class="text-[11px] font-mono text-zinc-500">Earned Agent Autonomy &amp; Chained Ledger</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+              Probation Trust Ledger &amp; Dynamic Policy Governor
+            </h2>
+            <p class="text-xs text-zinc-400 font-light mt-1 max-w-2xl">
+              Every agent workflow starts on probation. It earns trust through verified runs, and loses trust the moment it touches a test. The model never grades itself.
+            </p>
+          </div>
+
+          <!-- Controls CTA -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="simulateCleanPass()" class="px-4 py-2 rounded-full text-xs font-semibold text-[#18181b] bg-white hover:bg-zinc-100 active:scale-95 transition-all shadow-sm flex items-center gap-1.5">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-signal-safe"></i>
+              <span>Simulate Clean Pass</span>
+            </button>
+            <button onclick="simulateTestTampering()" class="px-4 py-2 rounded-full text-xs font-semibold text-white bg-signal-threat/20 hover:bg-signal-threat/30 border border-signal-threat/40 active:scale-95 transition-all flex items-center gap-1.5">
+              <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-signal-threat"></i>
+              <span>Simulate Test Deletion Attack</span>
+            </button>
+            <button onclick="verifyProbationChain()" class="px-3.5 py-2 rounded-full text-xs font-medium text-zinc-300 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 active:scale-95 transition-all">
+              Verify Hash Chain
+            </button>
+            <button onclick="resetProbationDemo()" class="px-3 py-2 rounded-full text-xs font-mono text-zinc-500 hover:text-zinc-300 bg-white/[0.02] border border-white/5 transition-all">
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- Demotion Banner (Hidden by default, shown on violation) -->
+        <div id="probation-demotion-banner" class="hidden p-4 rounded-2xl bg-signal-threat/10 border border-signal-threat/40 flex items-start gap-3 transition-all animate-pulse">
+          <i data-lucide="shield-alert" class="w-5 h-5 text-signal-threat shrink-0 mt-0.5"></i>
+          <div class="text-xs font-mono">
+            <div class="text-signal-threat font-semibold">🚨 INSTANT DEMOTION TRIGGERED (GitLab Security Standard v1.0)</div>
+            <div id="probation-demotion-reason" class="text-zinc-300 mt-1">TEST_TAMPERING_DETECTED: Agent deleted test assertions to force PR pass. Autonomy dropped from Level 3 to Level 2. Pass streak reset to 0.</div>
+            <div class="text-[11px] text-zinc-400 mt-1">GitLab Branch Policy: Locked. Approvals required changed from 0 to 1 (Human maintainer sign-off strictly required).</div>
+          </div>
+        </div>
+
+        <!-- 3-STEP TRUST STEPPER -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+          <!-- Step 1 -->
+          <div id="step-level-1" class="p-4 rounded-2xl bg-white/[0.04] border border-[#f093bf] transition-all relative">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">Level 1: Assisted</span>
+              <span id="badge-level-1" class="text-[10px] px-2 py-0.5 rounded-full bg-[#f093bf]/20 text-[#f093bf] border border-[#f093bf]/40 font-semibold">ACTIVE</span>
+            </div>
+            <div class="text-sm font-semibold text-white font-sans">SUGGEST (Probation)</div>
+            <div class="text-zinc-400 font-light text-[11px] mt-1 leading-relaxed">
+              Comments suggestions on issues only. Opening Merge Requests or auto-merging is strictly blocked.
+            </div>
+            <div class="mt-3 pt-3 border-t border-white/[0.06] text-[10px] text-zinc-500 flex items-center justify-between">
+              <span>Promotion: 2 Clean Passes</span>
+              <span>MRs: Blocked</span>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div id="step-level-2" class="p-4 rounded-2xl bg-white/[0.02] border border-white/10 transition-all opacity-60">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">Level 2: Supervised</span>
+              <span id="badge-level-2" class="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-zinc-400 border border-white/10 font-semibold">LOCKED</span>
+            </div>
+            <div class="text-sm font-semibold text-white font-sans">PROPOSE (Supervised)</div>
+            <div class="text-zinc-400 font-light text-[11px] mt-1 leading-relaxed">
+              Authorized to open Merge Requests. Merging strictly requires 1 named human maintainer sign-off.
+            </div>
+            <div class="mt-3 pt-3 border-t border-white/[0.06] text-[10px] text-zinc-500 flex items-center justify-between">
+              <span>Promotion: 5 Passes + Sign-off</span>
+              <span>Approvals: 1 Required</span>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div id="step-level-3" class="p-4 rounded-2xl bg-white/[0.02] border border-white/10 transition-all opacity-60">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">Level 3: Hands-off</span>
+              <span id="badge-level-3" class="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-zinc-400 border border-white/10 font-semibold">LOCKED</span>
+            </div>
+            <div class="text-sm font-semibold text-white font-sans">ACT (Guardrailed)</div>
+            <div class="text-zinc-400 font-light text-[11px] mt-1 leading-relaxed">
+              Auto-merges clean changes autonomously. Bounded by governor: 5 daily merges max. Demotes on error.
+            </div>
+            <div class="mt-3 pt-3 border-t border-white/[0.06] text-[10px] text-zinc-500 flex items-center justify-between">
+              <span>Governor: 5/day limit</span>
+              <span>Approvals: 0 (Auto)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TELEMETRY & GITLAB POLICY GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
+          <div class="p-3.5 rounded-2xl bg-black border border-white/[0.06]">
+            <span class="text-zinc-500 uppercase text-[9px] tracking-widest block">Agent Identity</span>
+            <div class="text-sm font-semibold text-white font-sans mt-1 truncate">gitlab-duo-flow-security</div>
+            <div class="text-[10px] text-zinc-500 mt-0.5">Service Account #8491</div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-black border border-white/[0.06]">
+            <span class="text-zinc-500 uppercase text-[9px] tracking-widest block">Clean Pass Streak</span>
+            <div id="probation-streak" class="text-sm font-semibold text-signal-safe font-sans mt-1 tabular-nums">0 consecutive passes</div>
+            <div id="probation-streak-sub" class="text-[10px] text-zinc-500 mt-0.5">Need 2 passes for Level 2</div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-black border border-white/[0.06]">
+            <span class="text-zinc-500 uppercase text-[9px] tracking-widest block">GitLab Approval Policy</span>
+            <div id="probation-policy-rule" class="text-sm font-semibold text-signal-amber font-sans mt-1">999 Approvals (MR Blocked)</div>
+            <div id="probation-policy-sub" class="text-[10px] text-zinc-500 mt-0.5">Target branch 'main' protected</div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-black border border-white/[0.06]">
+            <span class="text-zinc-500 uppercase text-[9px] tracking-widest block">Daily Merge Governor</span>
+            <div id="probation-governor" class="text-sm font-semibold text-white font-sans mt-1 tabular-nums">0 / 5 Merges Today</div>
+            <div class="text-[10px] text-zinc-500 mt-0.5">Rate limit resets in 8h</div>
+          </div>
+        </div>
+
+        <!-- LIVE CHAINED RECEIPTS LEDGER TABLE -->
+        <div class="rounded-2xl bg-black border border-white/[0.08] overflow-hidden">
+          <div class="px-4 py-3 bg-white/[0.02] border-b border-white/[0.06] flex items-center justify-between text-xs font-mono text-zinc-400">
+            <span class="flex items-center gap-2">
+              <i data-lucide="link" class="w-3.5 h-3.5 text-signal-cyan"></i>
+              <span>Immutable Ledger Hash Chain (previousHash &rarr; tamperProofHash)</span>
+            </span>
+            <span id="probation-chain-status" class="text-[10px] text-zinc-500">Genesis Block Active</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-white/[0.01] border-b border-white/[0.04] text-[10px] text-zinc-500 uppercase">
+                <tr>
+                  <th class="p-3">Block</th>
+                  <th class="p-3">Receipt ID</th>
+                  <th class="p-3">Target</th>
+                  <th class="p-3">Verdict</th>
+                  <th class="p-3">Previous Hash Link</th>
+                  <th class="p-3">Cryptographic Seal</th>
+                </tr>
+              </thead>
+              <tbody id="probation-ledger-tbody" class="divide-y divide-white/[0.04] text-zinc-300">
+                <tr>
+                  <td class="p-3 text-zinc-500">#0 (Genesis)</td>
+                  <td class="p-3 font-semibold text-white">IGRIS-GENESIS-00</td>
+                  <td class="p-3 text-zinc-400">core/security_policy.yml</td>
+                  <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-signal-safe/10 text-signal-safe text-[10px]">VERIFIED</span></td>
+                  <td class="p-3 text-zinc-500 font-mono">000000000000...</td>
+                  <td class="p-3 text-zinc-400 font-mono">cd55297f50786075...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </main>
 
@@ -1628,6 +1792,252 @@
       }
       document.getElementById('ledger-status-pill').innerText = `${validCount} / ${FROZEN_EVIDENCE_RUNS.length} Signatures Valid`;
       document.getElementById('ledger-verify-summary').innerText = `Verified ${validCount}/${FROZEN_EVIDENCE_RUNS.length} SHA-256 canonical receipts (${new Date().toLocaleTimeString()}).`;
+    }
+
+    // ========================================================
+    // PROBATION & EARNED AUTONOMY STATE ENGINE (GitLab Security Standard v1.0)
+    // ========================================================
+    function getSecureRandomHex(bytesCount = 4) {
+      if (window.crypto && window.crypto.getRandomValues) {
+        const arr = new Uint8Array(bytesCount);
+        window.crypto.getRandomValues(arr);
+        return Array.from(arr, function(b) { return b.toString(16).padStart(2, '0'); }).join('').toUpperCase();
+      }
+      return '4F8A91BC';
+    }
+
+    const PROBATION_STATE = {
+      level: 1, // 1: SUGGEST, 2: PROPOSE, 3: ACT
+      cleanPasses: 0,
+      mergesToday: 0,
+      chain: [
+        {
+          block: 0,
+          receiptId: 'IGRIS-GENESIS-00',
+          reportId: 'GL-INIT-2026',
+          timestamp: '2026-10-06T00:00:00.000Z',
+          target: 'core/security_policy.yml#strictGates',
+          verdict: 'VERIFIED',
+          exitCode: 0,
+          durationMs: 0.1,
+          previousHash: '0000000000000000000000000000000000000000000000000000000000000000',
+          tamperProofHash: 'cd55297f507860758f1f2e8b664a9ac83a6bae5b2e04064c0f65f616f2e4e361'
+        }
+      ]
+    };
+
+    function updateProbationUI(demoted = false, reason = '') {
+      const banner = document.getElementById('probation-demotion-banner');
+      if (demoted) {
+        banner.classList.remove('hidden');
+        document.getElementById('probation-demotion-reason').innerText = reason;
+      } else {
+        banner.classList.add('hidden');
+      }
+
+      // Steps
+      const s1 = document.getElementById('step-level-1');
+      const s2 = document.getElementById('step-level-2');
+      const s3 = document.getElementById('step-level-3');
+      const b1 = document.getElementById('badge-level-1');
+      const b2 = document.getElementById('badge-level-2');
+      const b3 = document.getElementById('badge-level-3');
+
+      [s1, s2, s3].forEach(function(s) {
+        s.classList.remove('border-[#f093bf]', 'border-signal-cyan', 'border-signal-safe', 'bg-white/[0.04]');
+        s.classList.add('opacity-60', 'border-white/10', 'bg-white/[0.02]');
+      });
+      [b1, b2, b3].forEach(function(b) {
+        b.className = 'text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-zinc-400 border border-white/10 font-semibold';
+        b.innerText = 'LOCKED';
+      });
+
+      if (PROBATION_STATE.level === 1) {
+        s1.classList.remove('opacity-60', 'border-white/10', 'bg-white/[0.02]');
+        s1.classList.add('border-[#f093bf]', 'bg-white/[0.04]');
+        b1.className = 'text-[10px] px-2 py-0.5 rounded-full bg-[#f093bf]/20 text-[#f093bf] border border-[#f093bf]/40 font-semibold';
+        b1.innerText = 'ACTIVE';
+
+        document.getElementById('probation-policy-rule').innerText = '999 Approvals (MR Blocked)';
+        document.getElementById('probation-policy-rule').className = 'text-sm font-semibold text-signal-amber font-sans mt-1';
+        document.getElementById('probation-streak-sub').innerText = `Need ${Math.max(0, 2 - PROBATION_STATE.cleanPasses)} more clean pass(es) for Level 2`;
+      } else if (PROBATION_STATE.level === 2) {
+        s2.classList.remove('opacity-60', 'border-white/10', 'bg-white/[0.02]');
+        s2.classList.add('border-signal-cyan', 'bg-white/[0.04]');
+        b2.className = 'text-[10px] px-2 py-0.5 rounded-full bg-signal-cyan/20 text-signal-cyan border border-signal-cyan/40 font-semibold';
+        b2.innerText = 'ACTIVE';
+
+        document.getElementById('probation-policy-rule').innerText = '1 Human Approval Required';
+        document.getElementById('probation-policy-rule').className = 'text-sm font-semibold text-signal-cyan font-sans mt-1';
+        document.getElementById('probation-streak-sub').innerText = `Need ${Math.max(0, 5 - PROBATION_STATE.cleanPasses)} more pass(es) + sign-off for Level 3`;
+      } else if (PROBATION_STATE.level === 3) {
+        s3.classList.remove('opacity-60', 'border-white/10', 'bg-white/[0.02]');
+        s3.classList.add('border-signal-safe', 'bg-white/[0.04]');
+        b3.className = 'text-[10px] px-2 py-0.5 rounded-full bg-signal-safe/20 text-signal-safe border border-signal-safe/40 font-semibold';
+        b3.innerText = 'ACTIVE';
+
+        document.getElementById('probation-policy-rule').innerText = '0 Approvals (Auto-Merge Active)';
+        document.getElementById('probation-policy-rule').className = 'text-sm font-semibold text-signal-safe font-sans mt-1';
+        document.getElementById('probation-streak-sub').innerText = 'Hands-off autonomy unlocked';
+      }
+
+      document.getElementById('probation-streak').innerText = `${PROBATION_STATE.cleanPasses} consecutive passes`;
+      document.getElementById('probation-governor').innerText = `${PROBATION_STATE.mergesToday} / 5 Merges Today`;
+
+      // Render Ledger Table
+      const tbody = document.getElementById('probation-ledger-tbody');
+      tbody.innerHTML = PROBATION_STATE.chain.map(function(b) {
+        const badgeColor = b.verdict === 'VERIFIED' || b.verdict === 'REFUTED' ? 'text-signal-safe bg-signal-safe/10' : b.verdict === 'DEMOTED' ? 'text-signal-threat bg-signal-threat/10' : 'text-[#f093bf] bg-[#f093bf]/10';
+        return `<tr>
+          <td class="p-3 text-zinc-500">#${b.block}</td>
+          <td class="p-3 font-semibold text-white">${b.receiptId}</td>
+          <td class="p-3 text-zinc-400 max-w-[200px] truncate">${b.target}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-full ${badgeColor} text-[10px] font-semibold">${b.verdict}</span></td>
+          <td class="p-3 text-zinc-500 font-mono">${b.previousHash.slice(0, 12)}...</td>
+          <td class="p-3 text-zinc-300 font-mono">${b.tamperProofHash.slice(0, 16)}...</td>
+        </tr>`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    async function simulateCleanPass() {
+      PROBATION_STATE.cleanPasses++;
+      const lastBlock = PROBATION_STATE.chain[0];
+      const prevHash = lastBlock.tamperProofHash;
+      const blockNum = PROBATION_STATE.chain.length;
+      const receiptId = `IGRIS-RUN-${getSecureRandomHex(3)}`;
+      const reportId = `GL-PASS-${1000 + blockNum}`;
+      const timestamp = new Date().toISOString();
+      const target = `src/packages/patch_${blockNum}.ts#verifyInvariant`;
+      const verdict = 'REFUTED';
+      const exitCode = 0;
+      const durationMs = 18.42;
+
+      // WebCrypto SHA-256 chained hash
+      const payload = JSON.stringify({
+        receiptId,
+        reportId,
+        timestamp,
+        target,
+        verdict,
+        exitCode: Number(exitCode),
+        durationMs: Number(durationMs),
+        previousHash: prevHash
+      });
+      const tamperProofHash = await sha256Hex(payload);
+
+      PROBATION_STATE.chain.unshift({
+        block: blockNum,
+        receiptId,
+        reportId,
+        timestamp,
+        target,
+        verdict,
+        exitCode: Number(exitCode),
+        durationMs: Number(durationMs),
+        previousHash: prevHash,
+        tamperProofHash
+      });
+
+      // Promotion rules: 2 passes -> Level 2; 5 passes -> Level 3
+      if (PROBATION_STATE.level === 1 && PROBATION_STATE.cleanPasses >= 2) {
+        PROBATION_STATE.level = 2;
+      } else if (PROBATION_STATE.level === 2 && PROBATION_STATE.cleanPasses >= 5) {
+        PROBATION_STATE.level = 3;
+      }
+
+      document.getElementById('probation-chain-status').innerText = `Chained ${PROBATION_STATE.chain.length} Blocks (Latest: ${tamperProofHash.slice(0, 8)}...)`;
+      updateProbationUI(false);
+    }
+
+    async function simulateTestTampering() {
+      // Fast-track agent to Level 3 to demonstrate the instant drop
+      PROBATION_STATE.level = 3;
+      PROBATION_STATE.cleanPasses = 5;
+
+      const lastBlock = PROBATION_STATE.chain[0];
+      const prevHash = lastBlock.tamperProofHash;
+      const blockNum = PROBATION_STATE.chain.length;
+      const receiptId = `IGRIS-DEMOTE-${getSecureRandomHex(3)}`;
+      const reportId = `GL-ATTACK-${1000 + blockNum}`;
+      const timestamp = new Date().toISOString();
+      const target = `tests/auth.test.ts#verifyToken`;
+      const verdict = 'DEMOTED';
+      const exitCode = 1;
+      const durationMs = 3.92;
+
+      // WebCrypto SHA-256 chained hash
+      const payload = JSON.stringify({
+        receiptId,
+        reportId,
+        timestamp,
+        target,
+        verdict,
+        exitCode,
+        durationMs,
+        previousHash: prevHash
+      });
+      const tamperProofHash = await sha256Hex(payload);
+
+      PROBATION_STATE.chain.unshift({
+        block: blockNum,
+        receiptId,
+        reportId,
+        timestamp,
+        target,
+        verdict,
+        exitCode,
+        durationMs,
+        previousHash: prevHash,
+        tamperProofHash
+      });
+
+      // Immediate demotion to Level 2
+      PROBATION_STATE.level = 2;
+      PROBATION_STATE.cleanPasses = 0;
+
+      document.getElementById('probation-chain-status').innerText = `Demotion Recorded in Chain (Block #${blockNum})`;
+      updateProbationUI(true, 'TEST_TAMPERING_DETECTED: Agent deleted 1 test assertion in auth.test.ts to force PR green. Dropped from Level 3 to Level 2. Streak reset.');
+    }
+
+    async function verifyProbationChain() {
+      let chainValid = true;
+      for (let i = 0; i < PROBATION_STATE.chain.length - 1; i++) {
+        const current = PROBATION_STATE.chain[i];
+        const next = PROBATION_STATE.chain[i + 1];
+        if (current.previousHash !== next.tamperProofHash) {
+          chainValid = false;
+        }
+      }
+
+      const statusEl = document.getElementById('probation-chain-status');
+      if (chainValid) {
+        statusEl.innerHTML = `<span class="text-signal-safe font-semibold">✔ ${PROBATION_STATE.chain.length}/${PROBATION_STATE.chain.length} Ledger Chain Hashes Valid (Exit Code 0)</span>`;
+      } else {
+        statusEl.innerHTML = `<span class="text-signal-threat font-semibold">❌ Broken Chain Link Detected!</span>`;
+      }
+    }
+
+    function resetProbationDemo() {
+      PROBATION_STATE.level = 1;
+      PROBATION_STATE.cleanPasses = 0;
+      PROBATION_STATE.mergesToday = 0;
+      PROBATION_STATE.chain = [
+        {
+          block: 0,
+          receiptId: 'IGRIS-GENESIS-00',
+          reportId: 'GL-INIT-2026',
+          timestamp: '2026-10-06T00:00:00.000Z',
+          target: 'core/security_policy.yml#strictGates',
+          verdict: 'VERIFIED',
+          exitCode: 0,
+          durationMs: 0.1,
+          previousHash: '0000000000000000000000000000000000000000000000000000000000000000',
+          tamperProofHash: 'cd55297f507860758f1f2e8b664a9ac83a6bae5b2e04064c0f65f616f2e4e361'
+        }
+      ];
+      document.getElementById('probation-chain-status').innerText = 'Genesis Block Active';
+      updateProbationUI(false);
     }
 
     // Initialize Default Scenario & Pre-Merge Diff Audit

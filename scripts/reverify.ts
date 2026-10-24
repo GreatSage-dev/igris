@@ -30,11 +30,13 @@ if (targetArg) {
   filesToVerify = fs
     .readdirSync(evidenceDir)
     .filter((f) => f.endsWith('.json'))
+    .sort()
     .map((f) => path.join(evidenceDir, f));
 }
 
 let allPassed = true;
 let totalVerified = 0;
+let expectedPrevHash = '0000000000000000000000000000000000000000000000000000000000000000';
 
 for (const filePath of filesToVerify) {
   const fileName = path.basename(filePath);
@@ -59,6 +61,18 @@ for (const filePath of filesToVerify) {
     continue;
   }
 
+  // 2. Verify ledger hash-chain linkage (The GitLab Security Standard v1.0)
+  if (!targetArg && receipt.previousHash !== undefined) {
+    if (receipt.previousHash !== expectedPrevHash) {
+      console.error(`❌ [BROKEN CHAIN] ${fileName}: previousHash does not match prior receipt hash!`);
+      console.error(`   Expected: ${expectedPrevHash}`);
+      console.error(`   Found:    ${receipt.previousHash}`);
+      allPassed = false;
+      continue;
+    }
+    expectedPrevHash = receipt.tamperProofHash;
+  }
+
   // 2. Invariant verification
   const g0 = receipt.gatesEvaluated.find((g) => g.gate === 'G0_SCHEMA');
   const g1 = receipt.gatesEvaluated.find((g) => g.gate === 'G1_REACHABILITY');
@@ -70,6 +84,9 @@ for (const filePath of filesToVerify) {
   console.log(`  • Target:             ${receipt.target.file}#${receipt.target.symbol}`);
   console.log(`  • Recorded Verdict:   ${receipt.verdict}`);
   console.log(`  • Execution Duration: ${receipt.durationMs}ms`);
+  if (receipt.previousHash) {
+    console.log(`  • Ledger Chain Link:  ${receipt.previousHash.slice(0, 16)}... (VERIFIED LINK)`);
+  }
   console.log(`  • SHA-256 Seal:       ${receipt.tamperProofHash.slice(0, 32)}... (VALID)`);
 
   if (g0) console.log(`  ✔ Gate 0 (Schema):        ${g0.passed ? 'PASS' : 'FAIL'} (${g0.durationMs}ms)`);

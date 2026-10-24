@@ -23,6 +23,14 @@
         {
           "name": "igris_audit_diff",
           "description": "Pre-merge zero-trust diff auditor that checks merge request diffs for negative-space deleted test assertions, hardcoded secrets, and dangerous execution sinks."
+        },
+        {
+          "name": "igris_probation_status",
+          "description": "Queries the earned autonomy level (Level 1 Suggest, Level 2 Propose, Level 3 Act) and trust streak under The GitLab Security Standard v1.0."
+        },
+        {
+          "name": "igris_evaluate_action",
+          "description": "Evaluates agent actions (SUGGEST_FIX, OPEN_MERGE_REQUEST, AUTO_MERGE, DEPLOY) against earned autonomy levels; instantly demotes rogue agents if tests are deleted or secrets are leaked."
         }
       ]
     }

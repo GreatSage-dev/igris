@@ -1,6 +1,7 @@
-import { IgrisReceipt, GateResult, Verdict, BisectionResult } from './types.js';
+import { IgrisReceipt, GateResult, Verdict, BisectionResult, AutonomyLevel } from './types.js';
 /**
  * Builds an immutable, tamper-evident evidence receipt for GitLab issues/MRs.
+ * Chains cryptographic hashes (previousHash) to establish an unforgeable ledger.
  */
 export declare function buildReceipt(params: {
     reportId: string;
@@ -13,6 +14,13 @@ export declare function buildReceipt(params: {
     gatesEvaluated: GateResult[];
     bisection: BisectionResult | null;
     remediationSummary?: string;
+    previousHash?: string;
+    autonomyLevel?: AutonomyLevel;
+    probationState?: {
+        level: AutonomyLevel;
+        consecutiveCleanPasses: number;
+        demoted: boolean;
+    };
 }): IgrisReceipt;
 /**
  * Deterministically checks whether a receipt's SHA-256 seal matches its payload.

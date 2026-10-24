@@ -1,12 +1,13 @@
 import crypto from 'node:crypto';
 /**
  * Builds an immutable, tamper-evident evidence receipt for GitLab issues/MRs.
+ * Chains cryptographic hashes (previousHash) to establish an unforgeable ledger.
  */
 export function buildReceipt(params) {
     const timestamp = new Date().toISOString();
     const receiptId = `IGRIS-${crypto.randomBytes(6).toString('hex').toUpperCase()}`;
-    // Generate SHA256 signature over critical execution parameters
-    const payloadToSign = JSON.stringify({
+    // Generate SHA256 signature over critical execution parameters + previousHash
+    const signPayload = {
         receiptId,
         reportId: params.reportId,
         timestamp,
@@ -14,8 +15,11 @@ export function buildReceipt(params) {
         verdict: params.verdict,
         exitCode: params.exitCode,
         durationMs: params.durationMs
-    });
-    const tamperProofHash = crypto.createHash('sha256').update(payloadToSign).digest('hex');
+    };
+    if (params.previousHash) {
+        signPayload.previousHash = params.previousHash;
+    }
+    const tamperProofHash = crypto.createHash('sha256').update(JSON.stringify(signPayload)).digest('hex');
     return {
         receiptId,
         reportId: params.reportId,
@@ -31,6 +35,9 @@ export function buildReceipt(params) {
         gatesEvaluated: params.gatesEvaluated,
         bisection: params.bisection,
         remediationSummary: params.remediationSummary,
+        previousHash: params.previousHash,
+        autonomyLevel: params.autonomyLevel,
+        probationState: params.probationState,
         tamperProofHash
     };
 }
@@ -38,7 +45,7 @@ export function buildReceipt(params) {
  * Deterministically checks whether a receipt's SHA-256 seal matches its payload.
  */
 export function verifyReceiptSignature(receipt) {
-    const payloadToSign = JSON.stringify({
+    const signPayload = {
         receiptId: receipt.receiptId,
         reportId: receipt.reportId,
         timestamp: receipt.timestamp,
@@ -46,8 +53,11 @@ export function verifyReceiptSignature(receipt) {
         verdict: receipt.verdict,
         exitCode: receipt.exitCode,
         durationMs: receipt.durationMs
-    });
-    const computedHash = crypto.createHash('sha256').update(payloadToSign).digest('hex');
+    };
+    if (receipt.previousHash) {
+        signPayload.previousHash = receipt.previousHash;
+    }
+    const computedHash = crypto.createHash('sha256').update(JSON.stringify(signPayload)).digest('hex');
     return computedHash === receipt.tamperProofHash;
 }
 /**
@@ -71,7 +81,23 @@ export function formatReceiptMarkdown(receipt) {
     md += `| **Process Exit Code** | \`${receipt.exitCode}\` |\n`;
     md += `| **Quarantine Duration** | \`${receipt.durationMs}ms\` |\n`;
     md += `| **Heap Delta** | \`${receipt.memoryDeltaMb}MB\` |\n`;
+    if (receipt.previousHash) {
+        md += `| **Chain Link (Prev Hash)** | \`${receipt.previousHash.slice(0, 16)}...\` |\n`;
+    }
     md += `| **Tamper-Proof Hash** | \`${receipt.tamperProofHash.slice(0, 16)}...\` |\n\n`;
+    if (receipt.probationState) {
+        const levelLabel = receipt.probationState.level === 'LEVEL_1_SUGGEST'
+            ? 'Level 1: SUGGEST (Assisted - Discussions Only)'
+            : receipt.probationState.level === 'LEVEL_2_PROPOSE'
+                ? 'Level 2: PROPOSE (Supervised - Human Sign-off Required)'
+                : 'Level 3: ACT (Hands-off - Guardrailed Auto-Merge)';
+        const demotionNotice = receipt.probationState.demoted
+            ? ' ⚠️ **DEMOTED ON VIOLATION**'
+            : '';
+        md += `### 🛡️ Probation Trust Ledger (GitLab Security Standard v1.0)\n`;
+        md += `- **Autonomy State:** \`${levelLabel}\`${demotionNotice}\n`;
+        md += `- **Clean Pass Streak:** ${receipt.probationState.consecutiveCleanPasses}\n\n`;
+    }
     md += `### 🔍 Gate Evaluation Cascade\n`;
     for (const g of receipt.gatesEvaluated) {
         const statusIcon = g.passed ? '✅' : g.verdict === 'REFUTED' ? '🛡️' : '❌';

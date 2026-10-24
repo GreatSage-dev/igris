@@ -4,11 +4,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { IgrisEngine } from './engine.js';
 import { auditDiff } from './diff_audit.js';
+import { ProbationEngine } from './probation.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 const WEB_DIR = path.resolve(REPO_ROOT, 'web');
 const engine = new IgrisEngine();
+const probation = new ProbationEngine();
 const PORT = process.env.PORT || 3000;
 const MIME_TYPES = {
     '.html': 'text/html',
@@ -66,6 +68,82 @@ const server = http.createServer(async (req, res) => {
                 const auditResult = auditDiff(diffText);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(auditResult));
+            }
+            catch (err) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+        return;
+    }
+    // API Endpoint: /api/probation/status
+    if (req.method === 'GET' && req.url?.startsWith('/api/probation/status')) {
+        const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+        const agentId = urlObj.searchParams.get('agentId') || 'gitlab-duo-flow-security';
+        const record = probation.getOrCreateAgent(agentId);
+        const policy = probation.getGitLabPolicy(record.currentLevel, record.mergesToday);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+            agentId: record.agentId,
+            currentLevel: record.currentLevel,
+            consecutiveCleanPasses: record.consecutiveCleanPasses,
+            totalPasses: record.totalPasses,
+            mergesToday: record.mergesToday,
+            gitLabPolicy: policy,
+            violations: record.violations
+        }));
+        return;
+    }
+    // API Endpoint: /api/probation/ledger
+    if (req.method === 'GET' && req.url === '/api/probation/ledger') {
+        const ledger = probation.getLedger();
+        const integrity = probation.verifyLedgerIntegrity();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ledger, integrity }));
+        return;
+    }
+    // API Endpoint: /api/probation/evaluate
+    if (req.method === 'POST' && req.url === '/api/probation/evaluate') {
+        let body = '';
+        req.on('data', (chunk) => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            try {
+                const parsed = JSON.parse(body);
+                const { agentId, action, diffText, humanSignOffProvided } = parsed;
+                let diffAudit = undefined;
+                if (diffText && typeof diffText === 'string') {
+                    diffAudit = auditDiff(diffText);
+                }
+                const evaluation = probation.evaluateAction({
+                    agentId: agentId || 'gitlab-duo-flow-security',
+                    action: action,
+                    diffAudit,
+                    humanSignOffProvided: Boolean(humanSignOffProvided)
+                });
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(evaluation));
+            }
+            catch (err) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+        return;
+    }
+    // API Endpoint: /api/probation/record_pass
+    if (req.method === 'POST' && req.url === '/api/probation/record_pass') {
+        let body = '';
+        req.on('data', (chunk) => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            try {
+                const parsed = JSON.parse(body);
+                const receipt = probation.recordVerifiedRun(parsed);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(receipt));
             }
             catch (err) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });

@@ -28,5 +28,6 @@
   ],
   "bisection": null,
   "remediationSummary": "REJECTED: Hallucinated code report. Function name does not exist in repository AST. Zero runner resources spent.",
-  "tamperProofHash": "16f8b80d3c171bdfc208aa5f180ba3d827443a12142c8d61e1125681642fe54c"
+  "tamperProofHash": "85a2eb0434c6bb20eacf381db0e8dbe1bb768fe722c414d309cfc62669be3ce4",
+  "previousHash": "cd55297f507860758f1f2e8b664a9ac83a6bae5b2e04064c0f65f616f2e4e361"
 }

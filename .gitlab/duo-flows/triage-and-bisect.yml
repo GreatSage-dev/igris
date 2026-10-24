@@ -1,0 +1,102 @@
+# GitLab Duo Agent Platform Workflow Definition
+# Flow: Autonomous Vulnerability Verification & Bisection (IGRIS + Probation)
+# Standard: The GitLab Security Standard v1.0 (Oct 6, 2026)
+version: '1.0'
+name: 'igris-triage-and-bisect-flow'
+description: 'Autonomous Duo workflow that evaluates bug reports, checks agent probation trust level, bisects regressions, audits MR diffs for test deletions, and dynamically configures approval rules.'
+
+triggers:
+  - event: 'issue.created'
+    filter:
+      labels: ['bug', 'security', 'regression']
+  - event: 'merge_request.created'
+    filter:
+      labels: ['ai-agent', 'duo-automated-fix']
+
+service_account:
+  name: 'gitlab-duo-flow-security'
+  initial_trust_level: 'LEVEL_1_SUGGEST'
+
+tools:
+  mcp_servers:
+    - ref: '.gitlab/duo-mcp-config.json'
+      server_name: 'igris'
+
+steps:
+  - id: 'check_probation_status'
+    name: 'Query Agent Earned Autonomy Level'
+    tool: 'igris.igris_probation_status'
+    inputs:
+      agentId: 'gitlab-duo-flow-security'
+    outputs:
+      currentLevel: 'step.output.currentLevel'
+      approvalsRequired: 'step.output.gitLabPolicy.approvalsRequired'
+      allowMerge: 'step.output.gitLabPolicy.allowMerge'
+
+  - id: 'triage_vulnerability_report'
+    name: 'Run 4-Gate Blast Chamber Verification'
+    tool: 'igris.igris_triage_report'
+    inputs:
+      report:
+        id: '{{ issue.iid }}'
+        title: '{{ issue.title }}'
+        description: '{{ issue.description }}'
+        targetFile: '{{ issue.custom_fields.target_file }}'
+        targetSymbol: '{{ issue.custom_fields.target_symbol }}'
+        reproductionCode: '{{ issue.custom_fields.reproduction_script }}'
+      repoRoot: '.'
+    outputs:
+      verdict: 'step.output.verdict'
+      receiptId: 'step.output.receiptId'
+      tamperProofHash: 'step.output.tamperProofHash'
+
+  - id: 'bisect_regression'
+    name: 'Execute Sub-Second Git Bisection (Issue #989)'
+    condition: 'steps.triage_vulnerability_report.outputs.verdict == "REPRODUCED"'
+    tool: 'igris.igris_bisect_history'
+    inputs:
+      repoRoot: '.'
+      goodCommitSha: 'main~20'
+      reproCommand: 'npm test'
+    outputs:
+      culpritCommit: 'step.output.bisection.culpritCommitSha'
+      culpritAuthor: 'step.output.bisection.commitAuthor'
+
+  - id: 'audit_proposed_mr_diff'
+    name: 'Audit Negative Space for Test Tampering'
+    condition: 'merge_request.present == true'
+    tool: 'igris.igris_audit_diff'
+    inputs:
+      diffText: '{{ merge_request.diff }}'
+    outputs:
+      deletedTestCount: 'step.output.deletedTestCount'
+      leakedSecrets: 'step.output.leakedSecrets'
+      auditPassed: 'step.output.passed'
+
+  - id: 'evaluate_and_enforce_policy'
+    name: 'Evaluate Action & Apply Instant Demotion if Tests Deleted'
+    condition: 'merge_request.present == true'
+    tool: 'igris.igris_evaluate_action'
+    inputs:
+      agentId: 'gitlab-duo-flow-security'
+      action: 'AUTO_MERGE'
+      diffText: '{{ merge_request.diff }}'
+    outputs:
+      allowed: 'step.output.allowed'
+      demoted: 'step.output.demoted'
+      newLevel: 'step.output.currentLevel'
+      approvalsRequired: 'step.output.gitLabPolicy.approvalsRequired'
+
+policy_enforcement:
+  on_action_blocked:
+    post_comment:
+      target: '{{ merge_request.id || issue.id }}'
+      message: |
+        🛑 **IGRIS SILENT GATEKEEPER REFUSAL**
+        Action blocked under **The GitLab Security Standard v1.0**.
+        Reason: {{ steps.evaluate_and_enforce_policy.outputs.reason || "Verification failed." }}
+        Receipt Hash: `{{ steps.triage_vulnerability_report.outputs.tamperProofHash }}`
+    gitlab_branch_protection:
+      target_branch: 'main'
+      require_code_owner_approval: true
+      approvals_required: '{{ steps.evaluate_and_enforce_policy.outputs.approvalsRequired || 1 }}'

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { IgrisEngine } from '../src/engine.js';
 import { auditDiff } from '../src/diff_audit.js';
 import { verifyReceiptSignature } from '../src/receipt.js';
+import { ProbationEngine } from '../src/probation.js';
 import { IgrisReceipt } from '../src/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -133,8 +134,10 @@ async function runForensicAudit() {
     'src/server.ts',
     'src/cli.ts',
     'src/types.ts',
+    'src/probation.ts',
     'api/triage.js',
-    'api/audit_diff.js'
+    'api/audit_diff.js',
+    'api/probation.js'
   ];
 
   let todoCount = 0;
@@ -248,6 +251,77 @@ async function runForensicAudit() {
     evidence: frontendPassed
       ? '0 fintech placeholders, Plus Jakarta Sans + JetBrains Mono (tabular-nums), WebCrypto SHA-256 verified'
       : `Placeholders found: ${foundPlaceholders.join(', ')}`
+  });
+
+  // ---------------------------------------------------------------------------
+  // AXIS 6: PROBATION & EARNED AUTONOMY (The GitLab Security Standard v1.0)
+  // ---------------------------------------------------------------------------
+  const probation = new ProbationEngine();
+  const testAgentId = 'audit-test-agent';
+
+  // 6A. Level 1 Boundary Enforcement
+  const l1Eval = probation.evaluateAction({ agentId: testAgentId, action: 'OPEN_MERGE_REQUEST' });
+  const l1Blocked = !l1Eval.allowed && l1Eval.currentLevel === 'LEVEL_1_SUGGEST';
+
+  // 6B. Earned promotion to Level 2
+  probation.recordVerifiedRun({
+    agentId: testAgentId,
+    receiptParams: {
+      reportId: 'AUDIT-PASS-1',
+      targetFile: 'src/engine.ts',
+      targetSymbol: 'triageReport',
+      verdict: 'REFUTED',
+      exitCode: 0,
+      durationMs: 12,
+      memoryDeltaMb: 0.5,
+      gatesEvaluated: [{ gate: 'G0_SCHEMA', passed: true, verdict: 'REFUTED', evidence: 'OK', durationMs: 1 }],
+      bisection: null
+    }
+  });
+  probation.recordVerifiedRun({
+    agentId: testAgentId,
+    receiptParams: {
+      reportId: 'AUDIT-PASS-2',
+      targetFile: 'src/engine.ts',
+      targetSymbol: 'triageReport',
+      verdict: 'REFUTED',
+      exitCode: 0,
+      durationMs: 15,
+      memoryDeltaMb: 0.6,
+      gatesEvaluated: [{ gate: 'G0_SCHEMA', passed: true, verdict: 'REFUTED', evidence: 'OK', durationMs: 1 }],
+      bisection: null
+    }
+  });
+  const agentRec = probation.getOrCreateAgent(testAgentId);
+  const promotedToL2 = agentRec.currentLevel === 'LEVEL_2_PROPOSE';
+
+  // 6C. Instant demotion on test tampering
+  const demoteEval = probation.evaluateAction({
+    agentId: testAgentId,
+    action: 'AUTO_MERGE',
+    diffAudit: {
+      verdict: 'SUSPICIOUS_MUTATION',
+      passed: false,
+      deletedTestCount: 1,
+      deletedTests: ['test("should not fail")'],
+      addedDependencies: [],
+      weakenedAssertions: 0,
+      leakedSecrets: [],
+      dangerousSinks: [],
+      findings: [],
+      summary: 'Deleted test detected'
+    }
+  });
+  const demotedToL1 = demoteEval.demoted && agentRec.currentLevel === 'LEVEL_1_SUGGEST';
+  const ledgerIntegrity = probation.verifyLedgerIntegrity();
+
+  const probationPassed = l1Blocked && promotedToL2 && demotedToL1 && ledgerIntegrity.valid;
+
+  results.push({
+    axis: '6. Probation & Earned Autonomy (GitLab Security Standard v1.0)',
+    check: 'Strict 3-level lifecycle, instant demotion on test tampering, and cryptographic hash-chaining',
+    passed: probationPassed,
+    evidence: `L1 Blocked=${l1Blocked}, Promoted L2=${promotedToL2}, Demoted=${demotedToL1}, Ledger Valid=${ledgerIntegrity.valid} (${ledgerIntegrity.totalReceipts} chained)`
   });
 
   // Print Summary Table

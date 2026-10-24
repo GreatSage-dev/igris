@@ -5,7 +5,9 @@ import { IgrisEngine } from './engine.js';
 import { formatReceiptMarkdown } from './receipt.js';
 import { runAutomatedBisection } from './gates/g3_bisect.js';
 import { auditDiff } from './diff_audit.js';
+import { ProbationEngine } from './probation.js';
 const engine = new IgrisEngine();
+const probation = new ProbationEngine();
 export function createIgrisMcpServer() {
     const server = new Server({
         name: 'igris-gatekeeper',
@@ -64,6 +66,47 @@ export function createIgrisMcpServer() {
                         },
                         required: ['repoRoot', 'goodCommitSha', 'reproCommand']
                     }
+                },
+                {
+                    name: 'igris_probation_status',
+                    description: 'Queries the agent autonomy level and trust record under The GitLab Security Standard v1.0. Returns current level (Level 1 Suggest, Level 2 Propose, Level 3 Act), clean pass streak, daily merge count, and GitLab branch protection & approval policies.',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            agentId: {
+                                type: 'string',
+                                description: 'Unique identifier for the agent workflow (e.g. gitlab-duo-flow-security)'
+                            }
+                        },
+                        required: ['agentId']
+                    }
+                },
+                {
+                    name: 'igris_evaluate_action',
+                    description: 'Evaluates whether an agent action (SUGGEST_FIX, OPEN_MERGE_REQUEST, AUTO_MERGE, DEPLOY) is authorized under its earned probation level. If a diff is provided, audits negative space (deleted tests, leaked credentials) and automatically triggers immediate demotion upon violations.',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            agentId: {
+                                type: 'string',
+                                description: 'Unique identifier for the agent workflow'
+                            },
+                            action: {
+                                type: 'string',
+                                enum: ['SUGGEST_FIX', 'OPEN_MERGE_REQUEST', 'AUTO_MERGE', 'DEPLOY'],
+                                description: 'The requested action to perform'
+                            },
+                            diffText: {
+                                type: 'string',
+                                description: 'Optional unified diff of proposed code changes to audit for test tampering or secrets'
+                            },
+                            humanSignOffProvided: {
+                                type: 'boolean',
+                                description: 'Whether a verified human maintainer sign-off has been provided'
+                            }
+                        },
+                        required: ['agentId', 'action']
+                    }
                 }
             ]
         };
@@ -113,6 +156,48 @@ export function createIgrisMcpServer() {
                                 ? `Automated Git Bisection successfully isolated culprit commit ${result.culpritCommitSha} by ${result.commitAuthor} in ${result.stepsCount} steps.`
                                 : 'Bisection completed without isolating an unambiguous culprit commit.'
                         }, null, 2)
+                    }
+                ]
+            };
+        }
+        if (name === 'igris_probation_status') {
+            const { agentId } = args;
+            const record = probation.getOrCreateAgent(agentId || 'default-agent');
+            const policy = probation.getGitLabPolicy(record.currentLevel, record.mergesToday);
+            return {
+                content: [
+                    {
+                        type: 'text',
+                        text: JSON.stringify({
+                            agentId: record.agentId,
+                            currentLevel: record.currentLevel,
+                            consecutiveCleanPasses: record.consecutiveCleanPasses,
+                            totalPasses: record.totalPasses,
+                            mergesToday: record.mergesToday,
+                            gitLabPolicy: policy,
+                            violations: record.violations
+                        }, null, 2)
+                    }
+                ]
+            };
+        }
+        if (name === 'igris_evaluate_action') {
+            const { agentId, action, diffText, humanSignOffProvided } = args;
+            let diffAudit = undefined;
+            if (diffText && typeof diffText === 'string') {
+                diffAudit = auditDiff(diffText);
+            }
+            const evaluation = probation.evaluateAction({
+                agentId: agentId || 'default-agent',
+                action,
+                diffAudit,
+                humanSignOffProvided: Boolean(humanSignOffProvided)
+            });
+            return {
+                content: [
+                    {
+                        type: 'text',
+                        text: JSON.stringify(evaluation, null, 2)
                     }
                 ]
             };

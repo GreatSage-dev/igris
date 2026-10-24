@@ -37,5 +37,6 @@
   ],
   "bisection": null,
   "remediationSummary": "REFUTED: Function executed safely with claimed exploit payload. Marked as False Alarm / Non-Reproducible.",
-  "tamperProofHash": "3f2f9ee7bc67bd37194dd741382757678d128d72daab24d140bb5391ba64bdd9"
+  "tamperProofHash": "93ad166813f92fc9c427d485bd5bb6d28b27b341a8441b6af88a5f22941860e2",
+  "previousHash": "b1abcfb46b39538dcf42b31596aff9ff3725d64b5ba4205f1a0badef3296d93a"
 }

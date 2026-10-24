@@ -51,5 +51,6 @@
     "reproductionCommand": "npm test -- --grep \"verifyToken expired\""
   },
   "remediationSummary": "CRITICAL: Regression bisected to commit a4f81c9e. Tolerances stripped without grace period. Recommended 1-line patch in jwt_validator.ts:45.",
-  "tamperProofHash": "5a28b9736e193991d4c9e70194369dc37b9b8660c1a3fb43419d1e65eb939efb"
+  "tamperProofHash": "cd55297f507860758f1f2e8b664a9ac83a6bae5b2e04064c0f65f616f2e4e361",
+  "previousHash": "0000000000000000000000000000000000000000000000000000000000000000"
 }
