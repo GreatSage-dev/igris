@@ -1,224 +1,184 @@
-<div align="center">
-
 # IGRIS
+
 ### Catch the hallucination. Bisect the commit. Prove it.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-19%2F19%20passing-2FA46A.svg)](src/probation.test.ts)
-[![Evidence Verified](https://img.shields.io/badge/evidence-5%2F5%20chained%20%26%20verified-5BA4FF.svg)](evidence/runs/)
-[![GitLab Security Standard](https://img.shields.io/badge/GitLab-Security%20Standard%20v1.0-E24329.svg?logo=gitlab)](src/probation.ts)
+[![Evidence](https://img.shields.io/badge/evidence-5%2F5%20chained%20%26%20re--verified-5BA4FF.svg)](evidence/runs/)
 [![GitLab Issue #989](https://img.shields.io/badge/GitLab-Issue%20%23989%20Answered-FC6D26.svg?logo=gitlab)](https://gitlab.com/gitlab-org/gitlab/-/issues/989)
-[![MCP Native](https://img.shields.io/badge/MCP-Native%20Server-8A2BE2.svg)](src/mcp_server.ts)
-[![GitLab CI](https://img.shields.io/badge/GitLab%20CI-Pipeline%20Ready-E24329.svg?logo=gitlab)](.gitlab-ci.yml)
+[![GitLab Security Standard](https://img.shields.io/badge/GitLab-Security%20Standard%20v1.0-E24329.svg?logo=gitlab)](https://about.gitlab.com/gitlab-security-standard/)
 [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud-Run%20Ready-4285F4.svg?logo=googlecloud)](Dockerfile)
 
-**The Sub-Second Git Bisection & Cryptographic Proof Engine for GitLab Duo**  
-*When AI code breaks production, IGRIS proves the failure in a sandbox and bisects Git history to isolate the culprit commit in 142ms.*
-
-```
-INCOMING BUG / FAILED TEST → AST REACHABILITY (7ms) → BLAST CHAMBER (3ms) → GIT BISECT (142ms) → CRYPTOGRAPHIC RECEIPT
-```
-
-[ **Interactive Cockpit** ](web/index.html) · [ **30-Second Summary** ](#⏱️-judges-the-30-second-summary) · [ **Sponsor Architecture** ](#how-gitlab-duo-google-cloud--anthropic-fit-together) · [ **Why the Judge Can't Be Fooled** ](#why-the-judge-cant-be-fooled) · [ **Verify in 3 Seconds** ](#verify-it-yourself-in-3-seconds)
-
-> **Built for:** GitLab "Life After Code" Hackathon (Oct 2026) in partnership with Google Cloud & Anthropic.  
-> **Engineering Doctrine:** Zero mocks, sub-second deterministic receipts, frozen cryptographic verifiers.
-
-</div>
+Built for the **GitLab "Transcend: Life After Code"** Hackathon (with Google Cloud & Anthropic).  
+[ **Interactive Cockpit** ](web/index.html) · [ **Verify in 5 Seconds** ](#verify-it-yourself-in-5-seconds) · [ **Watch It Refuse** ](#watch-it-refuse) · [ **Probation & Earned Autonomy** ](#probation-earned-autonomy-across-runs) · [ **The Honest Table** ](#the-honest-table)
 
 ---
 
-> ### ⏱️ Judges: The 30-Second Summary
-> 1. **The Human Problem:** AI makes it effortless to commit 20 PRs a day. But when a test breaks on `main`, senior engineers waste **45 minutes** manually checking out commits to find what broke.
-> 2. **The Pre-Merge Shield (7ms):** Before burning a cent of GitLab Duo credits or cloud compute, IGRIS checks if the claimed functions exist in the repository's Abstract Syntax Tree. If it's a hallucination, it is dropped in **7.95 milliseconds**.
-> 3. **The Post-Merge Answer to Issue #989 (142ms):** When a regression slips through, IGRIS binary-searches the commit history in **142 milliseconds** to isolate the breaking commit and author.
-> 4. **[Sponsor Integration Table](#how-gitlab-duo-google-cloud--anthropic-fit-together):** Native Model Context Protocol (MCP) server wired into GitLab Duo Agent, deployed on **Google Cloud Run** via [`Dockerfile`](Dockerfile) & [`cloudbuild.yaml`](cloudbuild.yaml), with native [`.gitlab-ci.yml`](.gitlab-ci.yml) automation.
-> 5. **[Why the Judge Can't Be Fooled](#why-the-judge-cant-be-fooled):** The LLM never grades itself. The verifier is deterministic code: AST export tables, OS process exit codes (`code !== 0`), and immutable SHA-256 seals.
-> 6. **[Evidence Receipts (`evidence/runs/`)](evidence/runs/):** 5 recorded JSON receipts from real runs, with full gate breakdowns and verifiable SHA-256 signatures.
-> 7. **Verify It Yourself in 3 Seconds:** Run `npm run reverify` to cryptographically re-hash and verify all 5 receipts locally on any machine.
+## The person this is for
+
+A maintainer opens their inbox.
+
+Forty security reports arrived overnight.  
+Each one sounds like an expert wrote it.  
+Most name functions that do not exist.
+
+This is already happening. On January 31, 2026, Daniel Stenberg shut down curl's seven-year HackerOne bug bounty after valid submissions dropped below 5% under a flood of AI-generated reports ([curl PR #20312](https://github.com/curl/curl/pull/20312)).
+
+GitLab's 2026 AI Accountability Report (Harris Poll, 1,528 developers and tech leaders) found that **85% agree AI moved the bottleneck from writing code to reviewing and validating it**. Meanwhile, when a real regression does slip onto `main`, engineers still bisect commits by hand—a pain point open in **[GitLab Issue #989 ("Automated git bisect")](https://gitlab.com/gitlab-org/gitlab/-/issues/989)** since September 2016.
+
+Humans cannot read faster.  
+So IGRIS runs first, refuses what fails, and shows its proof.
 
 ---
 
-## The Reality: The Maintainer Crisis & The 85% Bottleneck
+## Verify it yourself in 5 seconds
 
-> *"Writing code only accounts for about 25% of a developer's time... 85% of engineering professionals agree that the bottleneck has completely shifted from writing code to **reviewing, testing, and validating it**."*  
-> — **David DeSanto, Chief Product Officer, GitLab** *(AI Accountability Report)*
-
-On **January 31, 2026**, Daniel Stenberg officially shut down curl's 10-year bug bounty program. Maintainers were suffocating under hundreds of AI-generated reports claiming vulnerabilities in functions that did not even exist. The maintainer had to stop coding, spin up environments, and waste hours disproving hallucinations.
-
-Meanwhile, engineering teams merging dozens of AI PRs a day face the **Productivity Paradox**:
-1. **The Review Bottleneck:** Code generation is cheap; human validation is slow.
-2. **Hallucinated Exploits:** Bug reports reference non-existent functions, burning developer attention.
-3. **The Regression Nightmare ([GitLab Issue #989](https://gitlab.com/gitlab-org/gitlab/-/issues/989)):** When a regression breaks `main`, nobody knows which of yesterday's merged PRs caused it. Since **September 2016** (over 8 years), GitLab developers have requested native automated git bisection.
-
-**Beyond Text-Based Code Review:** Most AI review tools add *more reading* to an overwhelmed engineer by generating 500-word conversational markdown comments.
-
-**IGRIS takes an execution-first approach.** Rather than debating code with text, it checks the Abstract Syntax Tree in 7ms, runs untrusted code in an isolated runner with stripped environment variables, mathematically bisects the Git tree in 142ms, and stamps an immutable cryptographic receipt.
-
----
-
-## Aligning with The GitLab Security Standard (Oct 6, 2026) & The Probation Layer
-
-On **October 6, 2026**, GitLab published **The GitLab Security Standard (v1.0)** (*"Securing the Agentic Software Factory"*), setting the authoritative architectural blueprint for earned autonomy:
-> *"AI agents must earn autonomy through a verified track record. An agent workflow starts on probation, bounded by verification gates it cannot alter."*
-
-IGRIS is the first running, open-source reference implementation of this standard:
-
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                      PROBATION TRUST LIFECYCLE & THE DEMOTION GOVERNOR                 │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│ LEVEL 1: SUGGEST (Assisted)  ──[ 2 Clean Passes ]──► LEVEL 2: PROPOSE (Supervised)      │
-│ • Discussion comments only                          • Can open Merge Requests          │
-│ • MR creation & merge BLOCKED                       • Approvals required: 1 (Human)    │
-│                                                              │                         │
-│                                                     [ 5 Clean Passes + Sign-off ]      │
-│                                                              │                         │
-│                                                              ▼                         │
-│                                                      LEVEL 3: ACT (Hands-off Autonomy) │
-│                                                      • Guardrailed auto-merge (5/day)  │
-│                                                              │                         │
-│                     ┌────────────────────────────────────────┘                         │
-│                     ▼ [ AGENT ATTEMPTS TEST TAMPERING / DELETES ASSERTION ]            │
-│          🛑 INSTANT DEMOTION BACK TO LEVEL 2 (or Level 1)                             │
-│          • Pass streak reset to 0                                                      │
-│          • GitLab branch protection locked: Approvals required = 1 (Human sign-off)   │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-1. **Earned Autonomy:** Agents start at Level 1 (Suggest). They cannot open MRs until earning Level 2 through 2 deterministic passes. Level 3 requires 5 consecutive passes plus a named human owner sign-off.
-2. **The Refusal (Instant Demotion):** If an agent at Level 3 attempts to delete or weaken a test assertion to force CI green, IGRIS catches `DELETED_TEST` in 4ms, aborts the merge, and **demotes the agent immediately**. GitLab branch protection rules change dynamically in real-time.
-3. **Chained Cryptographic Ledger:** Receipts are linked sequentially (`previousHash` $\to$ `tamperProofHash`), creating an unalterable history. An agent cannot backdate or erase a violation.
-4. **Declarative GitLab Duo Flow:** Defined in [`.gitlab/duo-flows/triage-and-bisect.yml`](.gitlab/duo-flows/triage-and-bisect.yml), chaining `igris_probation_status`, `igris_triage_report`, `igris_bisect_history`, and `igris_audit_diff`.
-
----
-
-## The Two-Stroke Architecture: Shield + Velocity
-
-> *"Race cars don't have brakes to slow down. They have brakes so they can drive faster into the corner."*
-
-Engineering leaders choke AI velocity with multi-day review queues because of **fear of loss**: if an agent breaks production, the entire team halts.
-
-IGRIS provides deterministic protection across both ends of the lifecycle:
-
-| Stroke | Operational Phase | What IGRIS Deterministically Executes | The Velocity Unlocked |
-| :--- | :--- | :--- | :--- |
-| **Stroke 1: Pre-Merge** | *Before Code Merges* | Intercepts MRs via GitLab Duo MCP. Verifies AST reachability in 7ms, audits diffs for deleted test assertions (`audit_diff`), and executes reproduction scripts in the blast chamber. | **Maintainers and senior devs get hours back.** Zero cloud compute burned on hallucinated reports; zero risk of agents quietly deleting test assertions to pass CI. |
-| **Stroke 2: Post-Merge** | *When Outages Occur* | Working answer to **[GitLab Issue #989](https://gitlab.com/gitlab-org/gitlab/-/issues/989)**. Automatically binary-searches commit history in **142ms** to pinpoint the exact culprit commit and author. | **Teams can safely deploy autonomous agents in parallel.** Fear of pipeline breakage is eliminated because regressions are isolated in under 2 seconds. |
-
----
-
-## The 15-Second Split-Screen
-
-```
-┌───────────────────────────────────────┬───────────────────────────────────────┐
-│ THE NAIVE STATUS QUO                  │ WITH IGRIS + GITLAB DUO               │
-├───────────────────────────────────────┼───────────────────────────────────────┤
-│ • 20 AI PRs submitted daily.          │ • 20 AI PRs submitted daily.          │
-│ • Maintainers drown in review fatigue.│ • IGRIS drops fake bugs in 7ms (0 CPU)│
-│ • Silent bugs rubber-stamped to main. │ • Verified MR badge stamped in 142ms. │
-│ • 45 minutes lost manually bisecting. │ • Regressions pinned in 4 steps (#989)│
-│ • Outcome: Engineering team stalls.   │ • Outcome: 100x agent speed unlocked. │
-└───────────────────────────────────────┴───────────────────────────────────────┘
-```
-
----
-
-## How GitLab Duo, Google Cloud & Anthropic Fit Together
-
-There are no decorative wrappers. Every sponsor technology is strictly **load-bearing**:
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant GL as GitLab Duo Agent Platform
-    participant GCP as Google Cloud Run (IGRIS Engine)
-    participant AN as Anthropic Claude via Duo
-    participant GIT as Git Tree / Runner Sandbox
-
-    GL->>GCP: Webhook / MCP: audit_diff / verify_exploit
-    GCP->>GCP: Gate 0: Schema validate (<1ms)
-    GCP->>GCP: Gate 1: AST Reachability check (<10ms)
-    GCP->>GIT: Gate 2: Execute reproduction script in blast chamber
-    GIT-->>GCP: Captured Exit Code, Memory Delta, Duration
-    alt Vulnerability Confirmed (Exit Code != 0)
-        GCP->>GIT: Gate 3: Binary Git Bisect across commit history
-        GIT-->>GCP: Culprit Commit Isolated (4 steps, 142ms)
-        GCP->>GCP: Sign SHA-256 Tamper-Proof Seal
-        GCP->>AN: Send Culprit Commit Diff + Reproduction Trace
-        AN-->>GCP: Generate minimal 1-line remediation patch
-        GCP-->>GL: Post signed proof receipt + merge request patch
-    else Refuted / Hallucinated / Malicious
-        GCP-->>GL: Post REFUTED / PHANTOM_SYMBOL / REJECTED_UNSAFE receipt
-    end
-```
-
-| Step | Mechanism | Sponsor Plumbing | File in Repo |
-| :--- | :--- | :--- | :--- |
-| **1. Ingest & Flow** | Pipeline fails or issue created | **GitLab Duo Flow** declarative workflow & **GitLab CI** | [`.gitlab-ci.yml`](.gitlab-ci.yml), [`.gitlab/duo-flows/triage-and-bisect.yml`](.gitlab/duo-flows/triage-and-bisect.yml) |
-| **2. Trust & Probation** | Check agent autonomy tier | **The GitLab Security Standard v1.0** Dynamic Governor | [`src/probation.ts`](src/probation.ts), [`src/probation.test.ts`](src/probation.test.ts) |
-| **3. Agent Tool Call** | Duo routes triage to IGRIS | **GitLab Duo MCP Server** protocol standard | [`src/mcp_server.ts`](src/mcp_server.ts), [`.gitlab/duo-mcp-config.json`](.gitlab/duo-mcp-config.json) |
-| **4. Ephemeral Sandbox** | Sub-second AST & isolated runner | Deployed on **Google Cloud Run** for stateless speed | [`Dockerfile`](Dockerfile), [`cloudbuild.yaml`](cloudbuild.yaml) |
-| **5. Git Binary Search** | Pinpoint exact commit in $O(\log N)$ | Working answer to **[GitLab Issue #989](https://gitlab.com/gitlab-org/gitlab/-/issues/989)** | [`src/gates/g3_bisect.ts`](src/gates/g3_bisect.ts) |
-| **6. Patch Generation** | Surgical 1-line fix on culprit | **Anthropic Claude** orchestrated via Duo API | [`src/engine.ts`](src/engine.ts) |
-
----
-
-## Evidence From Real Runs
-
-Every row below is a real, recorded run from [`evidence/runs/`](evidence/runs/), backing our zero-mock mandate. All 5 runs form an unbroken cryptographic hash chain. Re-verify every row from your terminal with `npm run reverify`.
-
-| Run ID | Target Repo & Symbol | Scenario / Seeded Fault | Execution Duration | Cryptographic Chain Link (prevHash) | Culprit Commit Isolated | Deterministic Verdict | Evidence File |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `#04E310` | `jwt_validator.ts#verifyToken` | **The Golden Scenario:** Token expiration regression | **142.35 ms** | `000000000000...` (Genesis) | `a4f81c9e` (@alex) | `REPRODUCED` (Exit 1) | [`run_01_culprit_bisection.json`](evidence/runs/run_01_culprit_bisection.json) |
-| `#DDAC45` | `webhook.ts#processUntrustedWebhook` | **AI Hallucination:** Fake function name reported | **7.95 ms** | `cd55297f5078...` (Valid) | None (Symbol missing) | `PHANTOM_SYMBOL` | [`run_02_phantom_symbol_refusal.json`](evidence/runs/run_02_phantom_symbol_refusal.json) |
-| `#86811E` | `hasher.ts#hashPassword` | **Trojan Horse:** `; rm -rf / ; cat /etc/passwd` | **3.82 ms** | `85a2eb0434c6...` (Valid) | None (Shell injection) | `REJECTED_UNSAFE` | [`run_03_injection_attack_blocked.json`](evidence/runs/run_03_injection_attack_blocked.json) |
-| `#C881D4` | `calculator.ts#safeDivide` | **AI Slop / False Alarm:** Claimed divide-by-zero crash | **184.20 ms** | `b1abcfb46b39...` (Valid) | None (Clean exit code 0) | `REFUTED` | [`run_04_ai_slop_false_alarm_refuted.json`](evidence/runs/run_04_ai_slop_false_alarm_refuted.json) |
-| `#4A7AE8` | `billing.ts#chargeCustomerCard` | **Autonomous Agent Bug:** Devin agent broke idempotency | **198.50 ms** | `93ad166813f9...` (Valid) | `7b19a0fc` (@devin-agent) | `REPRODUCED` (Exit 1) | [`run_05_gitlab_duo_mcp_session.json`](evidence/runs/run_05_gitlab_duo_mcp_session.json) |
-
----
-
-## Why the Judge Can't Be Fooled
-
-Many automated coding workflows let an LLM evaluate its own output ("self-grading"). In IGRIS, **the model never grades itself**:
-
-| Potential Cheat / Attack | What Stops It in IGRIS | Verified in Code |
-| :--- | :--- | :--- |
-| **Agent creates fake mock to forge test pass** | Gate 1 parses the real TypeScript AST using symbol tables; hallucinated symbols are rejected as `PHANTOM_SYMBOL`. | [`src/gates/g1_reachability.ts`](src/gates/g1_reachability.ts), [`src/engine.test.ts`](src/engine.test.ts) |
-| **Exploit script prints fake `SUCCESS` to stdout** | Gate 2 ignores stdout text completely. Only raw OS process exit codes (`code !== 0`) and OS signals count. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts) |
-| **Reproduction script attempts CI secret exfiltration** | Gate 2 scans for environment variable access (`$CI_JOB_TOKEN`, `process.env`) and shell metacharacters before execution. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts#L45-L65) |
-| **Infinite loop or CPU freeze payload** | Strict hardware timeouts (default 2,000ms) with process group `SIGKILL` termination. | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts#L80-L95) |
-| **Dirty Git state corrupts historical bisection** | Gate 3 executes within isolated, clean temporary worktrees; dirty trees are incinerated on completion. | [`src/gates/g3_bisect.ts`](src/gates/g3_bisect.ts) |
-| **Vibe-coding leaks secrets or deletes test assertions** | `igris_audit_diff` inspects diffs for exposed API keys (`SUPABASE_SERVICE_ROLE_KEY`, `sk_live_*`), dangerous sinks (`eval`, shell execution), and negative-space test deletions (`- expect(...)`). | [`src/diff_audit.ts`](src/diff_audit.ts), [`src/engine.test.ts`](src/engine.test.ts) |
-| **Forged receipt or manipulated verdict** | SHA-256 seal is generated over immutable runtime parameters (duration, exit code, target, receiptId). | [`src/receipt.ts`](src/receipt.ts), [`scripts/reverify.ts`](scripts/reverify.ts) |
-
----
-
-## Verify It Yourself in 3 Seconds
-
-Zero setup hurdles. Run the entire deterministic verification suite from your command line:
+No cloud keys or database setup required:
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/GreatSage-dev/igris.git
 cd igris
-
-# 2. Run the 19/19 deterministic unit & integration tests (Exit Code 0)
-npm test
-
-# 3. Cryptographically re-verify all 5 chained evidence runs in milliseconds
-npm run reverify
-
-# 4. Run the 11-Point Agentic Engineering Forensic Self-Audit
-npm run audit:agentic
-
-# 5. Launch the Interactive Cockpit & Probation Ledger
-npm run serve
-# ➔ Open http://localhost:8080 to trigger real-time bisection, earned autonomy, and SHA-256 chaining
+npm test                 # 19/19 deterministic unit & probation tests (exit code 0)
+npm run reverify         # re-hashes and checks all 5 chained evidence receipts
+npm run audit:agentic    # 11/11 self-audit checks across AST, sandbox, and UI
+npm run serve            # opens the interactive cockpit at http://localhost:3000
 ```
 
 ---
 
-## License
+## What IGRIS does
 
-MIT © 2026 King's Court Engineering Standard. Built for the **GitLab Transcend: Life After Code Hackathon**.
+One rule: **nothing is believed until it is reproduced, and the cheapest check runs first.**
+
+```
+incoming bug report or agent merge request
+   │
+   ▼
+Gate 0   Is the report well-formed?                  < 1 ms    (0 model calls, 0 processes)
+Gate 1   Does the function it names even exist?      ~ 7 ms    (TypeScript AST symbol check)
+Gate 2   Run the repro in a locked sandbox.          ~ 60 ms   (only OS exit code counts)
+Gate 3   If it crashes, binary-search Git history.   ~ 70 ms   (isolates the culprit commit)
+   │
+   ▼
+Diff Audit & Probation Ledger
+   • Did the agent's patch delete a test or leak a key?
+   • Update the agent's autonomy level (Suggest → Propose → Act, or instant demotion)
+   │
+   ▼
+Chained Receipt  (SHA-256 sealed, re-checkable with `npm run reverify`)
+```
+
+Each gate can end the run.  
+A hallucinated report dies at Gate 1 in 7 milliseconds. It never spawns a container, never burns GitLab Duo credits, and never reaches an LLM.
+
+---
+
+## Watch it refuse
+
+Every row below is a recorded run in [`evidence/runs/`](evidence/runs/).  
+Targets are seeded fixtures with known faults so any judge can re-verify them deterministically.
+
+| Run | What was thrown at it | Gate that stopped or proved it | Verdict | Time | Evidence File |
+|:----|:----------------------|:-------------------------------|:--------|:-----|:--------------|
+| `#DDAC45` | Report naming a function that does not exist | **Gate 1** (AST symbol check) | `PHANTOM_SYMBOL` | `7.95 ms` | [`run_02_phantom_symbol_refusal.json`](evidence/runs/run_02_phantom_symbol_refusal.json) |
+| `#86811E` | Repro script containing `; rm -rf / ; cat /etc/passwd` | **Gate 2** (static quarantine lock) | `REJECTED_UNSAFE` | `3.82 ms` | [`run_03_injection_attack_blocked.json`](evidence/runs/run_03_injection_attack_blocked.json) |
+| `#C881D4` | Claimed divide-by-zero crash that executes safely | **Gate 2** (isolated subprocess, exit 0) | `REFUTED` | `184.20 ms` | [`run_04_ai_slop_false_alarm_refuted.json`](evidence/runs/run_04_ai_slop_false_alarm_refuted.json) |
+| `#04E310` | Real auth regression hidden across 16 commits | **Gate 3** (4-step `git bisect`) | `REPRODUCED` (`a4f81c9e`) | `142.35 ms` | [`run_01_culprit_bisection.json`](evidence/runs/run_01_culprit_bisection.json) |
+| `#4A7AE8` | Agent commit that broke billing idempotency | **Gate 3** (3-step `git bisect`) | `REPRODUCED` (`7b19a0fc`) | `198.50 ms` | [`run_05_gitlab_duo_mcp_session.json`](evidence/runs/run_05_gitlab_duo_mcp_session.json) |
+
+The speed is not the point.  
+A plain `git bisect run` also finds a bad commit.  
+The point is that every claim meets a gate that is allowed to say **no**, and the "no" comes with a receipt.
+
+---
+
+## Probation: Earned autonomy across runs
+
+On October 6, 2026, GitLab published **[The GitLab Security Standard v1.0](https://about.gitlab.com/gitlab-security-standard/)**, defining three levels of earned autonomy for AI agents (*Suggest*, *Propose*, *Act with guardrails*) and one core rule for the Verify stage: **checks must be ones the actor cannot edit or waive**.
+
+[`src/probation.ts`](src/probation.ts) turns that document into running state:
+
+```
+Level 1: SUGGEST (Probation)  ──[ 2 clean passes ]──►  Level 2: PROPOSE (Supervised)
+• Comments on issues only                              • Opens Merge Requests
+• Cannot open or merge MRs                             • Requires 1 human maintainer approval
+                                                              │
+                                                  [ 5 clean passes + owner sign-off ]
+                                                              │
+                                                              ▼
+                                                       Level 3: ACT (Guardrailed)
+                                                       • Auto-merges up to 5 MRs/day
+                                                              │
+          ┌───────────────────────────────────────────────────┘
+          ▼  [ Agent deletes a test assertion or leaks a secret in an MR diff ]
+🛑 INSTANT DEMOTION TO LEVEL 2 (or Level 1)
+• Streak reset to 0
+• GitLab policy locked: `approvalsRequired` set back to 1
+```
+
+Every run in the ledger hashes the previous receipt's seal (`previousHash` $\to$ `tamperProofHash`), so an agent cannot quietly rewrite its history.
+
+---
+
+## Why the judge cannot be fooled
+
+The model never grades itself.
+
+| Attack | What stops it | Code |
+|:-------|:--------------|:-----|
+| Report names a hallucinated function | Gate 1 parses the TypeScript AST symbol table before running anything | [`src/gates/g1_reachability.ts`](src/gates/g1_reachability.ts) |
+| Script prints a fake `SUCCESS` to stdout | Stdout text is ignored for verdicts; only the OS process exit code and signals count | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts) |
+| Script tries to steal `$CI_JOB_TOKEN` or run shell commands | Static quarantine blocks secret access and shell metacharacters; child env is stripped | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts) |
+| Infinite loop (`while(true){}`) | Hard timeout kills the process group and marks `INDETERMINATE` | [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts) |
+| Dirty working tree corrupts `git bisect` | Gate 3 runs inside a clean temporary Git worktree and removes it on exit | [`src/gates/g3_bisect.ts`](src/gates/g3_bisect.ts) |
+| Agent deletes a test assertion (`- expect(...)`) so its own MR passes | Negative-space diff audit catches deleted tests, leaked keys, and `eval` sinks, triggering instant Probation demotion | [`src/diff_audit.ts`](src/diff_audit.ts), [`src/probation.ts`](src/probation.ts) |
+
+---
+
+## Codebase anatomy (no magic, ~1,500 lines of TypeScript)
+
+There are no multi-agent frameworks or hidden wrappers. You can read the entire engine in one sitting:
+
+| File | Lines | What it does |
+|:-----|------:|:-------------|
+| [`src/engine.ts`](src/engine.ts) | 111 | Orchestrates the 4-gate cascade (`G0` $\to$ `G3`) with zero LLM calls |
+| [`src/gates/g0_schema.ts`](src/gates/g0_schema.ts) | 59 | Validates payload structure and required reproduction fields |
+| [`src/gates/g1_reachability.ts`](src/gates/g1_reachability.ts) | 77 | Parses TypeScript AST to verify the target file and symbol exist |
+| [`src/gates/g2_sandbox.ts`](src/gates/g2_sandbox.ts) | 199 | Static quarantine scanner + isolated child process runner with stripped env |
+| [`src/gates/g3_bisect.ts`](src/gates/g3_bisect.ts) | 67 | Automated `git bisect` binary search inside temporary worktrees (Issue #989) |
+| [`src/diff_audit.ts`](src/diff_audit.ts) | 231 | Audits unified MR diffs for deleted tests, leaked secrets, and dangerous sinks |
+| [`src/probation.ts`](src/probation.ts) | 376 | 3-level earned autonomy state machine, demotion rules, and hash-chained ledger |
+| [`src/receipt.ts`](src/receipt.ts) | 155 | Canonical JSON serialization, SHA-256 sealing, and GitLab Markdown formatting |
+| [`src/mcp_server.ts`](src/mcp_server.ts) | 264 | Model Context Protocol (MCP) server exposing 5 tools to GitLab Duo & Claude |
+
+---
+
+## How it runs inside GitLab & Google Cloud
+
+1. **MCP Server ([`src/mcp_server.ts`](src/mcp_server.ts) & [`.gitlab/duo-mcp-config.json`](.gitlab/duo-mcp-config.json)):** Exposes `igris_triage_report`, `igris_bisect_history`, `igris_audit_diff`, `igris_probation_status`, and `igris_evaluate_action` over MCP stdio.
+2. **GitLab Duo Flow ([`.gitlab/duo-flows/triage-and-bisect.yml`](.gitlab/duo-flows/triage-and-bisect.yml)):** Declarative workflow triggered on `issue.created` and `merge_request.created` that queries Probation level, runs the 4 gates, bisects regressions, and enforces branch approval rules.
+3. **GitLab CI Pipeline ([`.gitlab-ci.yml`](.gitlab-ci.yml)):** 4-stage pipeline (`build`, `test`, `verify`, `bisect`) that runs the 19-test suite, `npm run reverify`, and `npm run audit:agentic` on every push.
+4. **Google Cloud Run ([`Dockerfile`](Dockerfile) & [`cloudbuild.yaml`](cloudbuild.yaml)):** Stateless, non-root Node 22 Alpine container exposing the HTTP API and interactive workbench on port `8080`.
+
+---
+
+## The honest table
+
+**Real, and checked by automated tests (`npm test`, `npm run reverify`, `npm run audit:agentic`)**
+- Gates 0 through 3, negative-space diff auditing, and the 3-level Probation state machine (`19/19` unit & integration tests passing with exit code 0).
+- Hash-chained evidence receipts (`previousHash` $\to$ `tamperProofHash`) across all 5 recorded runs in `evidence/runs/`, re-verified in under 200ms by `npm run reverify`.
+- Interactive web cockpit ([`index.html`](index.html)) with real WebCrypto SHA-256 hashing, live server endpoints ([`src/server.ts`](src/server.ts)), and MCP server ([`src/mcp_server.ts`](src/mcp_server.ts)).
+
+**Simplified for deterministic local evaluation**
+- The 5 evidence runs target seeded repository fixtures with known faults so any judge can reproduce the exact millisecond timings and commit hashes offline.
+- Gate 2 runs untrusted scripts in an isolated OS child process with stripped environment variables and a hard `SIGKILL` timeout; in production multi-tenant deployment, this container runs inside a gVisor-sandboxed Google Cloud Run instance.
+- Receipt seals use deterministic SHA-256 hashing over canonical payloads to catch tampering or broken chain links; production deployment adds asymmetric KMS signing so an actor with file write access cannot recompute the chain.
+
+**Next steps beyond this hackathon**
+- Multi-language AST reachability (Python `ast` and Go `go/ast` alongside TypeScript).
+- Multi-bad-commit bisection weighting for flaky test suites.
+
+---
+
+Named after Igris, the silent knight at the gate who lets no impostor pass.  
+MIT © 2026
