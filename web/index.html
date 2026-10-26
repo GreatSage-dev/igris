@@ -19,16 +19,15 @@
           },
           colors: {
             mist: {
-              base: '#E7E9ED',
-              paper: '#F3F4F6',
-              deep: '#DADDE3',
-              rule: 'rgba(17, 18, 22, 0.13)',
+              base: '#EAECEF',
+              paper: '#F6F7F9',
+              deep: '#DFE2E8',
             },
             obsidian: {
-              void: '#0D0E11',
-              monolith: '#131419',
-              slate: '#1B1D24',
-              muted: '#5A5E6B',
+              void: '#0E0F13',
+              monolith: '#14151B',
+              slate: '#1C1E26',
+              muted: '#555966',
             },
             prism: {
               vermilion: '#E63B1F',
@@ -39,9 +38,9 @@
             }
           },
           letterSpacing: {
-            tighter: '-0.045em',
-            tight: '-0.025em',
-            widest: '0.14em',
+            tighter: '-0.04em',
+            tight: '-0.02em',
+            widest: '0.12em',
           }
         }
       }
@@ -49,222 +48,158 @@
   </script>
   <style>
     :root {
-      --bg-mist: #E7E9ED;
-      --bg-sheet: #F3F4F6;
+      --bg-mist: #EAECEF;
+      --bg-sheet: #F6F7F9;
       --ink-obsidian: #111216;
-      --ink-monolith: #15161B;
       --ink-muted: #525663;
       --prism-vermilion: #E63B1F;
       --prism-amber: #FF9E00;
       --prism-cyan: #00D2FF;
-      --grid-hairline: rgba(17, 18, 22, 0.13);
+      --rule-subtle: rgba(17, 18, 22, 0.10);
     }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #E7E9ED; }
-    ::-webkit-scrollbar-thumb { background: #15161B; }
+    ::-webkit-scrollbar-track { background: #EAECEF; }
+    ::-webkit-scrollbar-thumb { background: #15161B; border-radius: 3px; }
 
     .tabular-nums { font-variant-numeric: tabular-nums; }
-
-    /* ==========================================================================
-       ARTIST OPTICAL SYSTEM:
-       1. Inverted Alabaster Mist Void (#E7E9ED) with Halation Light Wrap
-       2. Selective Depth-of-Field (Background blurs; Outstretched Palm is razor-sharp)
-       3. Prismatic Chromatic Edge Split (Molten Vermilion + Amber + 1px Cyan Fringe)
-       4. Swiss Architectural Blueprint Grid (VG-84 + Schweizer Typografie)
-       ========================================================================== */
 
     body {
       background-color: var(--bg-mist);
       color: var(--ink-obsidian);
       background-image:
-        radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.92) 0%, rgba(231, 233, 237, 0.4) 48%, transparent 75%),
-        radial-gradient(circle at 22% 80%, rgba(255, 85, 0, 0.04) 0%, transparent 55%);
+        radial-gradient(circle at 75% 15%, rgba(255, 255, 255, 0.9) 0%, rgba(234, 236, 239, 0.3) 50%, transparent 75%);
     }
-
-    /* Architectural Swiss Blueprint Grid */
-    .swiss-grid-shell {
-      border-left: 1px solid var(--grid-hairline);
-      border-right: 1px solid var(--grid-hairline);
-      position: relative;
-    }
-
-    .swiss-rule-b { border-bottom: 1px solid var(--grid-hairline); }
-    .swiss-rule-t { border-top: 1px solid var(--grid-hairline); }
-    .swiss-rule-r { border-right: 1px solid var(--grid-hairline); }
-    .swiss-rule-l { border-left: 1px solid var(--grid-hairline); }
 
     /* Optical Halation Monolith: Light wraps inward over crushed charcoal edges */
     .obsidian-monolith {
       background: linear-gradient(175deg, #171920 0%, #0E0F13 100%);
       color: #F3F4F6;
       box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.22),
-        inset 0 0 28px rgba(231, 233, 237, 0.07),
-        0 28px 60px -18px rgba(13, 14, 17, 0.42);
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 24px 48px -16px rgba(13, 14, 17, 0.35);
       border: 1px solid rgba(17, 18, 22, 0.85);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Prismatic Heat Edge (Where Blinding Light Hits the Active Palm/Boundary) */
+    /* Prismatic Heat Edge (Where Light Hits the Active Focal Boundary) */
     .prismatic-palm {
       background: linear-gradient(175deg, #16171D 0%, #0C0D10 100%);
       color: #FFFFFF;
       position: relative;
       box-shadow:
-        inset 0 1.5px 0 rgba(255, 166, 0, 0.75),
+        inset 0 1.5px 0 rgba(255, 166, 0, 0.8),
         inset 2px 0 0 rgba(255, 69, 0, 0.65),
         inset -1.5px 0 0 rgba(0, 210, 255, 0.55),
-        -3px -1px 16px rgba(230, 59, 31, 0.24),
-        3px 1px 14px rgba(0, 210, 255, 0.18),
-        0 34px 70px -15px rgba(10, 11, 14, 0.58);
-      border: 1px solid rgba(255, 94, 0, 0.65);
+        0 28px 60px -16px rgba(10, 11, 14, 0.45);
+      border: 1px solid rgba(255, 94, 0, 0.6);
     }
 
-    /* Chromatic Aberration Text / Badge Utility */
-    .chromatic-text {
-      text-shadow: -1.5px 0 0 rgba(255, 61, 0, 0.75), 1.5px 0 0 rgba(0, 210, 255, 0.65);
-    }
-
-    /* Selective Depth-of-Field Planes (Blur-to-Sharp Focus Hierarchy) */
+    /* Selective Depth-of-Field Planes (Subtle Focus Hierarchy) */
     .dof-group:hover .dof-plane:not(:hover) {
-      filter: blur(2.2px);
-      opacity: 0.68;
-      transform: scale(0.992);
+      filter: blur(1.4px);
+      opacity: 0.72;
     }
     .dof-plane {
-      transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                  opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .dof-plane:hover {
       filter: blur(0px);
       opacity: 1;
-      transform: translateY(-2px);
-      box-shadow:
-        inset 0 1.5px 0 rgba(255, 158, 0, 0.8),
-        -2px 0 12px rgba(230, 59, 31, 0.25),
-        2px 0 12px rgba(0, 210, 255, 0.2),
-        0 24px 48px -12px rgba(13, 14, 17, 0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px -15px rgba(13, 14, 17, 0.16);
     }
 
-    /* Inline Typographic Plate from VG-84 */
+    /* Inline Typographic Plate */
     .inline-glyph-plate {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       background-color: #111216;
       color: #F3F4F6;
-      padding: 0.08em 0.32em;
+      padding: 0.08em 0.3em;
       vertical-align: middle;
       line-height: 1;
       box-shadow: -2px 0 0 #E63B1F, 2px 0 0 #00D2FF;
-      transform: translateY(-0.06em);
+      transform: translateY(-0.05em);
     }
 
     /* Scenario Cartridge States in Console */
     .scenario-card {
       background: #1A1C23;
-      border: 1px solid rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #E7E9ED;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .scenario-card.active-cartridge {
-      background: #111217;
+      background: #121318;
       border-color: #FF5500;
       box-shadow:
         inset 0 1.5px 0 rgba(255, 166, 0, 0.85),
         -2px 0 0 rgba(230, 59, 31, 0.8),
         2px 0 0 rgba(0, 210, 255, 0.7),
-        0 20px 40px rgba(0, 0, 0, 0.5);
-      filter: blur(0px);
+        0 16px 32px rgba(0, 0, 0, 0.4);
       opacity: 1;
     }
     .scenario-card.receded-cartridge {
-      opacity: 0.72;
-      filter: blur(0.6px);
+      opacity: 0.75;
     }
     .scenario-card.receded-cartridge:hover {
       opacity: 1;
-      filter: blur(0px);
-      border-color: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* Console Framed-Sheet Architecture (from Pinterest telemetry_2 + dashboard_5) */
+    /* Console Framed-Sheet Architecture */
     .console-monolith-frame {
       background: #14151A;
       border: 1px solid #111216;
-      box-shadow:
-        0 40px 100px -20px rgba(13, 14, 17, 0.45),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      box-shadow: 0 32px 80px -20px rgba(13, 14, 17, 0.35);
     }
     .console-alabaster-sheet {
-      background: #F2F3F6;
+      background: #F4F5F8;
       color: #111216;
     }
   </style>
 </head>
 <body class="min-h-screen font-sans antialiased selection:bg-[#E63B1F] selection:text-white overflow-x-hidden">
 
-  <!-- SVG Optical Chromatic Filter Definition -->
-  <svg class="hidden" aria-hidden="true">
-    <defs>
-      <filter id="prism-split">
-        <feOffset in="SourceGraphic" dx="-1.5" dy="0" result="redShift" />
-        <feOffset in="SourceGraphic" dx="1.5" dy="0" result="cyanShift" />
-        <feMerge>
-          <feMergeNode in="redShift" />
-          <feMergeNode in="cyanShift" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-  </svg>
-
   <!-- ======================================================================== -->
-  <!-- ARCHITECTURAL TOP HEADER (VG-84 + SWISS COORDINATE BAR)                  -->
+  <!-- CLEAN, UNCLUTTERED NAVIGATION BAR (CLEAR EYE DIRECTION)                  -->
   <!-- ======================================================================== -->
-  <header class="sticky top-0 z-50 bg-[#E7E9ED]/90 backdrop-blur-md swiss-rule-b">
-    <div class="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between swiss-grid-shell">
+  <header class="sticky top-0 z-50 bg-[#EAECEF]/90 backdrop-blur-md border-b border-[#111216]/10">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
-      <!-- Left: Index Mark & Brand -->
-      <div class="flex items-center space-x-6">
-        <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchTab('landing')">
-          <div class="w-7 h-7 bg-[#111216] text-white flex items-center justify-center font-mono text-xs font-bold tracking-tighter shadow-[-2px_0_0_#E63B1F,2px_0_0_#00D2FF]">
-            IG
-          </div>
-          <div class="flex items-baseline space-x-2">
-            <span class="text-base font-extrabold tracking-tighter text-[#111216]">IGRIS</span>
-            <span class="text-[11px] font-mono text-[#525663] tabular-nums">SYS—v1.0</span>
-          </div>
+      <!-- Left: Brand Identity -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('landing')">
+        <div class="w-8 h-8 bg-[#111216] text-white flex items-center justify-center font-mono text-xs font-bold tracking-tighter shadow-[-2px_0_0_#E63B1F,2px_0_0_#00D2FF]">
+          IG
         </div>
-
-        <span class="hidden lg:inline-block text-[11px] font-mono text-[#525663] pl-6 swiss-rule-l tabular-nums">
-          GRID 841×1189 • QUARANTINE OPTICS
-        </span>
+        <div>
+          <span class="text-base font-extrabold tracking-tight text-[#111216]">IGRIS</span>
+          <span class="hidden sm:inline-block text-xs font-mono text-[#525663] ml-2">Gatekeeper for GitLab Duo</span>
+        </div>
       </div>
 
-      <!-- Center Navigation (Plain Editorial Links, Zero Pill Chrome) -->
-      <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-tight text-[#525663]">
-        <button onclick="switchTab('landing')" class="text-[#111216] hover:text-[#E63B1F] transition-colors" id="nav-landing">Index</button>
-        <button onclick="navigateToSection('workflow')" class="hover:text-[#111216] transition-colors">4-Gate Cascade</button>
-        <button onclick="navigateToSection('split-screen')" class="hover:text-[#111216] transition-colors">15s Split-Screen</button>
-        <button onclick="navigateToSection('issue-989')" class="hover:text-[#111216] transition-colors">Issue #989</button>
-        <button onclick="switchTab('console')" class="flex items-center space-x-1.5 hover:text-[#111216] transition-colors cursor-pointer">
-          <span id="nav-console">Triage Console</span>
-          <span class="text-[10px] font-mono text-[#E63B1F]">↗</span>
+      <!-- Center: Step-by-Step Story Navigation -->
+      <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold text-[#525663]">
+        <button onclick="switchTab('landing')" id="nav-landing" class="text-[#111216] hover:text-[#E63B1F] transition-colors">
+          Overview
+        </button>
+        <button onclick="navigateToSection('workflow')" class="hover:text-[#111216] transition-colors">
+          01. How It Works
+        </button>
+        <button onclick="navigateToSection('split-screen')" class="hover:text-[#111216] transition-colors">
+          02. 15s Comparison
+        </button>
+        <button onclick="navigateToSection('issue-989')" class="hover:text-[#111216] transition-colors">
+          03. Git Bisect &amp; Probation
         </button>
       </nav>
 
-      <!-- Right: Action Switch -->
-      <div class="flex items-center space-x-4">
-        <div class="hidden sm:flex items-center space-x-2 text-[11px] font-mono text-[#111216]">
-          <span class="w-2 h-2 bg-[#E63B1F] inline-block"></span>
-          <span>GitLab Duo MCP</span>
-        </div>
-        <button onclick="switchTab('console')" class="px-5 py-2.5 bg-[#111216] text-[#F3F4F6] hover:bg-[#E63B1F] text-xs font-semibold tracking-tight transition-colors active:scale-95">
-          Open Instrument
+      <!-- Right: Primary Mode Switcher -->
+      <div class="flex items-center space-x-3">
+        <button onclick="switchTab('console')" id="nav-console" class="px-5 py-2.5 bg-[#111216] text-white hover:bg-[#E63B1F] text-xs font-bold tracking-tight transition-colors flex items-center space-x-2 shadow-[-2px_0_0_#E63B1F,2px_0_0_#00D2FF]">
+          <span>Interactive Console</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </button>
       </div>
 
@@ -272,224 +207,81 @@
   </header>
 
   <!-- ======================================================================== -->
-  <!-- VIEW 1: THE ARTIST-ENGINEERED LANDING PAGE (VG-84 + HANUMAN OPTICS)      -->
+  <!-- VIEW 1: THE LANDING PAGE (SINGLE VERTICAL SPINE, GENEROUS BREATHING ROOM)-->
   <!-- ======================================================================== -->
   <main id="view-landing" class="block">
 
     <!-- ====================================================================== -->
-    <!-- ACT I: MONUMENTAL ALABASTER VOID + OUTSTRETCHED PALM HERO              -->
+    <!-- HERO: CLEAR LEFT-TO-RIGHT FOCAL HIERARCHY                              -->
     <!-- ====================================================================== -->
-    <section class=" swiss-rule-b relative overflow-hidden">
-      <div class="max-w-[1400px] mx-auto swiss-grid-shell">
+    <section class="py-16 sm:py-24 border-b border-[#111216]/10">
+      <div class="max-w-6xl mx-auto px-6">
 
-        <!-- Top Architectural Coordinate Sub-row (Schweizer Grid Style) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 swiss-rule-b text-[11px] font-mono text-[#525663] leading-relaxed">
-          <div class="p-4 sm:px-8 swiss-rule-r">
-            <div class="font-semibold text-[#111216]">GitLab Security Standard</div>
-            <div>v1.0 • Oct 6, 2026</div>
-          </div>
-          <div class="p-4 sm:px-8 md:swiss-rule-r">
-            <div class="font-semibold text-[#111216]">Primary Precedent</div>
-            <div>curl PR #20312 (&lt;5% valid)</div>
-          </div>
-          <div class="p-4 sm:px-8 swiss-rule-r swiss-rule-t md:border-t-0">
-            <div class="font-semibold text-[#111216]">Gate 1 Refusal Speed</div>
-            <div class="tabular-nums text-[#E63B1F] font-semibold">3.61 ms (0 CPU burned)</div>
-          </div>
-          <div class="p-4 sm:px-8 swiss-rule-t md:border-t-0">
-            <div class="font-semibold text-[#111216]">Earned Autonomy</div>
-            <div>Probation L1 &rarr; L2 &rarr; L3</div>
-          </div>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-        <!-- Main Asymmetric Hero Stage (VG-84 Stipple Silhouette + Editorial Type) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 relative min-h-[540px]">
-
-          <!-- Left 8 Columns: Monumental Editorial Typography -->
-          <div class="lg:col-span-8 p-6 sm:p-12 lg:p-16 flex flex-col justify-between lg:swiss-rule-r relative z-10">
-            
-            <!-- Unapologetic Empty Air at Top (Worm's-Eye Monumentality) -->
-            <div class="hidden sm:block h-10"></div>
-
-            <div>
-              <h1 class="text-[2.35rem] sm:text-[3.5rem] xl:text-[4.25rem] font-extrabold tracking-tighter text-[#111216] leading-[0.98] mb-8">
-                AI bug reports are
-                <span class="inline-glyph-plate text-[0.55em] font-mono mx-1">G1</span>
-                guilty until reproduced.
-              </h1>
-
-              <p class="max-w-xl text-base sm:text-xl text-[#2C2F37] leading-relaxed font-normal mb-10">
-                Forty AI-written security reports arrive overnight. Most name functions that do not exist.
-                <strong>IGRIS</strong> stands at the gate of <strong>GitLab Duo</strong>—dropping phantom reports in
-                <span class="font-mono font-semibold text-[#E63B1F] tabular-nums">3.6ms</span>, bisecting real crashes in
-                <span class="font-mono font-semibold text-[#111216] tabular-nums">142.3ms</span>, and keeping every agent on probation.
-              </p>
-
-              <div class="flex flex-wrap items-center gap-4">
-                <button onclick="switchTab('console')" class="px-8 py-4 bg-[#111216] text-white hover:bg-[#E63B1F] text-sm font-bold tracking-tight transition-all flex items-center space-x-3 shadow-[-3px_0_0_#E63B1F,3px_0_0_#00D2FF]">
-                  <span>Enter Triage Console</span>
-                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                </button>
-                <button onclick="navigateToSection('workflow')" class="px-7 py-4 bg-[#F3F4F6] hover:bg-white text-[#111216] swiss-rule-b swiss-rule-t swiss-rule-l swiss-rule-r text-sm font-semibold tracking-tight transition-all">
-                  Inspect 4-Gate Cascade
-                </button>
-              </div>
+          <!-- Left 7 Columns: Single Unmistakable Reading Path -->
+          <div class="lg:col-span-7 space-y-8">
+            <div class="inline-flex items-center space-x-2.5 px-3.5 py-1.5 bg-white border border-[#111216]/15 text-xs font-mono text-[#111216]">
+              <span class="w-2 h-2 bg-[#E63B1F] inline-block"></span>
+              <span>GitLab "Life After Code" Hackathon • Zero-Trust Triage</span>
             </div>
 
-            <div class="pt-12 mt-12 swiss-rule-t flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#525663]">
-              <span>THE MODEL NEVER GRADES ITSELF • EXIT CODE 0 OR 1</span>
-              <span class="text-[#111216] font-semibold tabular-nums">SHA-256 CHAINED LEDGER</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tighter text-[#111216] leading-[1.02]">
+              AI bug reports are
+              <span class="inline-glyph-plate text-[0.55em] font-mono mx-1">G1</span>
+              guilty until reproduced.
+            </h1>
+
+            <p class="text-lg sm:text-xl text-[#2C2F37] leading-relaxed max-w-xl">
+              Forty AI-written security reports arrive overnight. Most name functions that do not exist.
+              <strong>IGRIS</strong> stands at the gate—refusing hallucinated reports in
+              <span class="font-mono font-bold text-[#E63B1F] tabular-nums">3.6ms</span>, bisecting real crashes in
+              <span class="font-mono font-bold text-[#111216] tabular-nums">142.3ms</span>, and keeping every AI agent on probation.
+            </p>
+
+            <!-- Clear Primary + Secondary Actions -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <button onclick="switchTab('console')" class="px-8 py-4 bg-[#111216] text-white hover:bg-[#E63B1F] text-sm font-bold tracking-tight transition-all flex items-center space-x-3 shadow-[-3px_0_0_#E63B1F,3px_0_0_#00D2FF]">
+                <span>Try the Live Triage Console</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+              <button onclick="navigateToSection('workflow')" class="px-6 py-4 bg-white hover:bg-[#F6F7F9] text-[#111216] border border-[#111216]/20 text-sm font-semibold tracking-tight transition-all flex items-center space-x-2">
+                <span>See How It Works</span>
+                <i data-lucide="arrow-down" class="w-4 h-4"></i>
+              </button>
             </div>
-          </div>
 
-          <!-- Right 4 Columns: VG-84 Stippled Guardian Silhouette & Optical Depth Field -->
-          <div class="lg:col-span-4 relative overflow-hidden bg-[#E2E4E9] min-h-[380px] flex flex-col justify-end p-6 sm:p-10">
-            
-            <!-- Interactive Stippled Guardian & Optical Prism Canvas -->
-            <canvas id="monolith-canvas" width="520" height="640" class="absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
-
-            <!-- Out-of-Focus Guardian Ghost Silhouette Watermark (Pure Optical Blur) -->
-            <div class="relative z-10 bg-[#E7E9ED]/85 backdrop-blur-md p-5 border border-[#111216]/15">
-              <div class="flex items-center justify-between text-[11px] font-mono text-[#525663] pb-2 mb-2 swiss-rule-b">
-                <span>OPTICAL FOCUS PLANE</span>
-                <span class="text-[#E63B1F] font-bold">f/1.2 APERTURE</span>
-              </div>
-              <p class="text-xs text-[#111216] leading-relaxed font-medium">
-                Background noise dissolves into the mist. Only the active proof in your palm snaps into razor-sharp focus.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- ================================================================== -->
-        <!-- THE OUTSTRETCHED PALM: RAZOR-SHARP FOREGROUND PROOF MONOLITH       -->
-        <!-- ================================================================== -->
-        <div class="p-6 sm:p-12 lg:p-16 bg-[#DFE2E7] swiss-rule-t relative">
-          
-          <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
+            <!-- Quiet 3-Metric Proof Bar -->
+            <div class="pt-8 border-t border-[#111216]/10 grid grid-cols-3 gap-6 max-w-lg">
               <div>
-                <div class="text-xs font-mono uppercase tracking-widest text-[#E63B1F] font-bold">
-                  Focal Plane 01 • The Refusal in Your Palm
-                </div>
-                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111216]">
-                  Live Specimen: Dropping a Fake curl Report Before Container Boot
-                </h2>
+                <div class="text-2xl font-extrabold font-mono text-[#E63B1F] tabular-nums">3.61 ms</div>
+                <div class="text-xs text-[#525663] mt-0.5">Fake symbol refusal</div>
               </div>
-              <span class="text-xs font-mono text-[#525663] tabular-nums">
-                SPECIMEN: run_01_curl_phantom.json
-              </span>
+              <div>
+                <div class="text-2xl font-extrabold font-mono text-[#111216] tabular-nums">142.3 ms</div>
+                <div class="text-xs text-[#525663] mt-0.5">Automated git bisect</div>
+              </div>
+              <div>
+                <div class="text-2xl font-extrabold font-mono text-[#111216] tabular-nums">5 / 5</div>
+                <div class="text-xs text-[#525663] mt-0.5">SHA-256 receipts</div>
+              </div>
             </div>
+          </div>
 
-            <!-- The Prismatic Obsidian Monolith (Sharpest Object in the Frame) -->
-            <div class="prismatic-palm p-6 sm:p-10">
-              
-              <!-- Monolith Top Bar -->
-              <div class="flex flex-wrap items-center justify-between pb-5 mb-8 border-b border-white/15 text-xs font-mono gap-4">
-                <div class="flex items-center space-x-3">
-                  <span class="px-2 py-0.5 bg-[#E63B1F] text-white font-bold text-[11px]">GATE 1 INTERCEPT</span>
-                  <span class="text-zinc-300">igris_quarantine // src/http_parser.c#parseChunkHeader</span>
+          <!-- Right 5 Columns: The Optical Artwork Focal Piece -->
+          <div class="lg:col-span-5">
+            <div class="relative rounded-sm overflow-hidden border border-[#111216]/20 bg-[#E2E4E9] h-[440px] flex flex-col justify-end p-6 shadow-xl">
+              <canvas id="monolith-canvas" width="520" height="640" class="absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
+
+              <div class="relative z-10 bg-white/90 backdrop-blur-md p-5 border border-[#111216]/15">
+                <div class="flex items-center justify-between text-[11px] font-mono text-[#525663] pb-2 mb-2 border-b border-[#111216]/10">
+                  <span>OPTICAL FOCUS HIERARCHY</span>
+                  <span class="text-[#E63B1F] font-bold">GATE 1 // 3.61ms</span>
                 </div>
-                <div class="flex items-center space-x-4 tabular-nums">
-                  <span class="text-[#FF9E00]">RUNNER CPU: 0.00 MB</span>
-                  <span class="text-[#00D2FF] font-semibold">LATENCY: 3.61 ms</span>
-                </div>
+                <p class="text-xs text-[#111216] leading-relaxed font-medium">
+                  Unverified AI noise stays blurred in the background. Only reproduced proof snaps into focus.
+                </p>
               </div>
-
-              <!-- 3-Column Sharp Architectural Breakdown -->
-              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                
-                <!-- Col 1: Untrusted Claim -->
-                <div class="lg:col-span-4 flex flex-col justify-between pr-0 lg:pr-6 lg:border-r border-white/10">
-                  <div>
-                    <div class="text-[11px] font-mono text-[#FF9E00] uppercase tracking-wider mb-2">
-                      01 / Untrusted AI Submission
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">
-                      curl CVE-2026 Hallucination
-                    </h3>
-                    <p class="text-xs text-zinc-300 leading-relaxed mb-4">
-                      Report claims a heap buffer overflow in <code class="text-[#FF9E00] font-mono">parseChunkHeader()</code> inside <code class="text-white font-mono">src/http_parser.c</code>.
-                    </p>
-                    <div class="p-3.5 bg-black/80 border border-white/10 font-mono text-[11px] text-zinc-300 leading-relaxed">
-                      <span class="text-zinc-500">// Target: src/http_parser.c</span><br>
-                      <span class="text-zinc-500">// Symbol: parseChunkHeader</span><br>
-                      <span class="text-[#E63B1F]">parseChunkHeader("%s%s%x".repeat(100));</span>
-                    </div>
-                  </div>
-                  <div class="pt-4 mt-4 border-t border-white/10 flex justify-between text-[11px] font-mono text-zinc-400">
-                    <span>Ingress: Untrusted</span>
-                    <span class="text-white">Cost: $0.00</span>
-                  </div>
-                </div>
-
-                <!-- Col 2: 4-Gate Cascade Execution -->
-                <div class="lg:col-span-4 flex flex-col justify-between pr-0 lg:pr-6 lg:border-r border-white/10 font-mono text-xs">
-                  <div>
-                    <div class="text-[11px] font-mono text-[#00D2FF] uppercase tracking-wider mb-3">
-                      02 / Ordered Cheap-First Gates
-                    </div>
-
-                    <div class="space-y-2.5">
-                      <div class="p-3 bg-white/[0.03] border border-white/10 flex items-center justify-between">
-                        <span class="text-zinc-200">G0 • Schema Check</span>
-                        <span class="text-emerald-400 font-semibold tabular-nums">0.82 ms PASS</span>
-                      </div>
-                      <div class="p-3 bg-[#E63B1F]/20 border border-[#E63B1F] flex items-center justify-between shadow-[-2px_0_0_#FF9E00,2px_0_0_#00D2FF]">
-                        <span class="text-white font-bold">G1 • AST Symbol Scan</span>
-                        <span class="text-[#FF9E00] font-bold tabular-nums">REFUSED (3.61 ms)</span>
-                      </div>
-                      <div class="p-3 bg-black/40 border border-white/5 flex items-center justify-between text-zinc-500">
-                        <span>G2 • 0-Network Sandbox</span>
-                        <span>HALTS BEFORE BOOT</span>
-                      </div>
-                      <div class="p-3 bg-black/40 border border-white/5 flex items-center justify-between text-zinc-500">
-                        <span>G3 • Git Bisect (#989)</span>
-                        <span>SKIPPED (0 CPU)</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="pt-4 mt-4 border-t border-white/10 flex justify-between text-[11px] text-emerald-400">
-                    <span>Duo Credits Protected</span>
-                    <span class="font-bold">100% Saved</span>
-                  </div>
-                </div>
-
-                <!-- Col 3: Cryptographic Seal -->
-                <div class="lg:col-span-4 flex flex-col justify-between">
-                  <div>
-                    <div class="text-[11px] font-mono text-emerald-400 uppercase tracking-wider mb-2">
-                      03 / Signed Cryptographic Receipt
-                    </div>
-                    <div class="space-y-2.5 text-xs font-mono mb-4">
-                      <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-zinc-400">Receipt ID</span>
-                        <span class="text-white font-bold">IGRIS-DDAC45AE</span>
-                      </div>
-                      <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-zinc-400">Verdict</span>
-                        <span class="text-[#FF9E00] font-bold">PHANTOM_SYMBOL</span>
-                      </div>
-                      <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-zinc-400">Process Exit</span>
-                        <span class="text-white tabular-nums">code 1 (Refuted)</span>
-                      </div>
-                    </div>
-                    <div class="p-3 bg-black border border-white/15 font-mono text-[10px] text-zinc-300 break-all">
-                      <span class="text-zinc-500">SHA-256:</span> 16f8b80d3c171bdf7f0bf3d6741e583b5d999689a671e7c9f01aa88ce9b3e54c
-                    </div>
-                  </div>
-
-                  <button onclick="switchTab('console')" class="mt-5 w-full py-3.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center space-x-2">
-                    <i data-lucide="zap" class="w-4 h-4"></i>
-                    <span>Fire Live in Triage Console</span>
-                  </button>
-                </div>
-
-              </div>
-
             </div>
           </div>
 
@@ -499,110 +291,104 @@
     </section>
 
     <!-- ====================================================================== -->
-    <!-- ACT II: SWISS TYPOGRAPHIC POSTER — THE 4-GATE CASCADE & MOLTEN BLOCK   -->
-    <!-- (Inspired by Pinterest awwwards_4.jpg "typografie schweizer")          -->
+    <!-- STEP 01: THE 4-GATE PIPELINE (CLEAN LEFT-TO-RIGHT FLOW)                -->
     <!-- ====================================================================== -->
-    <section id="workflow" class="swiss-rule-b">
-      <div class="max-w-[1400px] mx-auto swiss-grid-shell">
+    <section id="workflow" class="py-20 sm:py-28 border-b border-[#111216]/10 bg-[#F4F5F8]">
+      <div class="max-w-6xl mx-auto px-6">
 
-        <!-- Section Header Row -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 swiss-rule-b">
-          <div class="lg:col-span-7 p-6 sm:p-12 lg:swiss-rule-r">
-            <h2 class="text-4xl sm:text-6xl font-extrabold tracking-tighter text-[#111216] leading-[0.95]">
-              four ordered gates.<br>
-              <span class="text-[#E63B1F]">cheapest check first.</span>
-            </h2>
+        <!-- Clear Section Header -->
+        <div class="max-w-2xl mb-14">
+          <div class="text-xs font-mono uppercase tracking-widest text-[#E63B1F] font-bold mb-3">
+            Step 01 // How IGRIS Works
           </div>
-          <div class="lg:col-span-5 p-6 sm:p-12 flex flex-col justify-between bg-[#ECEEF2]">
-            <p class="text-sm sm:text-base text-[#2C2F37] leading-relaxed">
-              Standard CI bots boot a heavy container on every bug report. IGRIS runs four ordered hardware gates—refusing fake symbols and shell injections in milliseconds before spending a single GitLab Duo credit.
-            </p>
-            <div class="text-xs font-mono text-[#111216] font-semibold pt-4 tabular-nums">
-              G0 (0.8ms) &rarr; G1 (3.6ms) &rarr; G2 (3.8ms) &rarr; G3 (142.3ms)
-            </div>
-          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tighter text-[#111216] leading-tight mb-4">
+            Four ordered gates. Cheapest check runs first.
+          </h2>
+          <p class="text-base sm:text-lg text-[#454954] leading-relaxed">
+            Every incoming bug report or AI merge request must pass four hardware checks in order. Fake reports are dropped in milliseconds before a container or AI model is ever booted.
+          </p>
         </div>
 
-        <!-- 4-Gate Depth-of-Field Matrix (Hovering one plane blurs the others) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 dof-group">
+        <!-- Unified 4-Step Horizontal Progression (Easy Left-to-Right Eye Path) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 dof-group">
 
           <!-- Gate 0 -->
-          <div class="dof-plane p-8 sm:p-10 bg-[#F3F4F6] swiss-rule-b lg: border-b-0 md:swiss-rule-r flex flex-col justify-between min-h-[320px]">
+          <div class="dof-plane bg-white border border-[#111216]/15 p-7 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between font-mono text-xs mb-8">
-                <span class="px-2 py-0.5 bg-[#111216] text-white font-bold">GATE 0</span>
-                <span class="text-[#111216] font-bold tabular-nums">0.82 ms</span>
+              <div class="flex items-center justify-between font-mono text-xs mb-6">
+                <span class="px-2.5 py-1 bg-[#EAECEF] text-[#111216] font-bold">GATE 0</span>
+                <span class="text-[#525663] font-semibold tabular-nums">0.82 ms</span>
               </div>
-              <h3 class="text-2xl font-extrabold tracking-tight text-[#111216] mb-3">
-                Schema Filter
+              <h3 class="text-xl font-extrabold text-[#111216] mb-2.5">
+                1. Schema Filter
               </h3>
               <p class="text-sm text-[#454954] leading-relaxed">
-                Checks that the incoming report names a real file path, a specific function symbol, and a reproduction command before any parser runs.
+                Verifies the report names a real file path, a specific function symbol, and a reproduction script.
               </p>
             </div>
-            <div class="pt-6 swiss-rule-t font-mono text-xs text-[#111216] flex justify-between">
-              <span>src/gates/g0_schema.ts</span>
-              <span class="font-bold">61 lines</span>
+            <div class="pt-5 mt-6 border-t border-[#111216]/10 font-mono text-xs text-[#525663] flex justify-between">
+              <span>g0_schema.ts</span>
+              <span class="text-[#111216] font-semibold">Pass &rarr; G1</span>
             </div>
           </div>
 
-          <!-- Gate 1 -->
-          <div class="dof-plane p-8 sm:p-10 bg-[#131419] text-white swiss-rule-b lg:border-b-0 lg:swiss-rule-r flex flex-col justify-between min-h-[320px]">
+          <!-- Gate 1 (Primary Focal Accent — Where Fake Reports Die) -->
+          <div class="dof-plane bg-[#131419] text-white border-2 border-[#E63B1F] p-7 flex flex-col justify-between shadow-lg">
             <div>
-              <div class="flex items-center justify-between font-mono text-xs mb-8">
-                <span class="px-2 py-0.5 bg-[#E63B1F] text-white font-bold">GATE 1</span>
+              <div class="flex items-center justify-between font-mono text-xs mb-6">
+                <span class="px-2.5 py-1 bg-[#E63B1F] text-white font-bold">GATE 1 • KEY GATE</span>
                 <span class="text-[#FF9E00] font-bold tabular-nums">3.61 ms</span>
               </div>
-              <h3 class="text-2xl font-extrabold tracking-tight text-white mb-3">
-                AST Symbol Check
+              <h3 class="text-xl font-extrabold text-white mb-2.5">
+                2. AST Symbol Scan
               </h3>
               <p class="text-sm text-zinc-300 leading-relaxed">
-                Parses the target source file. If the function the AI report blames does not exist, IGRIS refuses the report with <code class="text-[#FF9E00] font-mono">PHANTOM_SYMBOL</code>.
+                Scans the real syntax tree. If the function the AI report blames does not exist, IGRIS refuses it immediately.
               </p>
             </div>
-            <div class="pt-6 border-t border-white/15 font-mono text-xs text-[#FF9E00] flex justify-between">
-              <span>src/gates/g1_reachability.ts</span>
-              <span class="font-bold">133 lines</span>
+            <div class="pt-5 mt-6 border-t border-white/15 font-mono text-xs text-[#FF9E00] flex justify-between">
+              <span>g1_reachability.ts</span>
+              <span class="font-bold">Stops Slop</span>
             </div>
           </div>
 
           <!-- Gate 2 -->
-          <div class="dof-plane p-8 sm:p-10 bg-[#F3F4F6] swiss-rule-b md:border-b-0 md:swiss-rule-r flex flex-col justify-between min-h-[320px]">
+          <div class="dof-plane bg-white border border-[#111216]/15 p-7 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between font-mono text-xs mb-8">
-                <span class="px-2 py-0.5 bg-[#111216] text-white font-bold">GATE 2</span>
-                <span class="text-[#111216] font-bold tabular-nums">3.82 ms</span>
+              <div class="flex items-center justify-between font-mono text-xs mb-6">
+                <span class="px-2.5 py-1 bg-[#EAECEF] text-[#111216] font-bold">GATE 2</span>
+                <span class="text-[#525663] font-semibold tabular-nums">3.82 ms</span>
               </div>
-              <h3 class="text-2xl font-extrabold tracking-tight text-[#111216] mb-3">
-                0-Network Sandbox
+              <h3 class="text-xl font-extrabold text-[#111216] mb-2.5">
+                3. Locked Sandbox
               </h3>
               <p class="text-sm text-[#454954] leading-relaxed">
-                Blocks shell traps (<code class="font-mono text-[#E63B1F]">rm -rf</code>, <code class="font-mono text-[#E63B1F]">$CI_JOB_TOKEN</code>) and runs valid reproduction code in an isolated child process with zero network access.
+                Blocks shell traps (<code class="font-mono text-[#E63B1F]">rm -rf</code>, <code class="font-mono text-[#E63B1F]">$CI_JOB_TOKEN</code>) and runs the repro with zero network access. Only the exit code counts.
               </p>
             </div>
-            <div class="pt-6 swiss-rule-t font-mono text-xs text-[#111216] flex justify-between">
-              <span>src/gates/g2_sandbox.ts</span>
-              <span class="font-bold">177 lines</span>
+            <div class="pt-5 mt-6 border-t border-[#111216]/10 font-mono text-xs text-[#525663] flex justify-between">
+              <span>g2_sandbox.ts</span>
+              <span class="text-[#111216] font-semibold">Exit Code 0/1</span>
             </div>
           </div>
 
-          <!-- Gate 3 (Molten Vermilion Architectural Block from awwwards_4.jpg) -->
-          <div class="dof-plane p-8 sm:p-10 bg-[#E63B1F] text-white flex flex-col justify-between min-h-[320px]">
+          <!-- Gate 3 -->
+          <div class="dof-plane bg-white border border-[#111216]/15 p-7 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between font-mono text-xs mb-8">
-                <span class="px-2 py-0.5 bg-[#111216] text-white font-bold">GATE 3</span>
-                <span class="text-white font-bold tabular-nums">142.3 ms</span>
+              <div class="flex items-center justify-between font-mono text-xs mb-6">
+                <span class="px-2.5 py-1 bg-[#EAECEF] text-[#111216] font-bold">GATE 3</span>
+                <span class="text-[#525663] font-semibold tabular-nums">142.3 ms</span>
               </div>
-              <h3 class="text-2xl font-extrabold tracking-tight text-white mb-3">
-                Automated Git Bisect
+              <h3 class="text-xl font-extrabold text-[#111216] mb-2.5">
+                4. Git Bisect (#989)
               </h3>
-              <p class="text-sm text-white/90 leading-relaxed">
-                Only when Gate 2 proves a real crash (<code class="font-mono bg-black/25 px-1">exit code != 0</code>), IGRIS binary-searches git history to lock the exact breaking commit.
+              <p class="text-sm text-[#454954] leading-relaxed">
+                When Gate 2 proves a real crash, IGRIS binary-searches git history to find the exact commit that broke the build.
               </p>
             </div>
-            <div class="pt-6 border-t border-white/25 font-mono text-xs text-white flex justify-between">
-              <span>src/gates/g3_bisect.ts</span>
-              <span class="font-bold">Issue #989</span>
+            <div class="pt-5 mt-6 border-t border-[#111216]/10 font-mono text-xs text-[#525663] flex justify-between">
+              <span>g3_bisect.ts</span>
+              <span class="text-[#E63B1F] font-bold">Finds Culprit</span>
             </div>
           </div>
 
@@ -612,81 +398,82 @@
     </section>
 
     <!-- ====================================================================== -->
-    <!-- ACT III: THE 15-SECOND SPLIT-SCREEN (HIGH-CONTRAST MONOLITH VS MIST)   -->
+    <!-- STEP 02: THE 15-SECOND SPLIT-SCREEN (BEFORE VS. AFTER)                 -->
     <!-- ====================================================================== -->
-    <section id="split-screen" class="swiss-rule-b">
-      <div class="max-w-[1400px] mx-auto swiss-grid-shell">
+    <section id="split-screen" class="py-20 sm:py-28 border-b border-[#111216]/10">
+      <div class="max-w-6xl mx-auto px-6">
 
-        <div class="p-6 sm:p-12 swiss-rule-b flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tighter text-[#111216]">
-              The 15-Second Split-Screen
-            </h2>
+        <div class="max-w-2xl mb-14">
+          <div class="text-xs font-mono uppercase tracking-widest text-[#E63B1F] font-bold mb-3">
+            Step 02 // Why Maintainers Need This
           </div>
-          <p class="text-sm font-mono text-[#525663]">
-            LEFT: NAIVE MAINTAINER INBOX (45 MIN LOST) • RIGHT: IGRIS GATEKEEPER (3.6 MS)
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tighter text-[#111216] leading-tight mb-4">
+            The 15-Second Split-Screen
+          </h2>
+          <p class="text-base sm:text-lg text-[#454954] leading-relaxed">
+            On January 31, 2026, <code class="font-mono font-semibold text-[#111216]">curl</code> shut down its bug bounty after valid submissions dropped below 5%. Here is the difference when an AI-generated report hits your inbox:
           </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
-          <!-- Left Screen: The Naive Status Quo (Faded Mist Sheet) -->
-          <div class="p-8 sm:p-14 bg-[#E2E4E9] lg:swiss-rule-r flex flex-col justify-between">
+          <!-- Left Screen: Without IGRIS -->
+          <div class="p-8 sm:p-10 bg-white border border-[#111216]/15 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between pb-4 mb-8 swiss-rule-b font-mono text-xs">
-                <span class="text-[#E63B1F] font-bold uppercase">Left Screen • Without Igris</span>
-                <span class="text-[#525663] tabular-nums">45 MINUTES WASTED</span>
+              <div class="flex items-center justify-between pb-4 mb-6 border-b border-[#111216]/10 font-mono text-xs">
+                <span class="text-[#525663] font-bold uppercase">Without IGRIS • Naive Inbox</span>
+                <span class="px-2.5 py-1 bg-[#EAECEF] text-[#111216] font-bold tabular-nums">45 MIN LOST</span>
               </div>
 
               <h3 class="text-2xl font-extrabold text-[#111216] mb-4">
-                Maintainer Buried in Plausible Lies
+                Maintainer Chases a Function That Does Not Exist
               </h3>
 
-              <div class="p-5 bg-[#F3F4F6] swiss-rule-b swiss-rule-t swiss-rule-l swiss-rule-r font-mono text-xs text-[#2C2F37] mb-6">
+              <div class="p-4 bg-[#F4F5F8] border border-[#111216]/15 font-mono text-xs text-[#2C2F37] mb-6">
                 <div class="font-bold text-[#E63B1F] mb-1">Issue #412: Critical RCE in parseChunkHeader()</div>
                 "Crafted chunked encoding header triggers heap overflow in src/http_parser.c..."
               </div>
 
-              <ul class="space-y-3 text-sm text-[#2C2F37] leading-relaxed">
-                <li>1. Maintainer stops deep work and boots a local debug container.</li>
-                <li>2. Searches 2,000 lines of C code looking for <code class="font-mono font-semibold">parseChunkHeader()</code>.</li>
-                <li>3. Discovers the function was invented by an LLM. On Jan 31, 2026, curl shut down its bug bounty (PR #20312) after valid reports fell below 5%.</li>
-              </ul>
+              <ol class="space-y-3 text-sm text-[#454954] leading-relaxed list-decimal list-inside">
+                <li>Maintainer stops deep work and boots a local debug container.</li>
+                <li>Searches 2,000 lines of C code looking for <code class="font-mono text-[#111216] font-semibold">parseChunkHeader()</code>.</li>
+                <li>Realizes the LLM invented the function name from thin air.</li>
+              </ol>
             </div>
 
-            <div class="mt-10 p-5 bg-[#111216] text-white font-mono text-xs flex items-center justify-between">
+            <div class="mt-8 pt-5 border-t border-[#111216]/10 font-mono text-xs flex items-center justify-between text-[#525663]">
               <span>OUTCOME: MAINTAINER BURNOUT</span>
-              <span class="text-[#E63B1F] font-bold">BOUNTY CLOSED</span>
+              <span class="text-[#E63B1F] font-bold">45 MINUTES WASTED</span>
             </div>
           </div>
 
-          <!-- Right Screen: IGRIS Superpower (Obsidian Prismatic Monolith) -->
-          <div class="p-8 sm:p-14 bg-[#111216] text-white flex flex-col justify-between relative overflow-hidden">
-            <div class="relative z-10">
-              <div class="flex items-center justify-between pb-4 mb-8 border-b border-white/15 font-mono text-xs">
-                <span class="text-[#FF9E00] font-bold uppercase">Right Screen • With Igris</span>
-                <span class="text-[#00D2FF] font-bold tabular-nums">3.61 MILLISECONDS</span>
+          <!-- Right Screen: With IGRIS (The Single Focal Dark Monolith on the Page) -->
+          <div class="prismatic-palm p-8 sm:p-10 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/15 font-mono text-xs">
+                <span class="text-[#FF9E00] font-bold uppercase">With IGRIS • Gate 1 Intercept</span>
+                <span class="px-2.5 py-1 bg-[#E63B1F] text-white font-bold tabular-nums">3.61 MILLISECONDS</span>
               </div>
 
               <h3 class="text-2xl font-extrabold text-white mb-4">
-                Refused at the Gate with Mathematical Proof
+                Refused at the Gate with a Signed Receipt
               </h3>
 
-              <div class="p-5 bg-black border border-[#FF5500]/60 shadow-[-2px_0_0_#E63B1F,2px_0_0_#00D2FF] font-mono text-xs text-zinc-200 mb-6">
+              <div class="p-4 bg-black/80 border border-[#FF5500]/50 font-mono text-xs text-zinc-200 mb-6">
                 <div class="font-bold text-[#FF9E00] mb-1">Verdict: PHANTOM_SYMBOL (Exit Code 1)</div>
                 "Symbol parseChunkHeader not found in AST of src/http_parser.c. Container boot aborted."
               </div>
 
-              <ul class="space-y-3 text-sm text-zinc-300 leading-relaxed">
-                <li>1. <strong>Gate 0 (0.82ms):</strong> Validates JSON schema fields.</li>
-                <li>2. <strong>Gate 1 (2.79ms):</strong> Scans AST of <code class="font-mono text-white">src/http_parser.c</code>. Catches non-existent function immediately.</li>
-                <li>3. <strong>Zero Compute Burned:</strong> Posts SHA-256 signed refusal receipt before any runner container or Duo credit is spent.</li>
-              </ul>
+              <ol class="space-y-3 text-sm text-zinc-300 leading-relaxed list-decimal list-inside">
+                <li><strong>Gate 0 (0.82ms):</strong> Checks required report fields.</li>
+                <li><strong>Gate 1 (2.79ms):</strong> Scans the syntax tree of <code class="font-mono text-white">src/http_parser.c</code> and spots the fake function.</li>
+                <li><strong>Zero Compute Burned:</strong> Seals a <code class="font-mono text-white">SHA-256</code> refusal receipt before booting any runner.</li>
+              </ol>
             </div>
 
-            <div class="mt-10 p-5 bg-[#E63B1F] text-white font-mono text-xs flex items-center justify-between relative z-10">
-              <span>OUTCOME: VERIFIED REFUSAL RECEIPT</span>
-              <span class="font-bold tabular-nums">0.00 MB CPU BURNED</span>
+            <div class="mt-8 pt-5 border-t border-white/15 font-mono text-xs flex items-center justify-between text-white">
+              <span>OUTCOME: VERIFIED REFUSAL</span>
+              <span class="text-emerald-400 font-bold tabular-nums">0.00 MB CPU BURNED</span>
             </div>
           </div>
 
@@ -696,599 +483,656 @@
     </section>
 
     <!-- ====================================================================== -->
-    <!-- ACT IV: ISSUE #989 & PROBATION AUTONOMY CALLOUT                        -->
+    <!-- STEP 03: GIT BISECT (#989) + EARNED PROBATION & CONSOLE HANDOFF        -->
     <!-- ====================================================================== -->
-    <section id="issue-989" class="swiss-rule-b">
-      <div class="max-w-[1400px] mx-auto swiss-grid-shell">
-        <div class="grid grid-cols-1 lg:grid-cols-12">
-          
-          <div class="lg:col-span-8 p-8 sm:p-14 lg:swiss-rule-r bg-[#F3F4F6]">
-            <div class="text-xs font-mono uppercase tracking-widest text-[#E63B1F] font-bold mb-2">
-              Open Since July 2017 • GitLab Community Issue #989
+    <section id="issue-989" class="py-20 sm:py-28 bg-[#F4F5F8]">
+      <div class="max-w-6xl mx-auto px-6">
+
+        <div class="max-w-2xl mb-14">
+          <div class="text-xs font-mono uppercase tracking-widest text-[#E63B1F] font-bold mb-3">
+            Step 03 // What Happens After the Gate
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tighter text-[#111216] leading-tight mb-4">
+            Pinpoints real bugs. Keeps AI agents on probation.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+
+          <!-- Feature A: Issue #989 -->
+          <div class="bg-white border border-[#111216]/15 p-8">
+            <div class="text-xs font-mono text-[#E63B1F] font-bold uppercase mb-2">
+              Solves GitLab Community Issue #989 (Open Since 2017)
             </div>
-            <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111216] mb-4">
-              Automated Git Bisection + Earned Agent Probation
+            <h3 class="text-2xl font-extrabold text-[#111216] mb-3">
+              Automated Git Bisection in 142.3ms
             </h3>
-            <p class="text-base text-[#2C2F37] leading-relaxed max-w-2xl mb-6">
-              When a report is real and crashes in Gate 2, IGRIS fulfills <strong>GitLab Issue #989</strong>: running <code class="font-mono bg-[#E2E4E9] px-1.5 py-0.5 text-xs">git bisect run</code> inside the isolated runner to name the exact breaking commit in <strong>142.3ms</strong>. And if an autonomous agent tries to pass CI by deleting a test assertion, IGRIS catches <code class="font-mono bg-[#111216] text-white px-1.5 py-0.5 text-xs">DELETED_TEST</code> and demotes the agent's GitLab approval level on the spot.
+            <p class="text-sm text-[#454954] leading-relaxed mb-6">
+              When a report is genuine and crashes inside the Gate 2 sandbox, IGRIS automatically runs <code class="font-mono bg-[#EAECEF] px-1.5 py-0.5 text-xs">git bisect run</code> across commit history in a clean temporary worktree to hand you the exact breaking commit.
             </p>
-            <div class="flex flex-wrap gap-3 font-mono text-xs">
-              <span class="px-3 py-1.5 bg-[#E7E9ED] text-[#111216] font-semibold">npm test (19/19 passing)</span>
-              <span class="px-3 py-1.5 bg-[#E7E9ED] text-[#111216] font-semibold">npm run reverify (5/5 chained hashes)</span>
+            <div class="font-mono text-xs text-[#111216] pt-4 border-t border-[#111216]/10 flex justify-between">
+              <span>Culprit Commit Locked: <strong class="text-[#E63B1F]">a4f81c9e</strong></span>
+              <span>16 commits searched</span>
             </div>
           </div>
 
-          <div class="lg:col-span-4 p-8 sm:p-14 bg-[#111216] text-white flex flex-col justify-between">
-            <div>
-              <div class="text-xs font-mono text-[#FF9E00] uppercase mb-2">Interactive Sandbox</div>
-              <div class="text-xl font-bold mb-3">Test All 3 Scenarios &amp; Probation Demotion Live</div>
-              <p class="text-xs text-zinc-400 leading-relaxed">
-                Fire the curl phantom symbol refusal, the Issue #989 git bisection, the shell injection trap, and the Level 3 &rarr; Level 2 test-deletion demotion.
-              </p>
+          <!-- Feature B: Earned Autonomy & Probation -->
+          <div class="bg-white border border-[#111216]/15 p-8">
+            <div class="text-xs font-mono text-[#111216] font-bold uppercase mb-2">
+              The GitLab Security Standard v1.0 (Oct 6, 2026)
             </div>
-            <button onclick="switchTab('console')" class="mt-8 w-full py-4 bg-white hover:bg-[#E63B1F] text-[#111216] hover:text-white font-bold text-xs uppercase tracking-wider transition-colors">
-              Launch Triage Console &rarr;
-            </button>
+            <h3 class="text-2xl font-extrabold text-[#111216] mb-3">
+              Earned Autonomy &amp; Instant Demotion
+            </h3>
+            <p class="text-sm text-[#454954] leading-relaxed mb-6">
+              Every AI agent starts at <strong>Level 1 (Probation)</strong>. It earns promotion through verified passes. If an agent tries to make CI green by deleting a test assertion (<code class="font-mono bg-[#111216] text-white px-1.5 py-0.5 text-xs">DELETED_TEST</code>), IGRIS demotes its approval level immediately.
+            </p>
+            <div class="font-mono text-xs text-[#111216] pt-4 border-t border-[#111216]/10 flex justify-between">
+              <span>L1 Suggest &rarr; L2 Propose &rarr; L3 Act</span>
+              <span class="text-[#E63B1F] font-bold">Zero-Trust Diff Audit</span>
+            </div>
           </div>
 
         </div>
+
+        <!-- Single Unmistakable Handoff Banner to the Console -->
+        <div class="obsidian-monolith p-8 sm:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <div class="text-xs font-mono text-[#FF9E00] uppercase tracking-wider mb-1">
+              1-Click Verification Sandbox
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
+              Test all 3 scenarios and agent demotion live in your browser.
+            </h3>
+          </div>
+          <button onclick="switchTab('console')" class="shrink-0 px-8 py-4 bg-[#E63B1F] hover:bg-[#FF5500] text-white font-bold text-sm transition-all flex items-center space-x-2 shadow-[-2px_0_0_#FF9E00,2px_0_0_#00D2FF]">
+            <span>Open Interactive Console</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
       </div>
     </section>
 
   </main>
 
   <!-- ======================================================================== -->
-  <!-- VIEW 2: THE INDUSTRIAL TELEMETRY & LEDGER CONSOLE                        -->
-  <!-- (Pinterest telemetry_2.jpg Matte Monolith + dashboard_5.jpg Split Sheet) -->
+  <!-- VIEW 2: THE GUIDED INTERACTIVE CONSOLE (STEP-BY-STEP, ZERO CLUTTER)      -->
   <!-- ======================================================================== -->
-  <main id="view-console" class="hidden py-8 sm:py-12 px-4 sm:px-8 bg-[#E2E4E9] min-h-screen">
+  <main id="view-console" class="hidden py-8 sm:py-12 px-4 sm:px-6 bg-[#DFE2E8] min-h-screen">
 
-    <!-- Outer Framed Instrument Shell (Sits inside the Alabaster Mist) -->
-    <div class="max-w-[1380px] mx-auto console-monolith-frame overflow-hidden">
+    <div class="max-w-6xl mx-auto console-monolith-frame overflow-hidden">
 
       <!-- ==================================================================== -->
-      <!-- UPPER DECK: MATTE GRAPHITE TELEMETRY & CARTRIDGE DECK (dashboard_5)  -->
+      <!-- CONSOLE HEADER + 3-TOOL WORKSPACE NAVIGATION                         -->
       <!-- ==================================================================== -->
-      <div class="p-6 sm:p-10 bg-[#121318] text-white border-b border-white/10">
+      <div class="p-6 sm:p-8 bg-[#121318] text-white border-b border-white/10">
 
-        <!-- Top Instrument Header Row -->
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-8 border-b border-white/10">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-6 border-b border-white/10">
           <div>
             <div class="flex items-center space-x-3 text-xs font-mono mb-2">
-              <span class="px-2 py-0.5 bg-[#E63B1F] text-white font-bold">QUARANTINE CHAMBER</span>
+              <span class="px-2 py-0.5 bg-[#E63B1F] text-white font-bold">INTERACTIVE INSTRUMENT</span>
               <span class="text-zinc-400 tabular-nums">RUNNER v16.9 • --network=none</span>
             </div>
-            <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-              IGRIS Autonomous Triage &amp; Probation Console
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              IGRIS Triage &amp; Probation Console
             </h1>
           </div>
 
-          <!-- Right Controls + Telemetry Needle Strip (from telemetry_2.jpg) -->
-          <div class="flex flex-wrap items-center gap-4">
-            <!-- Mini Vertical Needle Oscilloscope (telemetry_2.jpg motif) -->
-            <div class="hidden xl:flex items-end space-x-1.5 h-10 px-4 py-1.5 bg-black/60 border border-white/10" title="Gate Execution Latency Distribution">
-              <span class="w-0.5 h-3 bg-zinc-600"></span>
-              <span class="w-0.5 h-5 bg-zinc-500"></span>
-              <span class="w-0.5 h-2 bg-zinc-600"></span>
-              <span class="w-0.5 h-7 bg-[#FF9E00]"></span>
-              <span class="w-0.5 h-4 bg-zinc-400"></span>
-              <span class="w-0.5 h-6 bg-white"></span>
-              <span class="w-0.5 h-3 bg-zinc-600"></span>
-              <span class="w-0.5 h-8 bg-[#E63B1F]"></span>
-              <span class="w-0.5 h-4 bg-[#00D2FF]"></span>
-              <span class="w-0.5 h-5 bg-zinc-400"></span>
-              <span class="w-0.5 h-3 bg-zinc-600"></span>
-              <span class="w-0.5 h-6 bg-white"></span>
-              <span class="text-[10px] font-mono text-zinc-400 pl-2 tabular-nums">3.6ms MEDIAN</span>
-            </div>
-
-            <button onclick="switchTab('landing')" class="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono text-zinc-200 transition-all">
-              &larr; Exit to Index
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="switchTab('landing')" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono text-zinc-200 transition-all">
+              &larr; Back to Overview
             </button>
-
-            <button onclick="runTriage()" id="btn-run-triage" class="px-7 py-3.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all flex items-center space-x-2 shadow-[-2px_0_0_#FF9E00,2px_0_0_#00D2FF] active:scale-95">
-              <i data-lucide="zap" class="w-4 h-4"></i>
-              <span>Execute Blast Chamber</span>
+            <button onclick="runTriage()" id="btn-run-triage" class="px-6 py-2.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all flex items-center space-x-2 shadow-[-2px_0_0_#FF9E00,2px_0_0_#00D2FF]">
+              <i data-lucide="play" class="w-4 h-4"></i>
+              <span>Run 4-Gate Triage</span>
             </button>
           </div>
         </div>
 
-        <!-- 3 Adversarial Benchmark Cartridges (Selective Focus + Prismatic Rim) -->
-        <div class="pt-7">
-          <div class="flex items-center justify-between mb-4 text-xs font-mono text-zinc-400">
-            <span>SELECT ADVERSARIAL BENCHMARK CARTRIDGE (OPTICAL FOCUS PLANES)</span>
-            <span class="text-[#FF9E00] tabular-nums">1-CLICK DETERMINISTIC EXECUTION</span>
+        <!-- Guided Workspace Switcher (Lets User Focus on 1 Tool at a Time or View All) -->
+        <div class="pt-5 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="switchConsolePanel('sandbox')" id="cnav-sandbox" class="px-4 py-2 text-xs font-mono font-bold bg-[#E63B1F] text-white transition-all">
+              1. 4-Gate Triage Sandbox
+            </button>
+            <button onclick="switchConsolePanel('auditor')" id="cnav-auditor" class="px-4 py-2 text-xs font-mono font-semibold bg-white/5 hover:bg-white/15 text-zinc-300 border border-white/10 transition-all">
+              2. Diff &amp; Receipt Auditor
+            </button>
+            <button onclick="switchConsolePanel('probation')" id="cnav-probation" class="px-4 py-2 text-xs font-mono font-semibold bg-white/5 hover:bg-white/15 text-zinc-300 border border-white/10 transition-all">
+              3. Agent Probation Ledger
+            </button>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-
-            <!-- Scenario 1 -->
-            <button onclick="selectScenario(1)" id="card-scen-1" class="scenario-card active-cartridge p-6 text-left relative group">
-              <div class="flex items-center justify-between mb-3 font-mono text-[11px]">
-                <span class="text-zinc-400">CARTRIDGE 01 // CURL-SLOP-89</span>
-                <span class="px-2 py-0.5 bg-[#E63B1F]/20 text-[#FF9E00] border border-[#E63B1F]/50 font-bold">PHANTOM_SYMBOL</span>
-              </div>
-              <h3 class="text-base font-bold text-white mb-1.5">
-                The curl Hallucinated CVE
-              </h3>
-              <p class="text-xs text-zinc-300 leading-relaxed mb-4">
-                Blames non-existent function <code class="font-mono text-white">parseChunkHeader()</code>. Gate 1 AST check refuses in 3.6ms.
-              </p>
-              <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400 tabular-nums">
-                <span>0.0ms Runner CPU</span>
-                <span class="text-emerald-400 font-bold">Refused at Gate 1</span>
-              </div>
-            </button>
-
-            <!-- Scenario 2 -->
-            <button onclick="selectScenario(2)" id="card-scen-2" class="scenario-card receded-cartridge p-6 text-left relative group">
-              <div class="flex items-center justify-between mb-3 font-mono text-[11px]">
-                <span class="text-zinc-400">CARTRIDGE 02 // PROJ-ZERO-02</span>
-                <span class="px-2 py-0.5 bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold">VERIFIED_FLAW</span>
-              </div>
-              <h3 class="text-base font-bold text-white mb-1.5">
-                Genuine Memory Crash + Git Bisect
-              </h3>
-              <p class="text-xs text-zinc-300 leading-relaxed mb-4">
-                Real boundary crash exits with code 1. Triggers Gate 3 Git Bisect (#989) across commit history.
-              </p>
-              <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400 tabular-nums">
-                <span>Exit Code 1</span>
-                <span class="text-[#00D2FF] font-bold">Culprit Commit Locked</span>
-              </div>
-            </button>
-
-            <!-- Scenario 3 -->
-            <button onclick="selectScenario(3)" id="card-scen-3" class="scenario-card receded-cartridge p-6 text-left relative group">
-              <div class="flex items-center justify-between mb-3 font-mono text-[11px]">
-                <span class="text-zinc-400">CARTRIDGE 03 // TROJAN-RCE-03</span>
-                <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">HOSTILE_RCE</span>
-              </div>
-              <h3 class="text-base font-bold text-white mb-1.5">
-                Trojan Horse Shell Injection
-              </h3>
-              <p class="text-xs text-zinc-300 leading-relaxed mb-4">
-                Contains <code class="font-mono text-white">rm -rf /</code> and <code class="font-mono text-white">$CI_JOB_TOKEN</code> theft. Gate 2 blocks before spawn.
-              </p>
-              <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400 tabular-nums">
-                <span>0 Child Processes</span>
-                <span class="text-amber-300 font-bold">Runner Protected</span>
-              </div>
-            </button>
-
-          </div>
+          <button onclick="switchConsolePanel('all')" id="cnav-all" class="px-3.5 py-2 text-xs font-mono text-zinc-400 hover:text-white border border-white/10 transition-all">
+            Show All Panels
+          </button>
         </div>
 
       </div>
 
       <!-- ==================================================================== -->
-      <!-- LOWER SHEET: CRISP ALABASTER & OBSIDIAN SPLIT WORKSPACE              -->
+      <!-- CONSOLE WORKSPACE BODY                                               -->
       <!-- ==================================================================== -->
-      <div class="console-alabaster-sheet p-6 sm:p-10 space-y-10">
+      <div class="console-alabaster-sheet p-6 sm:p-10 space-y-12">
 
-        <!-- ROW 1: SPECIMEN INSPECTOR (LEFT 5 COLS) + HARDWARE STREAM (RIGHT 7 COLS) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- ================================================================== -->
+        <!-- PANEL 1: 4-GATE TRIAGE SANDBOX (GUIDED STEP 1 -> STEP 2 -> STEP 3) -->
+        <!-- ================================================================== -->
+        <div id="panel-sandbox" class="space-y-8">
 
-          <!-- Left 5 Cols: Forensic Specimen Sheet (Alabaster Ledger Card) -->
-          <div class="lg:col-span-5 bg-white border border-[#111216]/20 p-6 sm:p-7 space-y-5 shadow-sm">
-            <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15">
-              <div>
-                <div class="text-[10px] font-mono uppercase tracking-widest text-[#525663]">Incoming Specimen Sheet</div>
-                <div class="text-sm font-extrabold text-[#111216]">Vulnerability Ingest Dossier</div>
+          <!-- STEP 1: PICK A SCENARIO -->
+          <div class="bg-[#16181F] p-6 sm:p-7 text-white border border-[#111216]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+              <div class="flex items-center space-x-2.5">
+                <span class="px-2.5 py-0.5 bg-[#E63B1F] text-white font-mono text-xs font-bold">STEP 1</span>
+                <span class="text-sm sm:text-base font-bold text-white">Choose an incoming bug report scenario to test:</span>
               </div>
-              <span id="report-tag" class="text-xs font-mono px-2.5 py-1 bg-[#111216] text-white font-bold">ID: CURL-SLOP-89</span>
+              <span class="text-xs font-mono text-zinc-400">Click any card below</span>
             </div>
 
-            <div class="space-y-4">
-              <div>
-                <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider block mb-1">Vulnerability Claim</label>
-                <input type="text" id="input-title" readonly class="w-full bg-[#F3F4F6] border border-[#111216]/20 px-3.5 py-2.5 text-xs font-semibold text-[#111216] focus:outline-none select-all">
-              </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-              <div class="grid grid-cols-2 gap-3.5">
-                <div>
-                  <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider block mb-1">Target File</label>
-                  <input type="text" id="input-file" readonly class="w-full bg-[#F3F4F6] border border-[#111216]/20 px-3.5 py-2.5 text-xs font-mono text-[#111216] focus:outline-none select-all">
+              <!-- Scenario 1 -->
+              <button onclick="selectScenario(1)" id="card-scen-1" class="scenario-card active-cartridge p-5 text-left">
+                <div class="flex items-center justify-between mb-2 font-mono text-[11px]">
+                  <span class="text-zinc-400">SCENARIO 01</span>
+                  <span class="px-2 py-0.5 bg-[#E63B1F]/20 text-[#FF9E00] border border-[#E63B1F]/50 font-bold">PHANTOM_SYMBOL</span>
                 </div>
-                <div>
-                  <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider block mb-1">Target Symbol</label>
-                  <input type="text" id="input-symbol" readonly class="w-full bg-[#F3F4F6] border border-[#111216]/20 px-3.5 py-2.5 text-xs font-mono text-[#E63B1F] font-bold focus:outline-none select-all">
-                </div>
-              </div>
+                <h3 class="text-base font-bold text-white mb-1">
+                  Fake curl CVE Hallucination
+                </h3>
+                <p class="text-xs text-zinc-300 leading-relaxed">
+                  Blames non-existent function <code class="font-mono text-white">parseChunkHeader()</code>. Refused at Gate 1 in 3.6ms.
+                </p>
+              </button>
 
-              <div>
-                <div class="flex items-center justify-between mb-1">
-                  <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider">Reproduction Payload</label>
-                  <span class="text-[11px] font-mono text-[#E63B1F] font-semibold">UNTRUSTED INPUT</span>
+              <!-- Scenario 2 -->
+              <button onclick="selectScenario(2)" id="card-scen-2" class="scenario-card receded-cartridge p-5 text-left">
+                <div class="flex items-center justify-between mb-2 font-mono text-[11px]">
+                  <span class="text-zinc-400">SCENARIO 02</span>
+                  <span class="px-2 py-0.5 bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold">REAL CRASH + BISECT</span>
                 </div>
-                <div class="bg-[#111216] text-zinc-200 border border-[#111216]">
-                  <div class="px-3.5 py-2 bg-white/5 border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                    <span>reproduction_exploit.js</span>
-                    <span>--network=none</span>
-                  </div>
-                  <textarea id="input-code" readonly rows="6" class="w-full bg-transparent p-3.5 text-xs font-mono text-zinc-200 leading-relaxed resize-none focus:outline-none select-all"></textarea>
-                </div>
-              </div>
-            </div>
+                <h3 class="text-base font-bold text-white mb-1">
+                  Real Crash + Git Bisect (#989)
+                </h3>
+                <p class="text-xs text-zinc-300 leading-relaxed">
+                  Crashes in Gate 2 with exit code 1, then binary-searches git history to lock the bad commit.
+                </p>
+              </button>
 
-            <div class="pt-3 border-t border-[#111216]/15 flex items-center justify-between text-xs font-mono text-[#525663]">
-              <span>Gate 0 Schema Filter Armed</span>
-              <span class="text-[#111216] font-bold">Deterministic</span>
+              <!-- Scenario 3 -->
+              <button onclick="selectScenario(3)" id="card-scen-3" class="scenario-card receded-cartridge p-5 text-left">
+                <div class="flex items-center justify-between mb-2 font-mono text-[11px]">
+                  <span class="text-zinc-400">SCENARIO 03</span>
+                  <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">HOSTILE_RCE</span>
+                </div>
+                <h3 class="text-base font-bold text-white mb-1">
+                  Hostile Shell Injection Trap
+                </h3>
+                <p class="text-xs text-zinc-300 leading-relaxed">
+                  Hides <code class="font-mono text-white">rm -rf /</code> and <code class="font-mono text-white">$CI_JOB_TOKEN</code> theft inside a repro script. Blocked before spawn.
+                </p>
+              </button>
+
             </div>
           </div>
 
-          <!-- Right 7 Cols: 4-Gate Stepper + Obsidian Terminal + Prismatic Receipt -->
-          <div class="lg:col-span-7 space-y-6">
+          <!-- STEP 2: INSPECT INPUT (LEFT) & WATCH GATE EXECUTION (RIGHT) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-            <!-- 4-Gate Hardware Stepper -->
-            <div class="bg-white border border-[#111216]/20 p-6 shadow-sm">
-              <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15 mb-5">
-                <div>
-                  <div class="text-[10px] font-mono uppercase tracking-widest text-[#525663]">Ordered Execution Pipeline</div>
-                  <div class="text-sm font-extrabold text-[#111216]">4-Gate Deterministic Cascade</div>
+            <!-- Left 5 Cols: Incoming Bug Report Dossier -->
+            <div class="lg:col-span-5 bg-white border border-[#111216]/20 p-6 sm:p-7 space-y-5 shadow-sm">
+              <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2 py-0.5 bg-[#111216] text-white font-mono text-xs font-bold">STEP 2A</span>
+                  <span class="text-sm font-extrabold text-[#111216]">Incoming Report Payload</span>
                 </div>
-                <span id="exec-status" class="text-xs font-mono px-3 py-1 bg-[#111216] text-white font-semibold">Status: Standby</span>
+                <span id="report-tag" class="text-xs font-mono px-2.5 py-1 bg-[#EAECEF] text-[#111216] font-bold">ID: CURL-SLOP-89</span>
               </div>
 
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                <div id="step-g0" class="p-4 bg-[#14151A] border border-white/10 transition-all">
-                  <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 0</div>
-                  <div class="text-xs font-bold text-white mt-1">Schema</div>
-                  <div id="badge-g0" class="mt-2 text-[10px] font-mono text-zinc-400">READY</div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider block mb-1">Claimed Vulnerability</label>
+                  <input type="text" id="input-title" readonly class="w-full bg-[#F4F5F8] border border-[#111216]/20 px-3.5 py-2.5 text-xs font-semibold text-[#111216] focus:outline-none select-all">
                 </div>
-                <div id="step-g1" class="p-4 bg-[#14151A] border border-white/10 transition-all">
-                  <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 1</div>
-                  <div class="text-xs font-bold text-white mt-1">AST Scan</div>
-                  <div id="badge-g1" class="mt-2 text-[10px] font-mono text-zinc-400">READY</div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                  <div>
+                    <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider block mb-1">Target File</label>
+                    <input type="text" id="input-file" readonly class="w-full bg-[#F4F5F8] border border-[#111216]/20 px-3.5 py-2.5 text-xs font-mono text-[#111216] focus:outline-none select-all">
+                  </div>
+                  <div>
+                    <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider block mb-1">Target Symbol</label>
+                    <input type="text" id="input-symbol" readonly class="w-full bg-[#F4F5F8] border border-[#111216]/20 px-3.5 py-2.5 text-xs font-mono text-[#E63B1F] font-bold focus:outline-none select-all">
+                  </div>
                 </div>
-                <div id="step-g2" class="p-4 bg-[#14151A] border border-white/10 transition-all">
-                  <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 2</div>
-                  <div class="text-xs font-bold text-white mt-1">Sandbox</div>
-                  <div id="badge-g2" class="mt-2 text-[10px] font-mono text-zinc-400">READY</div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <label class="text-[11px] font-mono text-[#525663] uppercase tracking-wider">Reproduction Script</label>
+                    <span class="text-[11px] font-mono text-[#E63B1F] font-semibold">UNTRUSTED</span>
+                  </div>
+                  <div class="bg-[#111216] text-zinc-200 border border-[#111216]">
+                    <textarea id="input-code" readonly rows="5" class="w-full bg-transparent p-3.5 text-xs font-mono text-zinc-200 leading-relaxed resize-none focus:outline-none select-all"></textarea>
+                  </div>
                 </div>
-                <div id="step-g3" class="p-4 bg-[#14151A] border border-white/10 transition-all">
-                  <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 3</div>
-                  <div class="text-xs font-bold text-white mt-1">Git Bisect</div>
-                  <div id="badge-g3" class="mt-2 text-[10px] font-mono text-zinc-400">STANDBY</div>
+              </div>
+
+              <button onclick="runTriage()" class="w-full py-3.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center space-x-2 shadow-[-2px_0_0_#111216]">
+                <i data-lucide="play" class="w-4 h-4"></i>
+                <span>Run 4-Gate Verification on This Report</span>
+              </button>
+            </div>
+
+            <!-- Right 7 Cols: 4-Gate Pipeline + Live Terminal + Signed Receipt -->
+            <div class="lg:col-span-7 space-y-6">
+
+              <!-- 4-Gate Stepper -->
+              <div class="bg-white border border-[#111216]/20 p-6 shadow-sm">
+                <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15 mb-5">
+                  <div class="flex items-center space-x-2">
+                    <span class="px-2 py-0.5 bg-[#111216] text-white font-mono text-xs font-bold">STEP 2B</span>
+                    <span class="text-sm font-extrabold text-[#111216]">4-Gate Hardware Pipeline</span>
+                  </div>
+                  <span id="exec-status" class="text-xs font-mono px-3 py-1 bg-[#111216] text-white font-semibold">Status: Standby</span>
                 </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                  <div id="step-g0" class="p-4 bg-[#14151A] border border-white/10 transition-all">
+                    <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 0</div>
+                    <div class="text-xs font-bold text-white mt-1">Schema</div>
+                    <div id="badge-g0" class="mt-2 text-[10px] font-mono text-zinc-400">READY</div>
+                  </div>
+                  <div id="step-g1" class="p-4 bg-[#14151A] border border-white/10 transition-all">
+                    <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 1</div>
+                    <div class="text-xs font-bold text-white mt-1">AST Scan</div>
+                    <div id="badge-g1" class="mt-2 text-[10px] font-mono text-zinc-400">READY</div>
+                  </div>
+                  <div id="step-g2" class="p-4 bg-[#14151A] border border-white/10 transition-all">
+                    <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 2</div>
+                    <div class="text-xs font-bold text-white mt-1">Sandbox</div>
+                    <div id="badge-g2" class="mt-2 text-[10px] font-mono text-zinc-400">READY</div>
+                  </div>
+                  <div id="step-g3" class="p-4 bg-[#14151A] border border-white/10 transition-all">
+                    <div class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">GATE 3</div>
+                    <div class="text-xs font-bold text-white mt-1">Git Bisect</div>
+                    <div id="badge-g3" class="mt-2 text-[10px] font-mono text-zinc-400">STANDBY</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Execution Stream -->
+              <div class="bg-[#0E0F13] border border-[#111216] shadow-md">
+                <div class="px-5 py-3 bg-[#16181F] border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-300">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 bg-[#E63B1F] inline-block"></span>
+                    <span>Live Runner Stream</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-zinc-500">ELAPSED:</span>
+                    <span id="timer-display" class="tabular-nums font-mono text-[#FF9E00] font-bold">0.00ms</span>
+                  </div>
+                </div>
+                <pre id="terminal-output" class="p-5 text-xs font-mono text-zinc-200 h-44 overflow-y-auto leading-relaxed select-text">// Click 'Run 4-Gate Verification' to stream deterministic gate execution...</pre>
+              </div>
+
+              <!-- STEP 3: Cryptographic Evidence Receipt (Appears on Completion) -->
+              <div id="receipt-card" class="hidden prismatic-palm p-6 sm:p-7">
+                <div class="flex items-center justify-between pb-4 border-b border-white/15 mb-5">
+                  <div>
+                    <span class="text-xs font-bold tracking-wider uppercase text-[#FF9E00] font-mono block">STEP 3 • SIGNED VERDICT RECEIPT</span>
+                    <span class="text-[11px] font-mono text-zinc-400">Model Never Grades Itself • Sealed with WebCrypto SHA-256</span>
+                  </div>
+                  <span id="receipt-id" class="text-xs font-mono px-2.5 py-1 bg-white/10 border border-white/20 text-white font-bold">IGRIS-9B84F2A1</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-5 text-xs font-mono">
+                  <div class="p-3 bg-black/80 border border-white/10">
+                    <span class="text-zinc-400 uppercase text-[10px] block">Process Exit</span>
+                    <div id="receipt-exit" class="text-base font-bold text-white tabular-nums mt-1">code 0</div>
+                  </div>
+                  <div class="p-3 bg-black/80 border border-white/10">
+                    <span class="text-zinc-400 uppercase text-[10px] block">Duration</span>
+                    <div id="receipt-duration" class="text-base font-bold text-white tabular-nums mt-1">3.6ms</div>
+                  </div>
+                  <div class="p-3 bg-black/80 border border-white/10">
+                    <span class="text-zinc-400 uppercase text-[10px] block">Heap Delta</span>
+                    <div id="receipt-mem" class="text-base font-bold text-white tabular-nums mt-1">0.00MB</div>
+                  </div>
+                  <div class="p-3 bg-black/80 border border-white/10">
+                    <span class="text-zinc-400 uppercase text-[10px] block">Verdict</span>
+                    <div id="receipt-verdict" class="text-base font-bold text-emerald-400 mt-1">REFUTED</div>
+                  </div>
+                </div>
+
+                <!-- Bisection Box (#989) -->
+                <div id="receipt-bisection-box" class="hidden p-4 bg-black/90 border border-[#00D2FF]/50 text-xs font-mono text-zinc-200 mb-5 space-y-1">
+                  <div class="text-[#00D2FF] font-bold">Git Bisection: Breaking Commit Locked (Issue #989)</div>
+                  <div>Commit: <span class="text-white font-bold">b47a19ce4102</span> | Author: <span class="text-zinc-300">Alex Rivers &lt;alex@dev.io&gt;</span></div>
+                  <div>Message: <span class="text-zinc-300 italic">"Refactor auth token parser logic"</span></div>
+                </div>
+
+                <!-- SHA-256 Bar -->
+                <div class="p-3.5 bg-black border border-white/15 text-xs font-mono text-zinc-300 flex items-center justify-between">
+                  <div class="truncate mr-4">
+                    <span class="text-zinc-500">SHA-256:</span> <span id="receipt-hash" class="text-white select-all font-mono">16f8b80d3c171bdf7f0bf3d6741e583b5d999689a671e7c9f01aa88ce9b3e54c</span>
+                  </div>
+                  <button onclick="copyReceipt()" class="shrink-0 px-3.5 py-1.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white transition-all text-xs font-bold">
+                    Copy Receipt
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Next Step Navigation Prompt -->
+          <div class="pt-4 flex items-center justify-between border-t border-[#111216]/10 text-xs font-mono text-[#525663]">
+            <span>Next Tool: Audit AI Merge Request diffs for deleted tests &amp; leaked secrets</span>
+            <button onclick="switchConsolePanel('auditor')" class="px-4 py-2 bg-[#111216] text-white hover:bg-[#E63B1F] font-bold transition-colors">
+              Go to 2. Diff &amp; Receipt Auditor &rarr;
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ================================================================== -->
+        <!-- PANEL 2: PRE-MERGE DIFF AUDITOR + 5 FROZEN EVIDENCE RECEIPTS       -->
+        <!-- ================================================================== -->
+        <div id="panel-auditor" class="hidden space-y-8">
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            <!-- Left 6 Cols: Pre-Merge Zero-Trust Diff Auditor -->
+            <div class="lg:col-span-6 bg-white border border-[#111216]/20 p-6 sm:p-7 space-y-5 shadow-sm">
+              <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15">
+                <div>
+                  <div class="text-[10px] font-mono uppercase tracking-widest text-[#525663]">Negative-Space Diff Scanner</div>
+                  <div class="text-base font-extrabold text-[#111216]">Pre-Merge Zero-Trust Diff Auditor</div>
+                </div>
+                <span id="diff-verdict-badge" class="text-[10px] font-mono px-2.5 py-1 bg-[#E63B1F] text-white font-bold">SUSPICIOUS_MUTATION</span>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2">
+                <button onclick="selectDiffPreset(1)" id="diff-btn-1" class="px-3 py-1.5 text-[11px] font-mono bg-[#111216] text-white font-semibold transition-all">1. Test Deleted + Secret</button>
+                <button onclick="selectDiffPreset(2)" id="diff-btn-2" class="px-3 py-1.5 text-[11px] font-mono bg-[#EAECEF] text-[#111216] hover:bg-[#111216] hover:text-white transition-all">2. Hostile RCE Sink</button>
+                <button onclick="selectDiffPreset(3)" id="diff-btn-3" class="px-3 py-1.5 text-[11px] font-mono bg-[#EAECEF] text-[#111216] hover:bg-[#111216] hover:text-white transition-all">3. Clean Agentic Diff</button>
+              </div>
+
+              <div class="bg-[#111216] border border-[#111216]">
+                <div class="px-3.5 py-2 bg-white/5 border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                  <span>merge_request.diff</span>
+                  <span>igris_audit_diff</span>
+                </div>
+                <textarea id="diff-input" rows="5" class="w-full bg-transparent p-3.5 text-xs font-mono text-zinc-200 leading-relaxed resize-y focus:outline-none">--- a/src/auth.test.ts
++++ b/src/auth.test.ts
+@@ -14,4 +14,4 @@
+-  expect(verifyToken(expiredJwt)).toThrow('TokenExpiredError');
++  const SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.live_secret";
++  eval(req.body.dynamicHook);</textarea>
+              </div>
+
+              <div id="diff-findings-list" class="space-y-2 text-xs font-mono"></div>
+
+              <div class="pt-4 border-t border-[#111216]/15 flex items-center justify-between gap-4">
+                <span id="diff-summary-text" class="text-xs font-mono text-[#525663]">Rejected diff: 1 test deleted, 1 secret leaked, 1 RCE sink.</span>
+                <button onclick="runDiffAudit()" class="shrink-0 px-5 py-2.5 bg-[#111216] hover:bg-[#E63B1F] text-white text-xs font-bold transition-colors">
+                  Audit MR Diff
+                </button>
               </div>
             </div>
 
-            <!-- Obsidian Hardware Stream Terminal -->
-            <div class="bg-[#0E0F13] border border-[#111216] shadow-lg">
-              <div class="px-5 py-3 bg-[#16181F] border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-300">
-                <div class="flex items-center space-x-2">
-                  <span class="w-2.5 h-2.5 bg-[#E63B1F] inline-block"></span>
-                  <span>igris_blast_chamber@gitlab-runner-16.9</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <span class="text-zinc-500">ELAPSED:</span>
-                  <span id="timer-display" class="tabular-nums font-mono text-[#FF9E00] font-bold">0.00ms</span>
-                </div>
-              </div>
-              <pre id="terminal-output" class="p-5 text-xs font-mono text-zinc-200 h-44 overflow-y-auto leading-relaxed select-text">// Press 'Execute Blast Chamber' above to stream deterministic gate execution...</pre>
-            </div>
-
-            <!-- The Cryptographic Evidence Receipt (Prismatic Palm Focus) -->
-            <div id="receipt-card" class="hidden prismatic-palm p-6 sm:p-7">
-              <div class="flex items-center justify-between pb-4 border-b border-white/15 mb-5">
+            <!-- Right 6 Cols: 5 Frozen Repository Receipts Ledger -->
+            <div class="lg:col-span-6 bg-white border border-[#111216]/20 p-6 sm:p-7 space-y-5 shadow-sm">
+              <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15">
                 <div>
-                  <span class="text-xs font-bold tracking-wider uppercase text-[#FF9E00] font-mono block">CRYPTOGRAPHIC EVIDENCE RECEIPT</span>
-                  <span class="text-[11px] font-mono text-zinc-400">Signed Hardware Verdict • Model Never Grades Itself</span>
+                  <div class="text-[10px] font-mono uppercase tracking-widest text-[#525663]">evidence/runs/*.json</div>
+                  <div class="text-base font-extrabold text-[#111216]">Cryptographic Evidence Ledger</div>
                 </div>
-                <span id="receipt-id" class="text-xs font-mono px-2.5 py-1 bg-white/10 border border-white/20 text-white font-bold">IGRIS-9B84F2A1</span>
+                <span id="ledger-status-pill" class="text-[11px] font-mono px-2.5 py-1 bg-[#111216] text-emerald-400 font-bold tabular-nums">5 / 5 Signatures Valid</span>
               </div>
 
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-5 text-xs font-mono">
-                <div class="p-3 bg-black/80 border border-white/10">
-                  <span class="text-zinc-400 uppercase text-[10px] block">Process Exit</span>
-                  <div id="receipt-exit" class="text-base font-bold text-white tabular-nums mt-1">code 0</div>
+              <div class="divide-y divide-[#111216]/10 text-xs font-mono border border-[#111216]/15 bg-[#F8F9FA]">
+                <div class="flex items-center justify-between p-3">
+                  <div>
+                    <div class="text-[#111216] font-bold">IGRIS-84E31054 <span class="text-[#525663] font-normal">• GL-SEC-2026-9812</span></div>
+                    <div class="text-[11px] text-[#525663]">src/auth/jwt_validator.ts#verifyToken • Bisect: a4f81c9e</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] px-2 py-0.5 bg-[#E63B1F] text-white font-bold">REPRODUCED</span>
+                    <div id="seal-0" class="text-[11px] text-[#525663] mt-1 tabular-nums">142.35ms • 5a28b973...9efb</div>
+                  </div>
                 </div>
-                <div class="p-3 bg-black/80 border border-white/10">
-                  <span class="text-zinc-400 uppercase text-[10px] block">Duration</span>
-                  <div id="receipt-duration" class="text-base font-bold text-white tabular-nums mt-1">3.6ms</div>
+
+                <div class="flex items-center justify-between p-3">
+                  <div>
+                    <div class="text-[#111216] font-bold">IGRIS-DDAC45AE <span class="text-[#525663] font-normal">• AI-REP-2026-4019</span></div>
+                    <div class="text-[11px] text-[#525663]">src/billing/stripe_webhook.ts#processUntrustedWebhook</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] px-2 py-0.5 bg-[#111216] text-[#FF9E00] font-bold">PHANTOM_SYMBOL</span>
+                    <div id="seal-1" class="text-[11px] text-[#525663] mt-1 tabular-nums">7.95ms • 16f8b80d...e54c</div>
+                  </div>
                 </div>
-                <div class="p-3 bg-black/80 border border-white/10">
-                  <span class="text-zinc-400 uppercase text-[10px] block">Heap Delta</span>
-                  <div id="receipt-mem" class="text-base font-bold text-white tabular-nums mt-1">0.00MB</div>
+
+                <div class="flex items-center justify-between p-3">
+                  <div>
+                    <div class="text-[#111216] font-bold">IGRIS-B6811EF4 <span class="text-[#525663] font-normal">• HOSTILE-PAYLOAD-007</span></div>
+                    <div class="text-[11px] text-[#525663]">src/crypto/hasher.ts#hashPassword • 0 CPU spawned</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] px-2 py-0.5 bg-[#111216] text-amber-300 font-bold">REJECTED_UNSAFE</span>
+                    <div id="seal-2" class="text-[11px] text-[#525663] mt-1 tabular-nums">3.82ms • 3f0ba307...474e</div>
+                  </div>
                 </div>
-                <div class="p-3 bg-black/80 border border-white/10">
-                  <span class="text-zinc-400 uppercase text-[10px] block">Verdict</span>
-                  <div id="receipt-verdict" class="text-base font-bold text-emerald-400 mt-1">REFUTED</div>
+
+                <div class="flex items-center justify-between p-3">
+                  <div>
+                    <div class="text-[#111216] font-bold">IGRIS-C881D459 <span class="text-[#525663] font-normal">• GL-ISSUE-1094</span></div>
+                    <div class="text-[11px] text-[#525663]">src/math/calculator.ts#safeDivide • Exit code 0</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] px-2 py-0.5 bg-emerald-700 text-white font-bold">REFUTED</span>
+                    <div id="seal-3" class="text-[11px] text-[#525663] mt-1 tabular-nums">184.20ms • 5f2f9ee7...bdd9</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between p-3">
+                  <div>
+                    <div class="text-[#111216] font-bold">IGRIS-4A7AE8BC <span class="text-[#525663] font-normal">• DUO-MR-5821</span></div>
+                    <div class="text-[11px] text-[#525663]">src/payment/billing.ts#chargeCustomerCard • MCP</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] px-2 py-0.5 bg-[#E63B1F] text-white font-bold">REPRODUCED</span>
+                    <div id="seal-4" class="text-[11px] text-[#525663] mt-1 tabular-nums">198.50ms • 9e204d87...6984</div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Bisection Box (#989) -->
-              <div id="receipt-bisection-box" class="hidden p-4 bg-black/90 border border-[#00D2FF]/50 text-xs font-mono text-zinc-200 mb-5 space-y-1">
-                <div class="text-[#00D2FF] font-bold">Git Bisection: Breaking Commit Locked (Issue #989)</div>
-                <div>Commit: <span class="text-white font-bold">b47a19ce4102</span> | Author: <span class="text-zinc-300">Alex Rivers &lt;alex@dev.io&gt;</span></div>
-                <div>Message: <span class="text-zinc-300 italic">"Refactor auth token parser logic"</span></div>
-              </div>
-
-              <!-- SHA-256 Bar -->
-              <div class="p-3.5 bg-black border border-white/15 text-xs font-mono text-zinc-300 flex items-center justify-between">
-                <div class="truncate mr-4">
-                  <span class="text-zinc-500">SHA-256:</span> <span id="receipt-hash" class="text-white select-all font-mono">16f8b80d3c171bdf7f0bf3d6741e583b5d999689a671e7c9f01aa88ce9b3e54c</span>
-                </div>
-                <button onclick="copyReceipt()" class="shrink-0 px-3.5 py-1.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white transition-all text-xs font-bold">
-                  Copy Receipt
+              <div class="pt-3 flex items-center justify-between gap-4">
+                <span id="ledger-verify-summary" class="text-xs font-mono text-[#525663]">WebCrypto SHA-256: 5/5 canonical payload signatures verified.</span>
+                <button onclick="verifyAllEvidenceReceipts()" class="shrink-0 px-5 py-2.5 bg-[#111216] hover:bg-[#E63B1F] text-white text-xs font-bold transition-colors">
+                  Re-Verify All 5 Hashes
                 </button>
               </div>
             </div>
 
           </div>
 
-        </div>
-
-        <!-- ================================================================== -->
-        <!-- ROW 2: PRE-MERGE DIFF AUDITOR + 5 FROZEN EVIDENCE RECEIPTS         -->
-        <!-- ================================================================== -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4 border-t border-[#111216]/15">
-
-          <!-- Left 6 Cols: Pre-Merge Zero-Trust Diff Auditor -->
-          <div class="lg:col-span-6 bg-white border border-[#111216]/20 p-6 sm:p-7 space-y-5 shadow-sm">
-            <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15">
-              <div>
-                <div class="text-[10px] font-mono uppercase tracking-widest text-[#525663]">Negative-Space Diff Scanner</div>
-                <div class="text-sm font-extrabold text-[#111216]">Pre-Merge Zero-Trust Diff Auditor</div>
-              </div>
-              <span id="diff-verdict-badge" class="text-[10px] font-mono px-2.5 py-1 bg-[#E63B1F] text-white font-bold">SUSPICIOUS_MUTATION</span>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2">
-              <button onclick="selectDiffPreset(1)" id="diff-btn-1" class="px-3 py-1.5 text-[11px] font-mono bg-[#111216] text-white font-semibold transition-all">1. Test Deleted + Secret</button>
-              <button onclick="selectDiffPreset(2)" id="diff-btn-2" class="px-3 py-1.5 text-[11px] font-mono bg-[#E7E9ED] text-[#111216] hover:bg-[#111216] hover:text-white transition-all">2. Hostile RCE Sink</button>
-              <button onclick="selectDiffPreset(3)" id="diff-btn-3" class="px-3 py-1.5 text-[11px] font-mono bg-[#E7E9ED] text-[#111216] hover:bg-[#111216] hover:text-white transition-all">3. Clean Agentic Diff</button>
-            </div>
-
-            <div class="bg-[#111216] border border-[#111216]">
-              <div class="px-3.5 py-2 bg-white/5 border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                <span>merge_request.diff</span>
-                <span>igris_audit_diff</span>
-              </div>
-              <textarea id="diff-input" rows="5" class="w-full bg-transparent p-3.5 text-xs font-mono text-zinc-200 leading-relaxed resize-y focus:outline-none">--- a/src/auth.test.ts
-+++ b/src/auth.test.ts
-@@ -14,4 +14,4 @@
--  expect(verifyToken(expiredJwt)).toThrow('TokenExpiredError');
-+  const SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.live_secret";
-+  eval(req.body.dynamicHook);</textarea>
-            </div>
-
-            <div id="diff-findings-list" class="space-y-2 text-xs font-mono"></div>
-
-            <div class="pt-4 border-t border-[#111216]/15 flex items-center justify-between gap-4">
-              <span id="diff-summary-text" class="text-xs font-mono text-[#525663]">Rejected diff: 1 test deleted, 1 secret leaked, 1 RCE sink.</span>
-              <button onclick="runDiffAudit()" class="shrink-0 px-5 py-2.5 bg-[#111216] hover:bg-[#E63B1F] text-white text-xs font-bold transition-colors">
-                Audit MR Diff
-              </button>
-            </div>
-          </div>
-
-          <!-- Right 6 Cols: 5 Frozen Repository Receipts Ledger -->
-          <div class="lg:col-span-6 bg-white border border-[#111216]/20 p-6 sm:p-7 space-y-5 shadow-sm">
-            <div class="flex items-center justify-between pb-4 border-b border-[#111216]/15">
-              <div>
-                <div class="text-[10px] font-mono uppercase tracking-widest text-[#525663]">evidence/runs/*.json</div>
-                <div class="text-sm font-extrabold text-[#111216]">Cryptographic Evidence Ledger</div>
-              </div>
-              <span id="ledger-status-pill" class="text-[11px] font-mono px-2.5 py-1 bg-[#111216] text-emerald-400 font-bold tabular-nums">5 / 5 Signatures Valid</span>
-            </div>
-
-            <div class="divide-y divide-[#111216]/10 text-xs font-mono border border-[#111216]/15 bg-[#F8F9FA]">
-              <div class="flex items-center justify-between p-3">
-                <div>
-                  <div class="text-[#111216] font-bold">IGRIS-84E31054 <span class="text-[#525663] font-normal">• GL-SEC-2026-9812</span></div>
-                  <div class="text-[11px] text-[#525663]">src/auth/jwt_validator.ts#verifyToken • Bisect: a4f81c9e</div>
-                </div>
-                <div class="text-right">
-                  <span class="text-[10px] px-2 py-0.5 bg-[#E63B1F] text-white font-bold">REPRODUCED</span>
-                  <div id="seal-0" class="text-[11px] text-[#525663] mt-1 tabular-nums">142.35ms • 5a28b973...9efb</div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between p-3">
-                <div>
-                  <div class="text-[#111216] font-bold">IGRIS-DDAC45AE <span class="text-[#525663] font-normal">• AI-REP-2026-4019</span></div>
-                  <div class="text-[11px] text-[#525663]">src/billing/stripe_webhook.ts#processUntrustedWebhook</div>
-                </div>
-                <div class="text-right">
-                  <span class="text-[10px] px-2 py-0.5 bg-[#111216] text-[#FF9E00] font-bold">PHANTOM_SYMBOL</span>
-                  <div id="seal-1" class="text-[11px] text-[#525663] mt-1 tabular-nums">7.95ms • 16f8b80d...e54c</div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between p-3">
-                <div>
-                  <div class="text-[#111216] font-bold">IGRIS-B6811EF4 <span class="text-[#525663] font-normal">• HOSTILE-PAYLOAD-007</span></div>
-                  <div class="text-[11px] text-[#525663]">src/crypto/hasher.ts#hashPassword • 0 CPU spawned</div>
-                </div>
-                <div class="text-right">
-                  <span class="text-[10px] px-2 py-0.5 bg-[#111216] text-amber-300 font-bold">REJECTED_UNSAFE</span>
-                  <div id="seal-2" class="text-[11px] text-[#525663] mt-1 tabular-nums">3.82ms • 3f0ba307...474e</div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between p-3">
-                <div>
-                  <div class="text-[#111216] font-bold">IGRIS-C881D459 <span class="text-[#525663] font-normal">• GL-ISSUE-1094</span></div>
-                  <div class="text-[11px] text-[#525663]">src/math/calculator.ts#safeDivide • Exit code 0</div>
-                </div>
-                <div class="text-right">
-                  <span class="text-[10px] px-2 py-0.5 bg-emerald-700 text-white font-bold">REFUTED</span>
-                  <div id="seal-3" class="text-[11px] text-[#525663] mt-1 tabular-nums">184.20ms • 5f2f9ee7...bdd9</div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between p-3">
-                <div>
-                  <div class="text-[#111216] font-bold">IGRIS-4A7AE8BC <span class="text-[#525663] font-normal">• DUO-MR-5821</span></div>
-                  <div class="text-[11px] text-[#525663]">src/payment/billing.ts#chargeCustomerCard • MCP</div>
-                </div>
-                <div class="text-right">
-                  <span class="text-[10px] px-2 py-0.5 bg-[#E63B1F] text-white font-bold">REPRODUCED</span>
-                  <div id="seal-4" class="text-[11px] text-[#525663] mt-1 tabular-nums">198.50ms • 9e204d87...6984</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pt-3 flex items-center justify-between gap-4">
-              <span id="ledger-verify-summary" class="text-xs font-mono text-[#525663]">WebCrypto SHA-256: 5/5 canonical payload signatures verified.</span>
-              <button onclick="verifyAllEvidenceReceipts()" class="shrink-0 px-5 py-2.5 bg-[#111216] hover:bg-[#E63B1F] text-white text-xs font-bold transition-colors">
-                Re-Verify All 5 Hashes
-              </button>
-            </div>
+          <div class="pt-4 flex items-center justify-between border-t border-[#111216]/10 text-xs font-mono text-[#525663]">
+            <button onclick="switchConsolePanel('sandbox')" class="px-4 py-2 bg-white border border-[#111216]/20 text-[#111216] font-bold">
+              &larr; Back to 1. Gate Sandbox
+            </button>
+            <button onclick="switchConsolePanel('probation')" class="px-4 py-2 bg-[#111216] text-white hover:bg-[#E63B1F] font-bold transition-colors">
+              Go to 3. Agent Probation Ledger &rarr;
+            </button>
           </div>
 
         </div>
 
         <!-- ================================================================== -->
-        <!-- ROW 3: PROBATION TRUST LEDGER (OBSIDIAN MONOLITH INSET)            -->
+        <!-- PANEL 3: PROBATION TRUST LEDGER & POLICY GOVERNOR                  -->
         <!-- ================================================================== -->
-        <div id="probation-section" class="obsidian-monolith p-6 sm:p-9 space-y-6">
+        <div id="panel-probation" class="hidden space-y-6">
 
-          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-white/15">
-            <div>
-              <div class="flex items-center gap-3 mb-2">
-                <span class="px-2.5 py-0.5 bg-[#E63B1F] text-white text-[11px] font-mono uppercase font-bold">
-                  The GitLab Security Standard v1.0 (Oct 6, 2026)
-                </span>
-                <span class="text-xs font-mono text-zinc-400">Earned Autonomy &amp; Instant Demotion</span>
+          <div id="probation-section" class="obsidian-monolith p-6 sm:p-9 space-y-6">
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-white/15">
+              <div>
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="px-2.5 py-0.5 bg-[#E63B1F] text-white text-[11px] font-mono uppercase font-bold">
+                    The GitLab Security Standard v1.0 (Oct 6, 2026)
+                  </span>
+                  <span class="text-xs font-mono text-zinc-400">Earned Autonomy &amp; Instant Demotion</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                  Probation Trust Ledger &amp; GitLab Policy Governor
+                </h2>
+                <p class="text-xs text-zinc-300 mt-1 max-w-2xl">
+                  Every agent workflow starts at Level 1 on probation. Clean verified runs earn promotion. Deleting a test triggers instant demotion and locks GitLab branch approvals.
+                </p>
               </div>
-              <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                Probation Trust Ledger &amp; GitLab Policy Governor
-              </h2>
-              <p class="text-xs text-zinc-300 mt-1 max-w-2xl">
-                Every agent workflow starts at Level 1 on probation. Clean verified runs earn promotion. Deleting a test triggers instant demotion and locks GitLab branch approvals.
-              </p>
+
+              <div class="flex flex-wrap items-center gap-2.5">
+                <button onclick="simulateCleanPass()" class="px-4 py-2.5 bg-white text-[#111216] hover:bg-zinc-200 text-xs font-bold transition-all">
+                  + Simulate Clean Pass
+                </button>
+                <button onclick="simulateTestTampering()" class="px-4 py-2.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white text-xs font-bold transition-all shadow-[-2px_0_0_#FF9E00,2px_0_0_#00D2FF]">
+                  ! Simulate Deleted Test Attack
+                </button>
+                <button onclick="verifyProbationChain()" class="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono text-white transition-all">
+                  Verify Chain
+                </button>
+                <button onclick="resetProbationDemo()" class="px-3 py-2.5 bg-black/50 hover:bg-black text-xs font-mono text-zinc-400 border border-white/10 transition-all">
+                  Reset
+                </button>
+              </div>
             </div>
 
-            <div class="flex flex-wrap items-center gap-2.5">
-              <button onclick="simulateCleanPass()" class="px-4 py-2.5 bg-white text-[#111216] hover:bg-zinc-200 text-xs font-bold transition-all flex items-center gap-1.5">
-                <span>+ Simulate Clean Pass</span>
-              </button>
-              <button onclick="simulateTestTampering()" class="px-4 py-2.5 bg-[#E63B1F] hover:bg-[#FF5500] text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-[-2px_0_0_#FF9E00,2px_0_0_#00D2FF]">
-                <span>! Simulate Deleted Test Attack</span>
-              </button>
-              <button onclick="verifyProbationChain()" class="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono text-white transition-all">
-                Verify Chain
-              </button>
-              <button onclick="resetProbationDemo()" class="px-3 py-2.5 bg-black/50 hover:bg-black text-xs font-mono text-zinc-400 border border-white/10 transition-all">
-                Reset
-              </button>
+            <!-- Instant Demotion Alert Banner -->
+            <div id="probation-demotion-banner" class="hidden p-4 bg-[#E63B1F]/20 border border-[#E63B1F] flex items-start gap-3">
+              <div class="text-xs font-mono">
+                <div class="text-[#FF9E00] font-bold">INSTANT DEMOTION TRIGGERED (GitLab Security Standard v1.0)</div>
+                <div id="probation-demotion-reason" class="text-white mt-1">TEST_TAMPERING_DETECTED: Agent deleted test assertions to force PR pass. Autonomy dropped from Level 3 to Level 2. Pass streak reset to 0.</div>
+                <div class="text-xs text-zinc-300 mt-1">GitLab Branch Policy: auto_merge_allowed=false, approvals_before_merge=1 (Human maintainer required).</div>
+              </div>
             </div>
+
+            <!-- 3 Autonomy Levels Stepper -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+              <div id="step-level-1" class="p-5 bg-white/[0.04] border border-[#E63B1F] transition-all">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs uppercase text-zinc-300 font-bold">Level 1 • Assisted</span>
+                  <span id="badge-level-1" class="text-[10px] px-2 py-0.5 bg-[#E63B1F] text-white font-bold">ACTIVE</span>
+                </div>
+                <div class="text-base font-extrabold text-white font-sans">SUGGEST (Probation)</div>
+                <p class="text-zinc-300 font-sans text-xs mt-1 leading-relaxed">
+                  Can only post a suggested fix as an issue comment. Opening Merge Requests is blocked.
+                </p>
+                <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-zinc-400 flex justify-between">
+                  <span>Need: 2 Clean Passes</span>
+                  <span>MRs: Blocked</span>
+                </div>
+              </div>
+
+              <div id="step-level-2" class="p-5 bg-white/[0.02] border border-white/10 transition-all opacity-60">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs uppercase text-zinc-300 font-bold">Level 2 • Supervised</span>
+                  <span id="badge-level-2" class="text-[10px] px-2 py-0.5 bg-white/10 text-zinc-400 font-bold">LOCKED</span>
+                </div>
+                <div class="text-base font-extrabold text-white font-sans">PROPOSE (Supervised)</div>
+                <p class="text-zinc-300 font-sans text-xs mt-1 leading-relaxed">
+                  Opens the Merge Request, but GitLab requires 1 human maintainer approval to merge.
+                </p>
+                <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-zinc-400 flex justify-between">
+                  <span>Need: 5 Passes + Sign-off</span>
+                  <span>Approvals: 1 Human</span>
+                </div>
+              </div>
+
+              <div id="step-level-3" class="p-5 bg-white/[0.02] border border-white/10 transition-all opacity-60">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs uppercase text-zinc-300 font-bold">Level 3 • Hands-off</span>
+                  <span id="badge-level-3" class="text-[10px] px-2 py-0.5 bg-white/10 text-zinc-400 font-bold">LOCKED</span>
+                </div>
+                <div class="text-base font-extrabold text-white font-sans">ACT (Guardrailed)</div>
+                <p class="text-zinc-300 font-sans text-xs mt-1 leading-relaxed">
+                  Merges autonomously up to 5 times/day. Instant demotion to Level 2 if it touches a test.
+                </p>
+                <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-zinc-400 flex justify-between">
+                  <span>Governor: 5/day max</span>
+                  <span>Approvals: 0 (Auto)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Policy Telemetry Strip -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
+              <div class="p-4 bg-black/70 border border-white/10">
+                <span class="text-zinc-400 uppercase text-[10px] block">Agent Identity</span>
+                <div class="text-sm font-bold text-white font-sans mt-1 truncate">gitlab-duo-flow-security</div>
+                <div class="text-[11px] text-zinc-500 mt-0.5">Service Account #8491</div>
+              </div>
+              <div class="p-4 bg-black/70 border border-white/10">
+                <span class="text-zinc-400 uppercase text-[10px] block">Clean Pass Streak</span>
+                <div id="probation-streak" class="text-sm font-bold text-emerald-400 font-sans mt-1 tabular-nums">0 consecutive passes</div>
+                <div id="probation-streak-sub" class="text-[11px] text-zinc-500 mt-0.5">Need 2 passes for Level 2</div>
+              </div>
+              <div class="p-4 bg-black/70 border border-white/10">
+                <span class="text-zinc-400 uppercase text-[10px] block">GitLab Approval Policy</span>
+                <div id="probation-policy-rule" class="text-sm font-bold text-[#FF9E00] font-sans mt-1">999 Approvals (MR Blocked)</div>
+                <div id="probation-policy-sub" class="text-[11px] text-zinc-500 mt-0.5">Protected branch 'main'</div>
+              </div>
+              <div class="p-4 bg-black/70 border border-white/10">
+                <span class="text-zinc-400 uppercase text-[10px] block">Daily Merge Governor</span>
+                <div id="probation-governor" class="text-sm font-bold text-white font-sans mt-1 tabular-nums">0 / 5 Merges Today</div>
+                <div class="text-[11px] text-zinc-500 mt-0.5">Rate limit active</div>
+              </div>
+            </div>
+
+            <!-- Hash-Chained Ledger Table -->
+            <div class="bg-black/80 border border-white/15 overflow-hidden">
+              <div class="px-4 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-300">
+                <span>Immutable Hash-Chained Ledger (previousHash &rarr; tamperProofHash)</span>
+                <span id="probation-chain-status" class="text-xs text-[#FF9E00] font-semibold">Genesis Block Active</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-mono">
+                  <thead class="bg-white/5 border-b border-white/10 text-[10px] text-zinc-400 uppercase">
+                    <tr>
+                      <th class="p-3">Block</th>
+                      <th class="p-3">Receipt ID</th>
+                      <th class="p-3">Target</th>
+                      <th class="p-3">Verdict</th>
+                      <th class="p-3">Previous Hash</th>
+                      <th class="p-3">SHA-256 Seal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="probation-ledger-tbody" class="divide-y divide-white/10 text-zinc-200">
+                    <tr>
+                      <td class="p-3 text-zinc-400">#0 (Genesis)</td>
+                      <td class="p-3 font-bold text-white">IGRIS-GENESIS-00</td>
+                      <td class="p-3 text-zinc-300">core/security_policy.yml</td>
+                      <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">VERIFIED</span></td>
+                      <td class="p-3 text-zinc-500">000000000000...</td>
+                      <td class="p-3 text-zinc-300">cd55297f50786075...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Instant Demotion Alert Banner -->
-          <div id="probation-demotion-banner" class="hidden p-4 bg-[#E63B1F]/20 border border-[#E63B1F] flex items-start gap-3">
-            <div class="text-xs font-mono">
-              <div class="text-[#FF9E00] font-bold">INSTANT DEMOTION TRIGGERED (GitLab Security Standard v1.0)</div>
-              <div id="probation-demotion-reason" class="text-white mt-1">TEST_TAMPERING_DETECTED: Agent deleted test assertions to force PR pass. Autonomy dropped from Level 3 to Level 2. Pass streak reset to 0.</div>
-              <div class="text-xs text-zinc-300 mt-1">GitLab Branch Policy: auto_merge_allowed=false, approvals_before_merge=1 (Human maintainer required).</div>
-            </div>
-          </div>
-
-          <!-- 3 Autonomy Levels Stepper -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-            <div id="step-level-1" class="p-5 bg-white/[0.04] border border-[#E63B1F] transition-all">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs uppercase text-zinc-300 font-bold">Level 1 • Assisted</span>
-                <span id="badge-level-1" class="text-[10px] px-2 py-0.5 bg-[#E63B1F] text-white font-bold">ACTIVE</span>
-              </div>
-              <div class="text-base font-extrabold text-white font-sans">SUGGEST (Probation)</div>
-              <p class="text-zinc-300 font-sans text-xs mt-1 leading-relaxed">
-                Can only post a suggested fix as an issue comment. Opening Merge Requests is blocked.
-              </p>
-              <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-zinc-400 flex justify-between">
-                <span>Need: 2 Clean Passes</span>
-                <span>MRs: Blocked</span>
-              </div>
-            </div>
-
-            <div id="step-level-2" class="p-5 bg-white/[0.02] border border-white/10 transition-all opacity-60">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs uppercase text-zinc-300 font-bold">Level 2 • Supervised</span>
-                <span id="badge-level-2" class="text-[10px] px-2 py-0.5 bg-white/10 text-zinc-400 font-bold">LOCKED</span>
-              </div>
-              <div class="text-base font-extrabold text-white font-sans">PROPOSE (Supervised)</div>
-              <p class="text-zinc-300 font-sans text-xs mt-1 leading-relaxed">
-                Opens the Merge Request, but GitLab requires 1 human maintainer approval to merge.
-              </p>
-              <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-zinc-400 flex justify-between">
-                <span>Need: 5 Passes + Sign-off</span>
-                <span>Approvals: 1 Human</span>
-              </div>
-            </div>
-
-            <div id="step-level-3" class="p-5 bg-white/[0.02] border border-white/10 transition-all opacity-60">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs uppercase text-zinc-300 font-bold">Level 3 • Hands-off</span>
-                <span id="badge-level-3" class="text-[10px] px-2 py-0.5 bg-white/10 text-zinc-400 font-bold">LOCKED</span>
-              </div>
-              <div class="text-base font-extrabold text-white font-sans">ACT (Guardrailed)</div>
-              <p class="text-zinc-300 font-sans text-xs mt-1 leading-relaxed">
-                Merges autonomously up to 5 times/day. Instant demotion to Level 2 if it touches a test.
-              </p>
-              <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-zinc-400 flex justify-between">
-                <span>Governor: 5/day max</span>
-                <span>Approvals: 0 (Auto)</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Policy Telemetry Strip -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
-            <div class="p-4 bg-black/70 border border-white/10">
-              <span class="text-zinc-400 uppercase text-[10px] block">Agent Identity</span>
-              <div class="text-sm font-bold text-white font-sans mt-1 truncate">gitlab-duo-flow-security</div>
-              <div class="text-[11px] text-zinc-500 mt-0.5">Service Account #8491</div>
-            </div>
-            <div class="p-4 bg-black/70 border border-white/10">
-              <span class="text-zinc-400 uppercase text-[10px] block">Clean Pass Streak</span>
-              <div id="probation-streak" class="text-sm font-bold text-emerald-400 font-sans mt-1 tabular-nums">0 consecutive passes</div>
-              <div id="probation-streak-sub" class="text-[11px] text-zinc-500 mt-0.5">Need 2 passes for Level 2</div>
-            </div>
-            <div class="p-4 bg-black/70 border border-white/10">
-              <span class="text-zinc-400 uppercase text-[10px] block">GitLab Approval Policy</span>
-              <div id="probation-policy-rule" class="text-sm font-bold text-[#FF9E00] font-sans mt-1">999 Approvals (MR Blocked)</div>
-              <div id="probation-policy-sub" class="text-[11px] text-zinc-500 mt-0.5">Protected branch 'main'</div>
-            </div>
-            <div class="p-4 bg-black/70 border border-white/10">
-              <span class="text-zinc-400 uppercase text-[10px] block">Daily Merge Governor</span>
-              <div id="probation-governor" class="text-sm font-bold text-white font-sans mt-1 tabular-nums">0 / 5 Merges Today</div>
-              <div class="text-[11px] text-zinc-500 mt-0.5">Rate limit active</div>
-            </div>
-          </div>
-
-          <!-- Hash-Chained Ledger Table -->
-          <div class="bg-black/80 border border-white/15 overflow-hidden">
-            <div class="px-4 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-300">
-              <span>Immutable Hash-Chained Ledger (previousHash &rarr; tamperProofHash)</span>
-              <span id="probation-chain-status" class="text-xs text-[#FF9E00] font-semibold">Genesis Block Active</span>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs font-mono">
-                <thead class="bg-white/5 border-b border-white/10 text-[10px] text-zinc-400 uppercase">
-                  <tr>
-                    <th class="p-3">Block</th>
-                    <th class="p-3">Receipt ID</th>
-                    <th class="p-3">Target</th>
-                    <th class="p-3">Verdict</th>
-                    <th class="p-3">Previous Hash</th>
-                    <th class="p-3">SHA-256 Seal</th>
-                  </tr>
-                </thead>
-                <tbody id="probation-ledger-tbody" class="divide-y divide-white/10 text-zinc-200">
-                  <tr>
-                    <td class="p-3 text-zinc-400">#0 (Genesis)</td>
-                    <td class="p-3 font-bold text-white">IGRIS-GENESIS-00</td>
-                    <td class="p-3 text-zinc-300">core/security_policy.yml</td>
-                    <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">VERIFIED</span></td>
-                    <td class="p-3 text-zinc-500">000000000000...</td>
-                    <td class="p-3 text-zinc-300">cd55297f50786075...</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="pt-2 flex items-center justify-between text-xs font-mono text-[#525663]">
+            <button onclick="switchConsolePanel('auditor')" class="px-4 py-2 bg-white border border-[#111216]/20 text-[#111216] font-bold">
+              &larr; Back to 2. Diff &amp; Receipt Auditor
+            </button>
+            <button onclick="switchConsolePanel('sandbox')" class="px-4 py-2 bg-[#111216] text-white hover:bg-[#E63B1F] font-bold transition-colors">
+              Return to 1. Gate Triage Sandbox
+            </button>
           </div>
 
         </div>
@@ -1300,17 +1144,17 @@
   </main>
 
   <!-- ======================================================================== -->
-  <!-- ARCHITECTURAL FOOTER                                                     -->
+  <!-- CLEAN FOOTER                                                             -->
   <!-- ======================================================================== -->
-  <footer class="bg-[#E7E9ED] swiss-rule-t">
-    <div class="max-w-[1400px] mx-auto px-6 sm:px-12 py-12 swiss-grid-shell flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+  <footer class="bg-[#EAECEF] border-t border-[#111216]/10">
+    <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <div class="text-2xl font-extrabold tracking-tighter text-[#111216]">IGRIS</div>
-        <div class="text-xs font-mono text-[#525663] mt-1">
+        <div class="text-lg font-extrabold tracking-tight text-[#111216]">IGRIS</div>
+        <div class="text-xs font-mono text-[#525663]">
           The knight at the gate. Built for the GitLab "Life After Code" Hackathon.
         </div>
       </div>
-      <div class="text-xs font-mono text-[#111216] tabular-nums">
+      <div class="text-xs font-mono text-[#525663] tabular-nums">
         MIT LICENSE • ZERO MOCKS • SUB-SECOND VERIFIABLE RECEIPTS
       </div>
     </div>
@@ -1323,8 +1167,7 @@
     lucide.createIcons();
 
     // ------------------------------------------------------------------------
-    // 1. VG-84 + HANUMAN OPTICAL DEPTH-OF-FIELD STIPPLE CANVAS
-    //    Deterministic golden-angle stipple cloud + blurred guardian monolith
+    // 1. OPTICAL DEPTH-OF-FIELD STIPPLE CANVAS
     // ------------------------------------------------------------------------
     (function initOpticalCanvas() {
       const canvas = document.getElementById('monolith-canvas');
@@ -1339,22 +1182,20 @@
         const h = canvas.height;
         ctx.clearRect(0, 0, w, h);
 
-        // 1. Blinding Alabaster Mist Base
+        // 1. Alabaster Mist Base
         const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
         bgGrad.addColorStop(0, '#ECEDEF');
         bgGrad.addColorStop(1, '#DCDFE6');
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, w, h);
 
-        // 2. Out-of-Focus Monumental Guardian Silhouette (Worm's-Eye Low Angle)
+        // 2. Out-of-Focus Monumental Guardian Silhouette
         ctx.save();
         ctx.filter = 'blur(22px)';
         ctx.fillStyle = '#14151A';
-        // Bowed Head / Crown high in the mist
         ctx.beginPath();
         ctx.arc(w * 0.54, h * 0.34 + Math.sin(frameTick) * 3, 52, 0, Math.PI * 2);
         ctx.fill();
-        // Broad Monumental Shoulders & Torso
         ctx.beginPath();
         ctx.moveTo(w * 0.24, h * 0.95);
         ctx.quadraticCurveTo(w * 0.28, h * 0.44, w * 0.54, h * 0.42);
@@ -1363,12 +1204,12 @@
         ctx.fill();
         ctx.restore();
 
-        // 3. Prismatic Heat Rim (Where Blinding Light Hits the Foreground Arm/Palm)
+        // 3. Prismatic Heat Rim (Foreground Focal Point)
         ctx.save();
         ctx.filter = 'blur(8px)';
         const prismGrad = ctx.createRadialGradient(
-          w * 0.36, h * 0.58, 6,
-          w * 0.36, h * 0.58, 95
+          w * 0.38, h * 0.54, 6,
+          w * 0.38, h * 0.54, 92
         );
         prismGrad.addColorStop(0, 'rgba(255, 175, 0, 0.92)');
         prismGrad.addColorStop(0.45, 'rgba(230, 59, 31, 0.78)');
@@ -1376,36 +1217,35 @@
         prismGrad.addColorStop(1, 'rgba(231, 233, 237, 0)');
         ctx.fillStyle = prismGrad;
         ctx.beginPath();
-        ctx.arc(w * 0.36, h * 0.58, 95, 0, Math.PI * 2);
+        ctx.arc(w * 0.38, h * 0.54, 92, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
-        // 4. Razor-Sharp Focal Plane (The Outstretched Palm Geometric Core + VG-84 Stipple Field)
-        const totalStipples = 680;
+        // 4. Deterministic Golden-Angle Stipple Cloud
+        const totalStipples = 520;
         const goldenAngle = 2.399963229728653;
         for (let i = 0; i < totalStipples; i++) {
           const ratio = i / totalStipples;
           const angle = i * goldenAngle + frameTick * 0.15;
-          const radius = Math.sqrt(ratio) * (w * 0.48);
-          // Clustered in upper-right like VG-84 and around the focal palm
+          const radius = Math.sqrt(ratio) * (w * 0.45);
           const x = w * 0.68 + Math.cos(angle) * radius * 0.85;
           const y = h * 0.22 + Math.sin(angle) * radius * 0.75;
-          const dotSize = (1 - ratio * 0.65) * 2.1;
+          const dotSize = (1 - ratio * 0.65) * 2.0;
           ctx.fillStyle = i % 19 === 0 ? '#E63B1F' : '#111216';
           ctx.fillRect(x, y, dotSize, dotSize);
         }
 
-        // 5. Razor-Sharp Geometric Palm Sightline in Foreground
+        // 5. Razor-Sharp Geometric Sightline in Foreground
         ctx.save();
         ctx.strokeStyle = '#111216';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.arc(w * 0.36, h * 0.58, 34, 0, Math.PI * 2);
+        ctx.arc(w * 0.38, h * 0.54, 34, 0, Math.PI * 2);
         ctx.stroke();
 
         ctx.fillStyle = '#111216';
         ctx.font = '700 10px "JetBrains Mono", monospace';
-        ctx.fillText('FOCAL PLANE // 3.61ms', w * 0.16, h * 0.58 - 44);
+        ctx.fillText('FOCAL PLANE // 3.61ms', w * 0.18, h * 0.54 - 44);
         ctx.restore();
 
         requestAnimationFrame(renderOpticalField);
@@ -1414,26 +1254,61 @@
     })();
 
     // ------------------------------------------------------------------------
-    // 2. TAB & SECTION NAVIGATION
+    // 2. TAB, SECTION, AND CONSOLE PANEL NAVIGATION
     // ------------------------------------------------------------------------
     function switchTab(tab) {
       const viewLanding = document.getElementById('view-landing');
       const viewConsole = document.getElementById('view-console');
       const navLanding = document.getElementById('nav-landing');
-      const navConsole = document.getElementById('nav-console');
 
       if (tab === 'console') {
         viewLanding.classList.add('hidden');
         viewConsole.classList.remove('hidden');
-        navConsole.classList.add('text-[#E63B1F]');
-        navLanding.classList.remove('text-[#111216]');
+        if (navLanding) navLanding.classList.remove('text-[#111216]');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         viewLanding.classList.remove('hidden');
         viewConsole.classList.add('hidden');
-        navLanding.classList.add('text-[#111216]');
-        navConsole.classList.remove('text-[#E63B1F]');
+        if (navLanding) navLanding.classList.add('text-[#111216]');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      lucide.createIcons();
+    }
+
+    function switchConsolePanel(panel) {
+      const panels = {
+        sandbox: document.getElementById('panel-sandbox'),
+        auditor: document.getElementById('panel-auditor'),
+        probation: document.getElementById('panel-probation')
+      };
+      const navs = {
+        sandbox: document.getElementById('cnav-sandbox'),
+        auditor: document.getElementById('cnav-auditor'),
+        probation: document.getElementById('cnav-probation'),
+        all: document.getElementById('cnav-all')
+      };
+
+      const activeClass = "px-4 py-2 text-xs font-mono font-bold bg-[#E63B1F] text-white transition-all";
+      const inactiveClass = "px-4 py-2 text-xs font-mono font-semibold bg-white/5 hover:bg-white/15 text-zinc-300 border border-white/10 transition-all";
+
+      if (panel === 'all') {
+        Object.values(panels).forEach(function(p) { if (p) p.classList.remove('hidden'); });
+        navs.sandbox.className = inactiveClass;
+        navs.auditor.className = inactiveClass;
+        navs.probation.className = inactiveClass;
+        navs.all.className = activeClass;
+      } else {
+        Object.keys(panels).forEach(function(k) {
+          if (!panels[k]) return;
+          if (k === panel) {
+            panels[k].classList.remove('hidden');
+            navs[k].className = activeClass;
+          } else {
+            panels[k].classList.add('hidden');
+            navs[k].className = inactiveClass;
+          }
+        });
+        navs.all.className = "px-3.5 py-2 text-xs font-mono text-zinc-400 hover:text-white border border-white/10 transition-all";
       }
       lucide.createIcons();
     }
@@ -1558,13 +1433,14 @@
         document.getElementById(`badge-${g}`).innerText = "READY";
         document.getElementById(`badge-${g}`).className = "mt-2 text-[10px] font-mono text-zinc-400";
       });
-      document.getElementById('terminal-output').innerText = "// Ready for triage execution. Press 'Execute Blast Chamber' above.";
+      document.getElementById('terminal-output').innerText = "// Ready for triage execution. Click 'Run 4-Gate Verification' to begin.";
       document.getElementById('timer-display').innerText = "0.00ms";
       document.getElementById('receipt-card').classList.add('hidden');
       document.getElementById('exec-status').innerText = "Status: Standby";
     }
 
     async function runTriage() {
+      switchConsolePanel('sandbox');
       const data = SCENARIOS[activeScenario];
       const terminal = document.getElementById('terminal-output');
       const timerDisplay = document.getElementById('timer-display');
@@ -1716,7 +1592,7 @@
         if (i === num) {
           btn.className = "px-3 py-1.5 text-[11px] font-mono bg-[#111216] text-white font-semibold transition-all";
         } else {
-          btn.className = "px-3 py-1.5 text-[11px] font-mono bg-[#E7E9ED] text-[#111216] hover:bg-[#111216] hover:text-white transition-all";
+          btn.className = "px-3 py-1.5 text-[11px] font-mono bg-[#EAECEF] text-[#111216] hover:bg-[#111216] hover:text-white transition-all";
         }
       });
       document.getElementById('diff-input').value = DIFF_PRESETS[num];
@@ -1841,7 +1717,7 @@
     }
 
     // ------------------------------------------------------------------------
-    // 6. PROBATION & EARNED AUTONOMY STATE ENGINE (GitLab Security Standard v1.0)
+    // 6. PROBATION & EARNED AUTONOMY STATE ENGINE
     // ------------------------------------------------------------------------
     function getSecureRandomHex(bytesCount = 4) {
       if (window.crypto && window.crypto.getRandomValues) {
